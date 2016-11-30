@@ -45,7 +45,10 @@
   <ItemGroup>
     <Compile Include="Data\DataReader.cs" />
     <Compile Include="Generators\Generator.cs" />
+    <Compile Include="Generators\LampaGenerator.cs" />
+    <Compile Include="Generators\StlpGenerator.cs" />
     <Compile Include="Generators\TechikGenerator.cs" />
+    <Compile Include="Generators\UlicaGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

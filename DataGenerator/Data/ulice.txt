@@ -1,4 +1,5 @@
-﻿Bajzova
+﻿418
+Bajzova
 Borová
 Bottova
 Bytčianska
@@ -260,7 +261,6 @@ Na Slavíne
 Na stráni
 Na Štyridsiatku
 Na vŕšku
-Nábrežie arm. gen. Ludvíka Svobodu
 Nad lomom
 Námestie 1. mája
 Námestie Alexandra Dubčeka
@@ -269,7 +269,6 @@ Námestie Franza Liszta
 Námestie Ľudovíta Štúra
 Námestie Martina Benku
 Námestie slobody
-Námestie Slovenského národného povstania
 Nedbalova
 Nekrasovova
 Novosvetská

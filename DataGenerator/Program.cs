@@ -11,9 +11,18 @@ namespace DataGenerator
     {
         static void Main(string[] args)
         {
-            
-            var tg = new TechikGenerator();
-            tg.Generate(498);
+            //var tg = new TechikGenerator();
+            //tg.Generate(500);
+
+            //var ug = new UlicaGenerator();
+            //ug.Generate(50);
+
+            //var lg = new LampaGenerator();
+            //lg.Generate(10);
+
+            //var sg = new StlpGenerator();
+            //sg.Generate(25);
+
         }
     }
 }
