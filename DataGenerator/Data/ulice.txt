@@ -1,0 +1,420 @@
+﻿Bajzova
+Borová
+Bottova
+Bytčianska
+Centrálna		
+Dlhá		
+Dolná		
+Dubová
+Gaštanová
+Hlinská
+Hollého
+Hálkova
+Jaseňová
+Javorová
+Komenského
+Košická
+Kragujevská
+Kraskova
+Kukučínova	
+Limbova
+Michalská
+Mostná
+Na Horevaží
+Nemocničná
+Národná
+Obchodná
+Obvodova
+Osiková
+Petzvalova	
+Platanová
+Poštová
+Predmestská		
+Radničná
+Smreková
+Vysokoškolákov
+Závodská
+Cezmínová
+Dlhá
+Hraničiarska
+Iberková
+Ibišteková
+K pasienkom
+Konopiská
+Krušpánová
+Na hrádzi
+Novosadná
+Ovsená
+Petržalská
+Rakytníková
+Ražná
+Rebríčková
+Schengenská
+Skýcovská
+Sochorova
+Turistická
+Záhumenná
+Zobová
+29. augusta
+Albertova lávka
+Alžbetínska
+Americké námestie
+Andreja Plávku
+Anenská
+Banícka
+Banskobystrická
+Bartókova
+Bartoňova
+Baštová
+Beblavého
+Belopotockého
+Benediktiho
+Bernolákova
+Beskydská
+Bezručova
+Biela
+Björnsonova
+Blumentálska
+Bohúňova
+Bottova
+Boženy Němcovej
+Bôrik
+Bradlianska
+Brnianska
+Broskyňová
+Břeclavská
+Búdková
+Buková
+Bukurešťská
+Cesta na Červený most
+Cintorínska
+Cukrová
+Čajakova
+Čajkovského
+Čapkova
+Čelakovského
+Čerešňová
+Červeňova
+Čmeľovec
+Čulenova
+Dankovského
+Dobrovičova
+Dobrovského
+Dobšinského
+Dohnalova
+Dolná
+Donovalova
+Dostojevského rad
+Drevená
+Drotárska cesta
+Dubová
+Dunajská
+Dvořákovo nábrežie
+Fajnorovo nábrežie
+Fándlyho
+Farská
+Fazuľová
+Ferienčíkova
+Fialkové údolie
+Flöglova
+Floriánske námestie
+Fraňa Kráľa
+Francisciho
+Francúzskych partizánov
+Františkánska
+Františkánske námestie
+Gajova
+Galandova
+Gaštanová
+Godrova
+Gondova
+Gorazdova
+Gorkého
+Grösslingová
+Gunduličova
+Havlíčkova
+Havrania
+Haydnova
+Heydukova
+Hlavatého
+Hlavné námestie
+Hlboká cesta
+Hodžovo námestie
+Holekova
+Hollého
+Holubyho
+Hradné údolie
+Hrebendova
+Hriňovská
+Hroboňova
+Hummelova
+Hurbanovo námestie
+Hviezdoslavovo námestie
+Hýrošova
+Chalupkova
+Chorvátska
+Imricha Karvaša
+Inovecká
+Jakubovo námestie
+Janáčkova
+Jančova
+Jánošíkova
+Jaseňová
+Javorinská
+Javorová
+Jedlíkova
+Jelenia
+Jesenského
+Jozefa Kronera
+Jozefská
+Jurovského
+Justičná
+K lomu
+K Železnej studienke
+Kamenné námestie
+Kapitulská
+Kapucínska
+Karadžičova
+Karpatská
+Klariská
+Klemensova
+Klobučnícka
+Kmeťovo námestie
+Kolárska
+Kollárovo námestie
+Komenského námestie
+Konventná
+Korabinského
+Koreničova
+Kostolná
+Košická
+Kozia
+Krakovská
+Kráľovské údolie
+Krátka
+Krčméryho
+Krivá
+Križkova
+Krížna
+Krmanova
+Krupkova
+Kubániho
+Kúpeľná
+Kuzmányho
+Kýčerského
+Kysucká
+Ľadová
+Lamačská cesta
+Landererova
+Langsfeldova
+Laučekova
+Laurinská
+Lazaretská
+Legionárska
+Lehockého
+Lermontovova
+Lesná
+Leškova
+Lichardova
+Lipová
+Lodná
+Lomonosovova
+Lovinského
+Lubinská
+Lužická
+Lýcejná
+Majakovského
+Májkova
+Malá
+Malinová
+Malý trh
+Mariánska
+Maróthyho
+Martinengova
+Mateja Bela
+Matúšova
+Medená
+Medzierka
+Mickiewiczova
+Michalská
+Mikulášska
+Mišíkova
+Mlynská dolina
+Mlynské nivy
+Moskovská
+Mostová
+Mošovského
+Moyzesova
+Mozartova
+Mudroňova
+Murgašova
+Múzejná
+Myjavská
+Mýtna
+Na Baránku
+Na Brezinách
+Na Hrebienku
+Na Kalvárii
+Na kopci
+Na Slavíne
+Na stráni
+Na Štyridsiatku
+Na vŕšku
+Nábrežie arm. gen. Ludvíka Svobodu
+Nad lomom
+Námestie 1. mája
+Námestie Alexandra Dubčeka
+Námestie Eugena Suchoňa 
+Námestie Franza Liszta
+Námestie Ľudovíta Štúra
+Námestie Martina Benku
+Námestie slobody
+Námestie Slovenského národného povstania
+Nedbalova
+Nekrasovova
+Novosvetská
+Obchodná
+Odborárske námestie
+Okánikova
+Olejkárska
+Ostravská
+Palackého
+Palárikova
+Palisády
+Panenská
+Panská
+Partizánska
+Paulínyho
+Pažického
+Pilárikova
+Pod Bôrikom
+Pod Kalváriou
+Pod vinicami
+Podhorského
+Podjavorinskej
+Podjazd
+Podtatranského
+Poľná
+Poľská
+Porubského
+Poštová
+Povraznícka
+Pražská
+Prepoštská
+Prešernova
+Pri Habánskom mlyne
+Pri hradnej studni
+Pri Suchom mlyne
+Pribinova
+Primaciálne námestie
+Prokopa Veľkého
+Prvosienková
+Puškinova
+Radlinského
+Radničná
+Radvanská
+Rajská
+Rázusovo nábrežie
+Révová
+Riečna
+Rigeleho
+Riznerova
+Rubinsteinova
+Rudnayovo námestie
+Rybárska brána
+Rybné námestie
+Sasinkova
+Satinského
+Sedlárska
+Senická
+Schillerova
+Schody pri starej vodárni
+Sienkiewiczova
+Skalná
+Sklenárska
+Sládkovičova
+Slávičie údolie
+Slepá
+Slovanská
+Smetanova
+Soferove schody
+Socháňova
+Sokolská
+Somolického
+Spojná
+Srnčia
+Stará Vinárska
+Staromestská
+Staroturský chodník
+Strakova
+Strážnická
+Strelecká
+Strmá cesta
+Súbežná
+Suché mýto
+Svetlá
+Svoradova
+Šafárikovo námestie
+Šafranová
+Šancová
+Šípková
+Škarniclova
+Školská
+Škovránčia
+Šoltésovej
+Špitálska
+Štefánikova
+Štefanovičova
+Štetinova
+Štúrova
+Šulekova
+Tabaková
+Tablicova
+Tajovského
+Tallerova
+Tichá
+Timravina
+Tobrucká
+Tolstého
+Topoľová
+Továrenská
+Treskoňova
+Tvarožkova
+Údolná
+Úprkova
+Urbánkova
+Uršulínska
+Úzka
+V záhradách
+Vajanského nábrežie
+Valašská
+Vansovej
+Vazovova
+Ventúrska
+Veterná
+Vetvová
+Vlčkova
+Vodný vrch
+Vrátňanská
+Vrchná
+Vysoká
+Wilsonova
+Za sokolovňou
+Záhorácka
+Záhradnícka
+Záhrebská
+Zámocká
+Zámocké schody
+Zámočnícka
+Západný rad
+Zelená
+Zochova
+Zrínskeho
+Žabotova
+Železničiarska
+Žiarska
+Židovská
+Žilinská
+Živnostenská
+Žižkova
+Župné námestie

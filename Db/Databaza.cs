@@ -39,6 +39,41 @@ namespace Db
             return result;
         }
 
+        public List<string> GetTechnici()
+        {
+            var result = new List<string>();
+
+            OracleCommand command = ActiveConnection.CreateCommand();
+            string sql = "SELECT * FROM s_technik";
+            command.CommandText = sql;
+
+            OracleDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string r = reader["rodne_cislo"] + ", " + reader["meno"] + ", " + reader["priezvisko"];
+                result.Add(r);
+            }
+            return result;
+        }
+
+
+
+        public void InsertTechnik(string paRc, string paMeno, string paPriezvisko)
+        {
+            var sql = $"INSERT INTO s_technik VALUES ('{paRc}','{paMeno}','{paPriezvisko}')";
+            OracleCommand command = ActiveConnection.CreateCommand();
+            command.CommandText = sql;
+            command.ExecuteNonQuery();
+        }
+
+        public void InsertUlica(int paId, string paNazov, string paMesto)
+        {
+            var sql = $"INSERT INTO s_technik VALUES ('{paId}','{paNazov}','{paMesto}')";
+            OracleCommand command = ActiveConnection.CreateCommand();
+            command.CommandText = sql;
+            command.ExecuteNonQuery();
+        }
+
 
         private static OracleConnection GetDbConnection()
         {

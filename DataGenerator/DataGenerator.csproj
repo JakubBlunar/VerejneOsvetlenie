@@ -43,11 +43,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DataReader.cs" />
+    <Compile Include="Generators\Generator.cs" />
+    <Compile Include="Generators\TechikGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Db\Db.csproj">
+      <Project>{f132a6f0-0e3b-4ad7-91ba-b00f81ddb8cc}</Project>
+      <Name>Db</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\Cities.txt" />
+    <Content Include="Data\Names.txt" />
+    <Content Include="Data\rcs.txt" />
+    <Content Include="Data\Surnames.txt" />
+    <Content Include="Data\ulice.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
