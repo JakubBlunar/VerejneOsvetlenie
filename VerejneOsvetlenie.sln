@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplikacia", "Aplikacia\Apli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Db", "Db\Db.csproj", "{F132A6F0-0E3B-4AD7-91BA-B00F81DDB8CC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGenerator", "DataGenerator\DataGenerator.csproj", "{2C6704A1-9031-428E-8514-4C79024AC639}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F132A6F0-0E3B-4AD7-91BA-B00F81DDB8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F132A6F0-0E3B-4AD7-91BA-B00F81DDB8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F132A6F0-0E3B-4AD7-91BA-B00F81DDB8CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C6704A1-9031-428E-8514-4C79024AC639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C6704A1-9031-428E-8514-4C79024AC639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C6704A1-9031-428E-8514-4C79024AC639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C6704A1-9031-428E-8514-4C79024AC639}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
