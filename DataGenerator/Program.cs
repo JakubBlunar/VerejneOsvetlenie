@@ -33,8 +33,8 @@ namespace DataGenerator
             //var ksg = new ServisKontrolaGenerator();
             //ksg.Generate(49999);
 
-            var og = new ObsluhyGenerator();
-            og.Generate(0);
+            //var og = new ObsluhyGenerator();
+            //og.Generate(0);
         }
     }
 }

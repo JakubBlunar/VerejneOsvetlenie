@@ -57,25 +57,36 @@ namespace Db
             return cmd.Parameters["vysledok"].Value.ToString().Equals("S");
         }
 
+        // syntakticka chyba tu je
 
-        public bool VlozObsluhuStlpuKontrola(string rodCislotechnika, string meno, string priezvisko)
-        {
+        //public bool VlozObsluhuStlpuKontrola(string rodCislotechnika, string meno, string priezvisko)
+        //{
 
-            OracleCommand cmd = new OracleCommand("update_technik", ActiveConnection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislo;
-            cmd.Parameters.Add("pa_meno", "varchar2").Value = meno;
-            cmd.Parameters.Add("pa_priezvisko", "varchar2").Value = priezvisko;
+        //    OracleCommand cmd = new OracleCommand("update_technik", ActiveConnection);
+        //    cmd.CommandType = CommandType.StoredProcedure;
+        //    cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislo;
+        //    cmd.Parameters.Add("pa_meno", "varchar2").Value = meno;
+        //    cmd.Parameters.Add("pa_priezvisko", "varchar2").Value = priezvisko;
 
-            cmd.Parameters.Add("vysledok", OracleDbType.Varchar2, 1);
-            cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+        //    cmd.Parameters.Add("vysledok", OracleDbType.Varchar2, 1);
+        //    cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
 
-            cmd.ExecuteNonQuery();
+        //    cmd.ExecuteNonQuery();
 
-            return cmd.Parameters["vysledok"].Value.ToString().Equals("S");
-        }
+        //    return cmd.Parameters["vysledok"].Value.ToString().Equals("S");
+        //}
 
 
+
+
+
+
+
+
+
+
+
+        // Backup code - niečo z toho treba k generatorom
         #region SelectUkazka
         public List<string> GetOsoby()
         {
@@ -271,6 +282,4 @@ namespace Db
 
         #endregion
     }
-    
-
 }
