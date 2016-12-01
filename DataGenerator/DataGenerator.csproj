@@ -47,6 +47,7 @@
     <Compile Include="Generators\Generator.cs" />
     <Compile Include="Generators\LampaGenerator.cs" />
     <Compile Include="Generators\LampaNaStlpeGenerator.cs" />
+    <Compile Include="Generators\ObsluhyGenerator.cs" />
     <Compile Include="Generators\ServisKontrolaGenerator.cs" />
     <Compile Include="Generators\SluzbyGenerator.cs" />
     <Compile Include="Generators\StlpGenerator.cs" />

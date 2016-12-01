@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using Db.GeneratorHelpers;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Db
@@ -166,6 +168,67 @@ namespace Db
             while (reader.Read())
             {
                 result.Add(int.Parse(reader["cislo"].ToString()), reader["datum_instalacie"].ToString());
+            }
+            return result;
+        }
+
+        public List<StlpGeneratorHelper> StlpySelect()
+        {
+            OracleCommand command = ActiveConnection.CreateCommand();
+            string sql = $"SELECT cislo, datum_instalacie FROM s_stlp";
+            command.CommandText = sql;
+
+            OracleDataReader reader = command.ExecuteReader();
+
+            var result = new List<StlpGeneratorHelper>();
+            while (reader.Read())
+            {
+                result.Add(new StlpGeneratorHelper()
+                {
+                    Cislo = int.Parse(reader["cislo"].ToString()),
+                    DatumInstalacie = DateTime.Parse(reader["datum_instalacie"].ToString())
+                });
+            }
+            return result;
+        }
+
+        public List<LampaGeneratorHelper> LampySelect()
+        {
+            OracleCommand command = ActiveConnection.CreateCommand();
+            string sql = $"SELECT id_lampy, datum_instalacie, datum_demontaze FROM s_lampa_na_stlpe";
+            command.CommandText = sql;
+
+            OracleDataReader reader = command.ExecuteReader();
+
+            var result = new List<LampaGeneratorHelper>();
+            while (reader.Read())
+            {
+                var lampa = new LampaGeneratorHelper()
+                {
+                    Id = int.Parse(reader["id_lampy"].ToString()),
+                    DatumInstalacie = DateTime.Parse(reader["datum_instalacie"].ToString()),
+                };
+                if (!string.IsNullOrEmpty(reader["datum_demontaze"].ToString()))
+                {
+                    lampa.DatumOdinstalacie = DateTime.Parse(reader["datum_demontaze"].ToString());
+                }
+                result.Add(lampa);
+            }
+            return result;
+        }
+
+        public Dictionary<int, DateTime> GetSluzbyDatumy()
+        {
+            OracleCommand command = ActiveConnection.CreateCommand();
+            string sql = $"SELECT id_sluzby, datum FROM s_sluzba";
+            command.CommandText = sql;
+
+            OracleDataReader reader = command.ExecuteReader();
+
+            var result = new Dictionary<int, DateTime>();
+            while (reader.Read())
+            {
+                result.Add(int.Parse(reader["id_sluzby"].ToString()), DateTime.Parse(reader["datum"].ToString()));
             }
             return result;
         }

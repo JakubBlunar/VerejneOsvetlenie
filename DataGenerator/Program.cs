@@ -26,8 +26,14 @@ namespace DataGenerator
             //var lg = new LampaNaStlpeGenerator(9, 9724);
             //lg.Generate(0);
 
-            var sg = new SluzbyGenerator();
-            sg.Generate(50000);
+            //var sg = new SluzbyGenerator();
+            //sg.Generate(50000);
+
+            //var ksg = new ServisKontrolaGenerator();
+            //ksg.Generate(48585);
+
+            //var og = new ObsluhyGenerator();
+            //og.Generate(0);
         }
     }
 }

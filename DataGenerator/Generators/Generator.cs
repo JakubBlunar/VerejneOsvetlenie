@@ -22,5 +22,12 @@ namespace DataGenerator.Generators
             int range = (DateTime.Today - start).Days;
             return start.AddDays(_random.Next(range));
         }
+
+        public DateTime RandomDay(DateTime paMinDate, DateTime paMaxDate)
+        {
+            DateTime start = paMinDate;
+            int range = (paMaxDate - start).Days;
+            return start.AddDays(_random.Next(range));
+        }
     }
 }

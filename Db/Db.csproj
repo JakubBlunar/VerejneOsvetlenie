@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Databaza.cs" />
+    <Compile Include="GeneratorHelpers\LampaGeneratorHelper.cs" />
+    <Compile Include="GeneratorHelpers\StlpGeneratorHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
