@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Globalization;
+using System.IO;
 using Db;
 
 namespace DataGenerator.Generators
@@ -28,6 +30,14 @@ namespace DataGenerator.Generators
             DateTime start = paMinDate;
             int range = (paMaxDate - start).Days;
             return start.AddDays(_random.Next(range));
+        }
+
+        public void Write(string paSql)
+        {
+            using (StreamWriter w = File.AppendText("inserty.txt"))
+            {
+                w.WriteLine(paSql+";");
+            }
         }
     }
 }

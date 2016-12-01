@@ -12,13 +12,15 @@ namespace DataGenerator.Generators
             string rodCis;
             string datum;
             string popis;
-            for (int i = 26651; i < paCount; i++)
+            for (int i = 0; i < paCount; i++)
             {
                 rodCis = technici[_random.Next(0, technici.Count)];
                 datum = RandomDay().ToShortDateString();
                 popis = ipsum[_random.Next(ipsum.Count)];
-
-                _database.InsertSluzba(i, rodCis, datum, popis);
+                var trvanie = _random.Next(10, 200);
+                var sql = $"INSERT INTO s_sluzba VALUES " +
+                      $"('{i}','{rodCis}','{datum}','{popis}','{trvanie}')";
+                Write(sql);
             }
         }
 

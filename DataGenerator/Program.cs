@@ -11,29 +11,30 @@ namespace DataGenerator
     {
         static void Main(string[] args)
         {
-            //var tg = new TechikGenerator();
-            //tg.Generate(500);
+            /*
+            var tg = new TechikGenerator();
+            tg.Generate(500);
 
-            //var ug = new UlicaGenerator();
-            //ug.Generate(50);
+            var ug = new UlicaGenerator();
+            ug.Generate(50);
 
-            //var lg = new LampaGenerator();
-            //lg.Generate(10);
+            var lg = new LampaGenerator();
+            lg.Generate(10);*/
 
-            //var sg = new StlpGenerator(421);
+            //var sg = new StlpGenerator(425);
             //sg.Generate(25);
 
-            //var lg = new LampaNaStlpeGenerator(9, 9724);
+            //var lg = new LampaNaStlpeGenerator(9, 9774);
             //lg.Generate(0);
 
             //var sg = new SluzbyGenerator();
             //sg.Generate(50000);
 
             //var ksg = new ServisKontrolaGenerator();
-            //ksg.Generate(48585);
+            //ksg.Generate(49999);
 
-            //var og = new ObsluhyGenerator();
-            //og.Generate(0);
+            var og = new ObsluhyGenerator();
+            og.Generate(0);
         }
     }
 }

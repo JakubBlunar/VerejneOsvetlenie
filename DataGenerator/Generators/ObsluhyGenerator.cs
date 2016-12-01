@@ -44,10 +44,7 @@ namespace DataGenerator.Generators
             var sql = $"INSERT INTO s_obsluha_stlpu VALUES " +
                       $"('{stlpId}','{paIdSluzby}');";
 
-            using (StreamWriter w = File.AppendText("inserty.txt"))
-            {
-                w.WriteLine(sql);
-            }
+            Write(sql);
         }
 
         private void ObsluhaLampy(int paIdSluzby, DateTime paDate)
@@ -56,10 +53,7 @@ namespace DataGenerator.Generators
             var sql = $"INSERT INTO s_obsluha_lampy VALUES " +
                       $"('{lampaId}','{paIdSluzby}');";
 
-            using (StreamWriter w = File.AppendText("inserty.txt"))
-            {
-                w.WriteLine(sql);
-            }
+            Write(sql);
         }
 
         private int RandomStlp(DateTime paBefore)
@@ -89,7 +83,5 @@ namespace DataGenerator.Generators
             }
             return id;
         }
-
-
     }
 }

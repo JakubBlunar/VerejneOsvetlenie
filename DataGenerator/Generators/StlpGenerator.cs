@@ -32,7 +32,12 @@ namespace DataGenerator.Generators
                     vyska = _random.Next(250, 1000);
                     date = RandomDay().ToShortDateString();
                     typ = chars[_random.Next(2, 10)];
-                    _database.InsertStlp(cislo, i, vyska, j, date,typ);
+
+                    var sql = $"INSERT INTO s_stlp (cislo, id_ulice, vyska, poradie, datum_instalacie, typ) VALUES " +
+                      $"('{cislo}','{i}','{vyska}','{j}'," +
+                      $"TO_DATE('{date}','dd.mm.yyyy'),'{typ}')";
+
+                    Write(sql);
                     cislo++;
                 }
             }

@@ -48,11 +48,10 @@ namespace DataGenerator.Generators
 
         private void VytvorKontrolu(int paId)
         {
-            var trvanie = _random.Next(10, 200);
             var cena = _random.Next(2, 5000);
 
             var sql = $"INSERT INTO s_servis VALUES " +
-                      $"('{paId}','{trvanie}','{cena}');";
+                      $"('{paId}','{cena}');";
 
             using (StreamWriter w = File.AppendText("inserty.txt"))
             {
