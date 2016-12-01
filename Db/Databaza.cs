@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Db
@@ -66,8 +67,7 @@ namespace Db
             OracleDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
-                string r = reader["rodne_cislo"] + ", " + reader["meno"] + ", " + reader["priezvisko"];
-                result.Add(r);
+                result.Add(reader["rodne_cislo"].ToString());
             }
             return result;
         }
@@ -105,6 +105,69 @@ namespace Db
             OracleCommand command = ActiveConnection.CreateCommand();
             command.CommandText = sql;
             command.ExecuteNonQuery();
+        }
+
+        public void InsertLampaNaStlpe(int paIdLampy, int paCislo, int paIdTypu, char stav, string paDatIns, string paDatOdinst)
+        {
+            //var transaction = _conn.BeginTransaction(IsolationLevel.ReadCommitted);
+
+            var sql = $"INSERT INTO s_lampa_na_stlpe VALUES " +
+                      $"('{paIdLampy}','{paCislo}','{paIdTypu}','{stav}'," +
+                      $"TO_DATE('{paDatIns}','dd.mm.yyyy')";
+
+            if (!paDatOdinst.Equals("NULL"))
+            {
+                sql += $",TO_DATE('{paDatOdinst}','dd.mm.yyyy'))";
+            }
+            else
+            {
+                sql += ",NULL)";
+            }
+
+            using (StreamWriter w = File.AppendText("inserty.txt"))
+            {
+                w.WriteLine(sql + ";");
+            }
+
+            //OracleCommand command = ActiveConnection.CreateCommand();
+            //command.Transaction = transaction;
+            //command.CommandText = sql;
+            //command.ExecuteNonQuery();
+            //transaction.Commit();
+        }
+
+        public void InsertSluzba(int paId, string paRodCislo, string paDatum, string paPopis)
+        {
+            var transaction = _conn.BeginTransaction(IsolationLevel.ReadCommitted);
+
+            var sql = $"INSERT INTO s_sluzba VALUES " +
+                      $"('{paId}','{paRodCislo}','{paDatum}','{paPopis}')";
+
+            OracleCommand command = ActiveConnection.CreateCommand();
+            command.Transaction = transaction;
+            command.CommandText = sql;
+            command.ExecuteNonQuery();
+            transaction.Commit();
+        }
+
+
+        #endregion
+        #region GenerovanieSelecty
+
+        public Dictionary<int, string> GetLampaDatum()
+        {
+            OracleCommand command = ActiveConnection.CreateCommand();
+            string sql = $"SELECT cislo, datum_instalacie FROM s_stlp";
+            command.CommandText = sql;
+
+            OracleDataReader reader = command.ExecuteReader();
+
+            var result = new Dictionary<int, string>();
+            while (reader.Read())
+            {
+                result.Add(int.Parse(reader["cislo"].ToString()), reader["datum_instalacie"].ToString());
+            }
+            return result;
         }
 
         #endregion

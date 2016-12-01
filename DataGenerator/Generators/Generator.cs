@@ -15,5 +15,12 @@ namespace DataGenerator.Generators
         }
 
         public abstract void Generate(int paCount);
+
+        public DateTime RandomDay(DateTime paMinDate)
+        {
+            DateTime start = paMinDate;
+            int range = (DateTime.Today - start).Days;
+            return start.AddDays(_random.Next(range));
+        }
     }
 }

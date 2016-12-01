@@ -46,6 +46,9 @@
     <Compile Include="Data\DataReader.cs" />
     <Compile Include="Generators\Generator.cs" />
     <Compile Include="Generators\LampaGenerator.cs" />
+    <Compile Include="Generators\LampaNaStlpeGenerator.cs" />
+    <Compile Include="Generators\ServisKontrolaGenerator.cs" />
+    <Compile Include="Generators\SluzbyGenerator.cs" />
     <Compile Include="Generators\StlpGenerator.cs" />
     <Compile Include="Generators\TechikGenerator.cs" />
     <Compile Include="Generators\UlicaGenerator.cs" />
@@ -63,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Cities.txt" />
+    <Content Include="Data\lorIps.txt" />
     <Content Include="Data\Names.txt" />
     <Content Include="Data\rcs.txt" />
     <Content Include="Data\Surnames.txt" />

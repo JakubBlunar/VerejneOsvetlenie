@@ -8,7 +8,12 @@ namespace DataGenerator.Generators
 {
     public class StlpGenerator : Generator
     {
-        private const int MaxIdUlice = 421;
+        public int MaxIdUlice { get; }
+
+        public StlpGenerator(int paMaxIdUlice)
+        {
+            MaxIdUlice = paMaxIdUlice;
+        }
 
         public override void Generate(int paCount)
         {

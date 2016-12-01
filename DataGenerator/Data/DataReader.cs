@@ -10,6 +10,7 @@ namespace DataGenerator.Data
         public const string Surna = "Surnames.txt";
         public const string Rcs = "rcs.txt";
         public const string Ulice = "ulice.txt";
+        public const string LoreIps = "LorIps.txt";
 
         public static List<string> Read(string paFileName)
         {
