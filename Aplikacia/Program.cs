@@ -12,13 +12,8 @@ namespace Aplikacia
         static void Main(string[] args)
         {
             Databaza db = new Databaza();
-            List<string> osoby = db.GetOsoby();
-
-            foreach (var o in osoby)
-            {
-                Console.WriteLine(o);
-            }
-
+            Console.WriteLine(db.UpdateTechnik("9405248677","Jakub", "Blunar"));
+            
             Console.ReadLine();
         }
     }
