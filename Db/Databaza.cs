@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Globalization;
 using System.IO;
 using Db.GeneratorHelpers;
 using Oracle.ManagedDataAccess.Client;
@@ -41,28 +40,634 @@ namespace Db
             };
         }
 
+        public DataTable GetAllInfo()
+        {
+            DataTable dtable;
+            using (var adapt = new OracleDataAdapter())
+            {
+                adapt.SelectCommand = new OracleCommand("SELECT * FROM s_info", ActiveConnection);
+                var dset = new DataSet("dset");
+                adapt.Fill(dset);
+                dtable = dset.Tables[0];
+            }
+            return dtable;
+
+        }
+
+        public Vysledok ZmazIdLampy(int idTypu)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("delete_typ_lampy", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_typu", "number").Value = idTypu;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok ZmazLampuNaStlpe(int idLampy)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("delete_lampa_na_stlpe", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok ZmazTechnika(string rodCislo)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("delete_sluzba", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_rod_cislo_technika", "char").Value = rodCislo;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok ZmazSluzbu(int idSluzby)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("delete_sluzba", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok ZmazUlicu(int idUlice)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("delete_ulica", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_ulice", "number").Value = idUlice;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok ZmazInfoOStlpe(int idInfa)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("delete_info", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_info", "number").Value = idInfa;
+               
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok VlozTechnika(string rod_cislo, string meno, string priezvisko)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("insert_technik", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rod_cislo;
+                cmd.Parameters.Add("pa_meno", "varchar2").Value = meno;
+                cmd.Parameters.Add("pa_priezvisko", "varchar2").Value = priezvisko;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+
+        public Vysledok UpdateUlica(int idUlice, string nazov, string mesto = null)
+        {
+            var vysledok = new Vysledok();
+
+            var m = mesto ?? "null";
+
+            using (var cmd = new OracleCommand("update_ulica", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_ulice", "number").Value = idUlice;
+                cmd.Parameters.Add("pa_nazov", "varchar2").Value = nazov;
+                cmd.Parameters.Add("pa_mesto", "varchar2").Value = mesto;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok InsertUlica(string nazov, string mesto = null)
+        {
+            var vysledok = new Vysledok();
+
+            var m = mesto ?? "null";
+
+            using (var cmd = new OracleCommand("insert_ulica", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_nazov", "varchar2").Value = nazov;
+                cmd.Parameters.Add("pa_mesto", "varchar2").Value = mesto;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok InsertTypLampy( char typ, int svietivost)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("insert_typ_lampy", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+              
+                cmd.Parameters.Add("pa_typ", "char").Value = typ;
+                cmd.Parameters.Add("pa_svietivost", "number").Value = svietivost;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok InsertLampaNaStlpe(int idStlpu, int idTypu, char stav, DateTime datumInstalacie)
+        {
+            var vysledok = new Vysledok();
+
+            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
+           
+            using (var cmd = new OracleCommand("update_lampa_na_stlpe", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_id_typu", "number").Value = idTypu;
+                cmd.Parameters.Add("pa_stav", "char").Value = stav;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dInstalacie;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+
+        public Vysledok UpdateLampaNaStlpe(int idLampy, int idStlpu ,int idTypu, char stav, DateTime datumInstalacie, DateTime? datumDemontaze)
+        {
+            var vysledok = new Vysledok();
+
+            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
+            var dDemontaze = datumDemontaze != null ? datumDemontaze?.ToString("dd.MM.yyyy hh:mm") : "null";
+
+            using (var cmd = new OracleCommand("update_lampa_na_stlpe", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_id_typu", "number").Value = idTypu;
+                cmd.Parameters.Add("pa_stav", "char").Value = stav;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dInstalacie;
+                cmd.Parameters.Add("pa_datum_demontaze", "varchar2").Value = dDemontaze;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok UpdateTypLampy(int idTypu, int svietivost, char typ)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("update_typ_lampy", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_typu", "number").Value = idTypu;
+                cmd.Parameters.Add("pa_typ", "char").Value = typ;
+                cmd.Parameters.Add("pa_svietivost", "number").Value = svietivost;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+        }
+
+        public Vysledok UpdateInfoStlpu(int idZaznamu, int idStlpu, char typ, byte[] data)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("update_info_stlpu", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_info", "number").Value = idZaznamu;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+
+                OracleParameter blobParameter = new OracleParameter();
+                blobParameter.OracleDbType = OracleDbType.Blob;
+                blobParameter.ParameterName = "pa_data";
+                blobParameter.Value = data;
+                blobParameter.Size = data.Length;
+                cmd.Parameters.Add(blobParameter);
+                cmd.Parameters.Add("pa_typ", "char").Value = typ;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+        }
+
+        public Vysledok VlozInfoStlpu(int idStlpu, char typ, byte[] data)
+        {
+            var vysledok = new Vysledok();
+
+            using (var cmd = new OracleCommand("vloz_info_stlpu", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+
+                OracleParameter blobParameter = new OracleParameter();
+                blobParameter.OracleDbType = OracleDbType.Blob;
+                blobParameter.ParameterName = "pa_data";
+                blobParameter.Value = data;
+                blobParameter.Size = data.Length;
+                cmd.Parameters.Add(blobParameter);
+                cmd.Parameters.Add("pa_typ", "char").Value = typ;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+        }
+
+
+
         public Vysledok UpdateTechnik(string rodCislo, string meno, string priezvisko)
         {
             var vysledok = new Vysledok();
 
-            OracleCommand cmd = new OracleCommand("update_technik", ActiveConnection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislo;
-            cmd.Parameters.Add("pa_meno", "varchar2").Value = meno;
-            cmd.Parameters.Add("pa_priezvisko", "varchar2").Value = priezvisko;
-
-            cmd.Parameters.Add("vysledok", OracleDbType.Varchar2, 1);
-            cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
-
-            cmd.ExecuteNonQuery();
-
-            if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+            using (var cmd = new OracleCommand("update_technik", ActiveConnection))
             {
-                vysledok.Popis = "Success";
-            }
-            else
-            {
-                vysledok.NastavChybu("Daco sa nepodarilo");
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislo;
+                cmd.Parameters.Add("pa_meno", "varchar2").Value = meno;
+                cmd.Parameters.Add("pa_priezvisko", "varchar2").Value = priezvisko;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+
             }
             return vysledok;
         }
@@ -76,26 +681,37 @@ namespace Db
 
             string datum = pDatum.ToString("dd.MM.yyyy hh:mm");
 
-            OracleCommand cmd = new OracleCommand("vlozenie_kontroly_stlpu", ActiveConnection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
-            cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
-            cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
-            cmd.Parameters.Add("pa_stav", "char").Value = stav;
-            cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
-            cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
-            cmd.Parameters.Add("vysledok", OracleDbType.Varchar2, 1);
-            cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
-
-            cmd.ExecuteNonQuery();
-
-            if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+            using (var cmd = new OracleCommand("vlozenie_kontroly_stlpu", ActiveConnection))
             {
-                vysledok.Popis = "Success";
-            }
-            else
-            {
-                vysledok.NastavChybu("Daco sa nepodarilo");
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
+                cmd.Parameters.Add("pa_stav", "char").Value = stav;
+                cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
+                cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
             }
             return vysledok;
         }
@@ -108,27 +724,38 @@ namespace Db
 
             string datum = pDatum.ToString("dd.MM.yyyy hh:mm");
 
-            OracleCommand cmd = new OracleCommand("vlozenie_servisu_stlpu", ActiveConnection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
-            cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
-            cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
-            cmd.Parameters.Add("pa_stav", "char").Value = stav;
-            cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
-            cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
-            cmd.Parameters.Add("pa_cena", "number").Value = cena;
-            cmd.Parameters.Add("vysledok", OracleDbType.Varchar2, 1);
-            cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
-
-            cmd.ExecuteNonQuery();
-
-            if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+            using (var cmd = new OracleCommand("vlozenie_servisu_stlpu", ActiveConnection))
             {
-                vysledok.Popis = "Success";
-            }
-            else
-            {
-                vysledok.NastavChybu("Daco sa nepodarilo");
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
+                cmd.Parameters.Add("pa_stav", "char").Value = stav;
+                cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
+                cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
+                cmd.Parameters.Add("pa_cena", "number").Value = cena;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
             }
             return vysledok;
         }
@@ -141,29 +768,41 @@ namespace Db
 
             string datum = pDatum.ToString("dd.MM.yyyy hh:mm");
 
-            OracleCommand cmd = new OracleCommand("vlozenie_kontroly_lampy", ActiveConnection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
-            cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
-            cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
-            cmd.Parameters.Add("pa_stav", "char").Value = stav;
-            cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
-            cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
-            cmd.Parameters.Add("pa_svietivost", "number").Value = svietivost;
-            cmd.Parameters.Add("vysledok", OracleDbType.Varchar2, 1);
-            cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
-
-            cmd.ExecuteNonQuery();
-
-            if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+            using (var cmd = new OracleCommand("vlozenie_kontroly_lampy", ActiveConnection))
             {
-                vysledok.Popis = "Success";
-            }
-            else
-            {
-                vysledok.NastavChybu("Daco sa nepodarilo");
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
+                cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
+                cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
+                cmd.Parameters.Add("pa_stav", "char").Value = stav;
+                cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
+                cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
+                cmd.Parameters.Add("pa_svietivost", "number").Value = svietivost;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
             }
             return vysledok;
+
         }
 
         public Vysledok VlozServisuLampy(
@@ -174,27 +813,38 @@ namespace Db
 
             string datum = pDatum.ToString("dd.MM.yyyy hh:mm");
 
-            OracleCommand cmd = new OracleCommand("vlozenie_servisu_lampy", ActiveConnection);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
-            cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
-            cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
-            cmd.Parameters.Add("pa_stav", "char").Value = stav;
-            cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
-            cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
-            cmd.Parameters.Add("pa_cena", "number").Value = cena;
-            cmd.Parameters.Add("vysledok", OracleDbType.Varchar2, 1);
-            cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
-
-            cmd.ExecuteNonQuery();
-
-            if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+            using (var cmd = new OracleCommand("vlozenie_servisu_lampy", ActiveConnection))
             {
-                vysledok.Popis = "Success";
-            }
-            else
-            {
-                vysledok.NastavChybu("Daco sa nepodarilo");
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
+                cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
+                cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
+                cmd.Parameters.Add("pa_stav", "char").Value = stav;
+                cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
+                cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
+                cmd.Parameters.Add("pa_cena", "number").Value = cena;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
             }
             return vysledok;
         }
