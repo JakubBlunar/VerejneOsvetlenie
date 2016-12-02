@@ -12,7 +12,12 @@ namespace Aplikacia
         static void Main(string[] args)
         {
             Databaza db = new Databaza();
-            Console.WriteLine(db.UpdateTechnik("9405248677","Jakub", "Blunar"));
+
+            Vysledok res = db.VlozKontroluStlpu("9405248677", -5, "asdad", "D", 5, DateTime.Now);
+            if (res.JeChyba)
+                Console.WriteLine("error");
+            Console.WriteLine(res.Popis);
+      
             
             Console.ReadLine();
         }
