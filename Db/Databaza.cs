@@ -54,7 +54,7 @@ namespace Db
 
         }
 
-        public Vysledok ZmazIdLampy(int idTypu)
+        public Vysledok ZmazTypLampy(int idTypu)
         {
             var vysledok = new Vysledok();
 
