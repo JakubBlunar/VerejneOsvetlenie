@@ -61,8 +61,8 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
-            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
-            var dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy hh:mm") ?? "null";
+            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
+            var dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy HH:mm") ?? "null";
 
             using (var cmd = new OracleCommand("update_doplnok_stlpu", ActiveConnection))
             {
@@ -105,7 +105,7 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
-            string datum = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
+            string datum = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
 
             using (var cmd = new OracleCommand("insert_doplnok_stlpu", ActiveConnection))
             {
@@ -516,7 +516,7 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
-            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
+            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
            
             using (var cmd = new OracleCommand("update_lampa_na_stlpe", ActiveConnection))
             {
@@ -557,8 +557,8 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
-            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
-            var dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy hh:mm") ?? "null";
+            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
+            var dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy HH:mm") ?? "null";
 
             using (var cmd = new OracleCommand("update_lampa_na_stlpe", ActiveConnection))
             {
@@ -766,7 +766,7 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
-            string datum = pDatum.ToString("dd.MM.yyyy hh:mm");
+            string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
 
             using (var cmd = new OracleCommand("vlozenie_kontroly_stlpu", ActiveConnection))
             {
@@ -809,7 +809,7 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
-            string datum = pDatum.ToString("dd.MM.yyyy hh:mm");
+            string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
 
             using (var cmd = new OracleCommand("vlozenie_servisu_stlpu", ActiveConnection))
             {
@@ -853,7 +853,7 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
-            string datum = pDatum.ToString("dd.MM.yyyy hh:mm");
+            string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
 
             using (var cmd = new OracleCommand("vlozenie_kontroly_lampy", ActiveConnection))
             {
@@ -898,7 +898,7 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
-            string datum = pDatum.ToString("dd.MM.yyyy hh:mm");
+            string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
 
             using (var cmd = new OracleCommand("vlozenie_servisu_lampy", ActiveConnection))
             {
