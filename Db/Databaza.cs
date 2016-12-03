@@ -54,6 +54,93 @@ namespace Db
 
         }
 
+        public Vysledok UpdateDoplnokStlpu(int idStlpu, int idDoplnku,
+            char typDoplnku, string popisDoplnku,
+            DateTime datumInstalacie, DateTime? datumDemontaze
+            )
+        {
+            var vysledok = new Vysledok();
+
+            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
+            var dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy hh:mm") ?? "null";
+
+            using (var cmd = new OracleCommand("update_doplnok_stlpu", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_id_doplnku", "number").Value = idDoplnku;
+                cmd.Parameters.Add("pa_typ_doplnku", "char").Value = typDoplnku;
+                cmd.Parameters.Add("pa_popis_doplnku", "varchar").Value = popisDoplnku;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar").Value = dInstalacie;
+                cmd.Parameters.Add("pa_datum_demontaze", "varchar").Value = dDemontaze;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok VlozDoplnokStlpu(int idStlpu, char typDoplnku,string popisDoplnku, DateTime datumInstalacie)
+        {
+            var vysledok = new Vysledok();
+
+            string datum = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
+
+            using (var cmd = new OracleCommand("insert_doplnok_stlpu", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_typ_doplnku", "char").Value = typDoplnku;
+                cmd.Parameters.Add("pa_popis_doplnku", "varchar").Value = popisDoplnku;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar").Value = datum;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
         public Vysledok ZmazTypLampy(int idTypu)
         {
             var vysledok = new Vysledok();
@@ -270,7 +357,7 @@ namespace Db
 
         }
 
-        public Vysledok VlozTechnika(string rod_cislo, string meno, string priezvisko)
+        public Vysledok VlozTechnika(string rodCislo, string meno, string priezvisko)
         {
             var vysledok = new Vysledok();
 
@@ -278,7 +365,7 @@ namespace Db
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rod_cislo;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislo;
                 cmd.Parameters.Add("pa_meno", "varchar2").Value = meno;
                 cmd.Parameters.Add("pa_priezvisko", "varchar2").Value = priezvisko;
 
@@ -321,7 +408,7 @@ namespace Db
 
                 cmd.Parameters.Add("pa_id_ulice", "number").Value = idUlice;
                 cmd.Parameters.Add("pa_nazov", "varchar2").Value = nazov;
-                cmd.Parameters.Add("pa_mesto", "varchar2").Value = mesto;
+                cmd.Parameters.Add("pa_mesto", "varchar2").Value = m;
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
@@ -360,7 +447,7 @@ namespace Db
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add("pa_nazov", "varchar2").Value = nazov;
-                cmd.Parameters.Add("pa_mesto", "varchar2").Value = mesto;
+                cmd.Parameters.Add("pa_mesto", "varchar2").Value = m;
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
@@ -471,7 +558,7 @@ namespace Db
             var vysledok = new Vysledok();
 
             string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy hh:mm");
-            var dDemontaze = datumDemontaze != null ? datumDemontaze?.ToString("dd.MM.yyyy hh:mm") : "null";
+            var dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy hh:mm") ?? "null";
 
             using (var cmd = new OracleCommand("update_lampa_na_stlpe", ActiveConnection))
             {
