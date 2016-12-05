@@ -130,7 +130,7 @@ namespace Db
 
         public Vysledok UpdateDoplnokStlpu(int idStlpu, int idDoplnku,
             char typDoplnku, string popisDoplnku,
-            DateTime datumInstalacie, DateTime? datumDemontaze
+            DateTime datumInstalacie, DateTime? datumDemontaze = null
             )
         {
             var vysledok = new Vysledok();
@@ -145,9 +145,9 @@ namespace Db
                 cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
                 cmd.Parameters.Add("pa_id_doplnku", "number").Value = idDoplnku;
                 cmd.Parameters.Add("pa_typ_doplnku", "char").Value = typDoplnku;
-                cmd.Parameters.Add("pa_popis_doplnku", "varchar").Value = popisDoplnku;
-                cmd.Parameters.Add("pa_datum_instalacie", "varchar").Value = dInstalacie;
-                cmd.Parameters.Add("pa_datum_demontaze", "varchar").Value = dDemontaze;
+                cmd.Parameters.Add("pa_popis_doplnku", "varchar2").Value = popisDoplnku;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dInstalacie;
+                cmd.Parameters.Add("pa_datum_demontaze", "varchar2").Value = dDemontaze;
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
@@ -175,11 +175,12 @@ namespace Db
 
         }
 
-        public Vysledok VlozDoplnokStlpu(int idStlpu, char typDoplnku,string popisDoplnku, DateTime datumInstalacie)
+        public Vysledok VlozDoplnokStlpu(int idStlpu, char typDoplnku,string popisDoplnku, DateTime datumInstalacie,DateTime? datumDemontaze = null)
         {
             var vysledok = new Vysledok();
 
-            string datum = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
+            string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
+            string dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy HH:mm") ?? "null";
 
             using (var cmd = new OracleCommand("insert_doplnok_stlpu", ActiveConnection))
             {
@@ -187,8 +188,9 @@ namespace Db
 
                 cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
                 cmd.Parameters.Add("pa_typ_doplnku", "char").Value = typDoplnku;
-                cmd.Parameters.Add("pa_popis_doplnku", "varchar").Value = popisDoplnku;
-                cmd.Parameters.Add("pa_datum_instalacie", "varchar").Value = datum;
+                cmd.Parameters.Add("pa_popis_doplnku", "varchar2").Value = popisDoplnku;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dInstalacie;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dDemontaze;
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
