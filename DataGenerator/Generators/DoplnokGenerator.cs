@@ -100,14 +100,20 @@ namespace DataGenerator.Generators
         public void PridajDatumyDemontaze()
         {
             var db = new Databaza();
-            var reader = db.SpecialSelect("select cislo, to_char(DATUM_INSTALACIE, 'DD.MM.YYYY') as datum from s_stlp where DATUM_INSTALACIE is not null");
+            var reader = db.SpecialSelect("SELECT cislo , nest.id, nest.typ_doplnku, nest.popis, nest.datum_instalacie FROM s_stlp ss, table(select doplnky from s_stlp c WHERE c.cislo = ss.cislo) nest");
 
             foreach (var row in reader)
             {
                 if (_random.Next() % 2 == 0)
                 {
                     var idStlpu = int.Parse(row["CISLO"].ToString());
-                    var datumInstalacieStlpa = DateTime.Parse(row["DATUM"].ToString());
+                    var idDoplnku = int.Parse(row["ID"].ToString());
+                    var typDoplnku = row["TYP_DOPLNKU"].ToString()[0];
+                    var popisDoplnku = row["POPIS"].ToString();
+                    var datumInstalacieDoplnku = DateTime.Parse(row["DATUM_INSTALACIE"].ToString());
+                    var datumDemontazeDoplnku = RandomDay(datumInstalacieDoplnku, DateTime.Now);
+                    db.UpdateDoplnokStlpu(idStlpu, idDoplnku, typDoplnku, popisDoplnku, datumInstalacieDoplnku,
+                        datumDemontazeDoplnku);
                 }
             }
         }

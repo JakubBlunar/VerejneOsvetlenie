@@ -36,8 +36,9 @@ namespace DataGenerator
             //var og = new ObsluhyGenerator();
             //og.Generate(0);
 
-            var doplnky = new DoplnokGenerator();
-            doplnky.Generate(10000);
+            //var doplnky = new DoplnokGenerator();
+            //doplnky.Generate(10000);
+            //doplnky.PridajDatumyDemontaze();
         }
     }
 }
