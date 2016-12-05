@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Net.Mime;
-using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using Db;
+
 
 namespace Aplikacia
 {
@@ -81,6 +75,9 @@ namespace Aplikacia
                 
             }*/
 
+            StringBuilder b = db.Test();
+            Console.WriteLine(b.ToString());
+
             Console.WriteLine("Done");
             Console.ReadLine();
         }
@@ -98,7 +95,13 @@ namespace Aplikacia
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             return ms.ToArray();
         }
+
+        
+
     }
 
-
 }
+
+
+
+

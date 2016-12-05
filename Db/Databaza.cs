@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Text;
 using Db.GeneratorHelpers;
 using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 
 namespace Db
 {
@@ -11,7 +13,7 @@ namespace Db
     {
         private static OracleConnection _conn;
 
-        private static OracleConnection ActiveConnection
+        public static OracleConnection ActiveConnection
         {
             get
             {
@@ -39,6 +41,78 @@ namespace Db
                 ConnectionString = connString
             };
         }
+
+
+        /// <summary>
+        /// test odchytavania dbms_output.put_line();
+        /// </summary>
+
+        public StringBuilder Test()
+        {
+            StringBuilder b = new StringBuilder();
+            string storedProcedure = "vypis";
+
+            const string anonymousBlock = "begin dbms_output.get_lines(:1, :2); end;";
+            const int numToFetch = 10;
+
+            using (OracleCommand cmd = Databaza.ActiveConnection.CreateCommand())
+            {
+
+                cmd.CommandText = storedProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("rocnik", "char").Value = '1';
+                cmd.ExecuteNonQuery(); // start our procedure
+
+
+                cmd.Parameters.Clear();
+                var pLines = new OracleParameter("1", OracleDbType.Varchar2,
+                    numToFetch,
+                    "",
+                    ParameterDirection.Output)
+                {
+                    CollectionType = OracleCollectionType.PLSQLAssociativeArray,
+                    ArrayBindSize = new int[numToFetch]
+                };
+
+                for (var i = 0; i < numToFetch; i++)
+                {
+                    pLines.ArrayBindSize[i] = 32000;
+                }
+
+                var pNumlines = new OracleParameter("2",
+                    OracleDbType.Decimal,
+                    "",
+                    ParameterDirection.InputOutput)
+                {
+                    Value = numToFetch
+                };
+                cmd.CommandText = anonymousBlock;
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add(pLines);
+                cmd.Parameters.Add(pNumlines);
+                cmd.ExecuteNonQuery();
+
+                var numLinesFetched = ((OracleDecimal)pNumlines.Value).ToInt32();
+
+                while (numLinesFetched > 0)
+                {
+                    for (var i = 0; i < numLinesFetched; i++)
+                    {
+                        var oracleStrings = pLines.Value as OracleString[];
+                        if (oracleStrings != null)
+                            b.AppendLine(oracleStrings[i].ToString());
+                    }
+                    cmd.ExecuteNonQuery();
+                    numLinesFetched = ((OracleDecimal)pNumlines.Value).ToInt32();
+                }
+
+                pNumlines.Dispose();
+                pLines.Dispose();
+            }
+
+            return b;
+        }
+
 
         public DataTable GetAllInfo()
         {
