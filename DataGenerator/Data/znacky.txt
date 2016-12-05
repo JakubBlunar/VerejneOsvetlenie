@@ -1,0 +1,42 @@
+﻿Spôsob obchádzania prekážky
+Nebezpečenstvo šmyku
+Dvojitá zákruta prvá vpravo
+Nebezpečenstvo šmyku
+Nerovnosť vozovky
+Sneh alebo poľadovica
+Križovatka
+Sneh alebo poľadovica
+Železničné priecestie so závorami
+Zákaz vstupu chodcov
+Cestička pre chodcov
+Pozor chodci
+Zákaz zastavenia
+Križovatka
+Zákaz vjazdu všetkých vozidiel (v oboch smeroch)
+Železničné priecestie bez závor
+Koniec tunela
+Tunel
+Kruhový objazd
+Zákaz vjazdu všetkých vozidiel
+Zákaz vjazdu všetkých vozidiel (v oboch smeroch)
+Zákaz vjazdu vyznačených vozidiel
+Zákaz vjazdu všetkcýh vozidiel
+Zákaz vjazdu všetkých motorových vozidiel s výnimkou motocyklov bez postranného vozíka
+Zákruta vpravo
+Prikázaný smer obchádzania
+Prikázaný smer jazdy
+Prikázaný smer jazdy
+Zákruta vpravo
+Križovatka
+Zákaz vjazdu vozidiel prepravujúcich náklad ktorý môže spôsobiť znečistenie vody
+Zákaz vjazdu vozidiel prepravujúcich nebezpečný náklad
+Prikázaný smer prepravy nebezpečného nákladu
+Čerpacia stanica
+Hotel alebo motel
+Informácie
+WC
+Reštaurácia
+Občerstvenie
+Návesť pred križovatkou
+Návestná smerová tabuľa
+Diaľková návesť

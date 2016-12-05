@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DataReader.cs" />
+    <Compile Include="Generators\DoplnokGenerator.cs" />
     <Compile Include="Generators\Generator.cs" />
     <Compile Include="Generators\LampaGenerator.cs" />
     <Compile Include="Generators\LampaNaStlpeGenerator.cs" />
@@ -72,7 +74,9 @@
     <Content Include="Data\rcs.txt" />
     <Content Include="Data\Surnames.txt" />
     <Content Include="Data\ulice.txt" />
+    <Content Include="Data\znacky.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -72,7 +72,7 @@ namespace Aplikacia
             /*
             using (var s = new FileStream("D:import.sql", FileMode.Open))
             {
-                
+                    
             }*/
 
             StringBuilder b = db.Test();
@@ -96,7 +96,7 @@ namespace Aplikacia
             return ms.ToArray();
         }
 
-        
+
 
     }
 

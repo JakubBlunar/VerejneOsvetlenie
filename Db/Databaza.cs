@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -23,8 +24,7 @@ namespace Db
                     _conn.Open();
                 }
                 return _conn;
-            } 
-
+            }
         }
 
         private static OracleConnection GetDbConnection()
@@ -1035,6 +1035,30 @@ namespace Db
                 result.Add(r);
             }
             return result;
+        }
+
+        public IEnumerable<Dictionary<string,object>> SpecialSelect(string select)
+        {
+            OracleCommand command = ActiveConnection.CreateCommand();
+            string sql = select;
+            command.CommandText = sql;
+
+            var reader = command.ExecuteReader();
+
+            var table = new Dictionary<string, object>();
+            for (var i = 0; i < reader.FieldCount; i++)
+            {
+                table.Add(reader.GetName(i), null);
+            }
+            while (reader.Read())
+            {
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    table[reader.GetName(i)] = null;
+                    table[reader.GetName(i)] = reader[reader.GetName(i)];
+                }
+                yield return table;
+            }
         }
 
         public List<string> GetTechnici()
