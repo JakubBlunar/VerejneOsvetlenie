@@ -43,7 +43,17 @@ namespace Db
             };
         }
 
-        public IEnumerable<List<string>> RunProcedureWithOutput(string nameOfProcedure, params ProcedureParameter[] procedureParameters)
+        /// <summary>
+        /// Metóda na volanie procedúry
+        /// zadáte názov procedúry
+        /// ak má out parameter s názvom výsledok tak tam vložte novú inštanciu aby sa Vám vrátil cez ňu výsledok ak je to bez out parametra tak tam dajte null
+        /// a potom klasicky vypíšte ktoré parametre s akými typmi a hodnotami tak treba vložiť
+        /// </summary>
+        /// <param name="nameOfProcedure"></param>
+        /// <param name="vysledok">funguje podobne ako out parameter akurát nie je povinný pokiaľ ho procedúra neobsahuje</param>
+        /// <param name="procedureParameters"></param>
+        /// <returns></returns>
+        public IEnumerable<List<string>> RunProcedureWithOutput(string nameOfProcedure, Vysledok vysledok, params ProcedureParameter[] procedureParameters)
         {
             StringBuilder b = new StringBuilder();
             string storedProcedure = nameOfProcedure;
@@ -60,7 +70,30 @@ namespace Db
                     cmd.Parameters.Add(parameter.NazovParametra, parameter.DbNazovTypu).Value
                         = parameter.HodnotaParametra;
                 }
-                cmd.ExecuteNonQuery(); // start our procedure
+                if (vysledok != null)
+                {
+                    cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                    cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                }
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok?.NastavChybu("Chyba pri vykonavani procdury");
+                    yield break;
+                }
+
+                if (vysledok != null)
+                {
+                    if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                        vysledok.Popis = "Success";
+                    else
+                        vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+
                 cmd.Parameters.Clear();
                 var pLines = new OracleParameter("1", OracleDbType.Varchar2, numToFetch, "", ParameterDirection.Output)
                 {

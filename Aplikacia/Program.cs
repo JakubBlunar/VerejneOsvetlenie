@@ -79,11 +79,28 @@ namespace Aplikacia
             Console.WriteLine(b.ToString());
             Console.WriteLine("Done");
 
-            var resultProcedure = db.RunProcedureWithOutput("vypis", new ProcedureParameter("rocnik", "char", '1'));
-            foreach (var row in resultProcedure)
+            var vysledok = new Vysledok();
+            var resultProcedurWithoutResult = db.RunProcedureWithOutput("TEST_KOD", null, new ProcedureParameter("parameter1", "integer", 1));
+            foreach (var row in resultProcedurWithoutResult)
             {
                 Console.WriteLine(row[0]);
             }
+
+            vysledok = new Vysledok();
+            var resultProcedureSuccess = db.RunProcedureWithOutput("TEST_KOD", vysledok, new ProcedureParameter("parameter1", "integer", 0));
+            foreach (var row in resultProcedureSuccess)
+            {
+                Console.WriteLine(row[0]);
+            }
+            Console.WriteLine($"vysledok je chyba:{vysledok.JeChyba}, sprava: {vysledok.Popis}");
+
+            vysledok = new Vysledok();
+            var resultProcedureError = db.RunProcedureWithOutput("TEST_KOD", vysledok, new ProcedureParameter("parameter1", "integer", 1));
+            foreach (var row in resultProcedureError)
+            {
+                Console.WriteLine(row[0]);
+            }
+            Console.WriteLine($"vysledok je chyba:{vysledok.JeChyba}, sprava: {vysledok.Popis}");
 
             Console.WriteLine("Done");
             Console.ReadLine();
