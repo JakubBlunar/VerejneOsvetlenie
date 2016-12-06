@@ -39,6 +39,9 @@ namespace DataGenerator
             //var doplnky = new DoplnokGenerator();
             //doplnky.Generate(10000);
             //doplnky.PridajDatumyDemontaze();
+
+            var sg = new SvietivostGenerator();
+            sg.Generate(0);
         }
     }
 }

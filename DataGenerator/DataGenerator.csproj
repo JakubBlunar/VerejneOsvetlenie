@@ -53,6 +53,7 @@
     <Compile Include="Generators\ServisKontrolaGenerator.cs" />
     <Compile Include="Generators\SluzbyGenerator.cs" />
     <Compile Include="Generators\StlpGenerator.cs" />
+    <Compile Include="Generators\SvietivostGenerator.cs" />
     <Compile Include="Generators\TechikGenerator.cs" />
     <Compile Include="Generators\UlicaGenerator.cs" />
     <Compile Include="Program.cs" />

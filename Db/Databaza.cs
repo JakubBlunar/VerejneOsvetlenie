@@ -1075,9 +1075,12 @@ namespace Db
 
 
 
-
-
-
+        public void ExecuteNonQueryOwn(string sql)
+        {
+            OracleCommand command = ActiveConnection.CreateCommand();
+            command.CommandText = sql;
+            command.ExecuteNonQuery();
+        }
 
         // Backup code - niečo z toho treba k generatorom
         #region SelectUkazka
