@@ -40,8 +40,8 @@ namespace DataGenerator
             //doplnky.Generate(10000);
             //doplnky.PridajDatumyDemontaze();
 
-            var sg = new SvietivostGenerator();
-            sg.Generate(0);
+            //var sg = new SvietivostGenerator();
+            //sg.Generate(0);
         }
     }
 }
