@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Db.GeneratorHelpers;
 using Oracle.ManagedDataAccess.Client;
@@ -40,6 +41,64 @@ namespace Db
             {
                 ConnectionString = connString
             };
+        }
+
+        public IEnumerable<List<string>> RunProcedureWithOutput(string nameOfProcedure, params ProcedureParameter[] procedureParameters)
+        {
+            StringBuilder b = new StringBuilder();
+            string storedProcedure = nameOfProcedure;
+
+            const string anonymousBlock = "begin dbms_output.get_lines(:1, :2); end;";
+            const int numToFetch = 10;
+            using (OracleCommand cmd = Databaza.ActiveConnection.CreateCommand())
+            {
+
+                cmd.CommandText = storedProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
+                foreach (ProcedureParameter parameter in procedureParameters)
+                {
+                    cmd.Parameters.Add(parameter.NazovParametra, parameter.DbNazovTypu).Value
+                        = parameter.HodnotaParametra;
+                }
+                cmd.ExecuteNonQuery(); // start our procedure
+                cmd.Parameters.Clear();
+                var pLines = new OracleParameter("1", OracleDbType.Varchar2, numToFetch, "", ParameterDirection.Output)
+                {
+                    CollectionType = OracleCollectionType.PLSQLAssociativeArray,
+                    ArrayBindSize = new int[numToFetch]
+                };
+
+                for (var i = 0; i < numToFetch; i++)
+                {
+                    pLines.ArrayBindSize[i] = 32000;
+                }
+
+                var pNumlines = new OracleParameter("2", OracleDbType.Decimal, "", ParameterDirection.InputOutput) { Value = numToFetch };
+                cmd.CommandText = anonymousBlock;
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.Add(pLines);
+                cmd.Parameters.Add(pNumlines);
+                cmd.ExecuteNonQuery();
+
+                var numLinesFetched = ((OracleDecimal)pNumlines.Value).ToInt32();
+
+                while (numLinesFetched > 0)
+                {
+                    for (var i = 0; i < numLinesFetched; i++)
+                    {
+                        var oracleStrings = pLines.Value as OracleString[];
+                        var a = string.Empty;
+                        if (oracleStrings != null)
+                            yield return oracleStrings[i].ToString().Split(';').ToList();
+                    }
+                    cmd.ExecuteNonQuery();
+
+                    numLinesFetched = ((OracleDecimal)pNumlines.Value).ToInt32();
+                }
+
+                pNumlines.Dispose();
+                pLines.Dispose();
+            }
         }
 
 
@@ -175,7 +234,7 @@ namespace Db
 
         }
 
-        public Vysledok VlozDoplnokStlpu(int idStlpu, char typDoplnku,string popisDoplnku, DateTime datumInstalacie,DateTime? datumDemontaze = null)
+        public Vysledok VlozDoplnokStlpu(int idStlpu, char typDoplnku, string popisDoplnku, DateTime datumInstalacie, DateTime? datumDemontaze = null)
         {
             var vysledok = new Vysledok();
 
@@ -406,7 +465,7 @@ namespace Db
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add("pa_id_info", "number").Value = idInfa;
-               
+
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
                 try
@@ -551,14 +610,14 @@ namespace Db
 
         }
 
-        public Vysledok InsertTypLampy( char typ, int svietivost)
+        public Vysledok InsertTypLampy(char typ, int svietivost)
         {
             var vysledok = new Vysledok();
 
             using (var cmd = new OracleCommand("insert_typ_lampy", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
-              
+
                 cmd.Parameters.Add("pa_typ", "char").Value = typ;
                 cmd.Parameters.Add("pa_svietivost", "number").Value = svietivost;
 
@@ -593,7 +652,7 @@ namespace Db
             var vysledok = new Vysledok();
 
             string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
-           
+
             using (var cmd = new OracleCommand("update_lampa_na_stlpe", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -629,7 +688,7 @@ namespace Db
         }
 
 
-        public Vysledok UpdateLampaNaStlpe(int idLampy, int idStlpu ,int idTypu, char stav, DateTime datumInstalacie, DateTime? datumDemontaze)
+        public Vysledok UpdateLampaNaStlpe(int idLampy, int idStlpu, int idTypu, char stav, DateTime datumInstalacie, DateTime? datumDemontaze)
         {
             var vysledok = new Vysledok();
 
@@ -838,7 +897,7 @@ namespace Db
 
         public Vysledok VlozKontroluStlpu(
             string rodCislotechnika, int idStlpu, string popis,
-            string stav, int trvanie, DateTime pDatum )
+            string stav, int trvanie, DateTime pDatum)
         {
             var vysledok = new Vysledok();
 
@@ -881,7 +940,7 @@ namespace Db
 
         public Vysledok VlozServisStlpu(
             string rodCislotechnika, int idStlpu, string popis,
-            string stav, int trvanie, DateTime pDatum,int cena)
+            string stav, int trvanie, DateTime pDatum, int cena)
         {
             var vysledok = new Vysledok();
 
@@ -1039,7 +1098,7 @@ namespace Db
             return result;
         }
 
-        public IEnumerable<Dictionary<string,object>> SpecialSelect(string select)
+        public IEnumerable<Dictionary<string, object>> SpecialSelect(string select)
         {
             OracleCommand command = ActiveConnection.CreateCommand();
             string sql = select;
@@ -1078,6 +1137,7 @@ namespace Db
             }
             return result;
         }
+
         #endregion
         #region GenerovanieInserty
         public void InsertTechnik(string paRc, string paMeno, string paPriezvisko)

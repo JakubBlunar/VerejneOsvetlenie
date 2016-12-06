@@ -77,6 +77,13 @@ namespace Aplikacia
 
             StringBuilder b = db.Test();
             Console.WriteLine(b.ToString());
+            Console.WriteLine("Done");
+
+            var resultProcedure = db.RunProcedureWithOutput("vypis", new ProcedureParameter("rocnik", "char", '1'));
+            foreach (var row in resultProcedure)
+            {
+                Console.WriteLine(row[0]);
+            }
 
             Console.WriteLine("Done");
             Console.ReadLine();
