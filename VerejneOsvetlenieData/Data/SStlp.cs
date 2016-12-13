@@ -1,7 +1,9 @@
+using VerejneOsvetlenieData.Data.Interfaces;
+
 namespace VerejneOsvetlenieData.Data
 {
     [SqlClass(TableName = "S_STLP", DisplayName = "Ståp", TableKeyContraint = "cislo = {0}")]
-    public class SStlp
+    public class SStlp : SqlEntita
     {
         [SqlClass(ColumnName = "CISLO", DisplayName = null)]
         public string Cislo { get; set; }
@@ -15,7 +17,22 @@ namespace VerejneOsvetlenieData.Data
         public string DatumInstalacie { get; set; }
         [SqlClass(ColumnName = "TYP")]
         public string Typ { get; set; }
-        [SqlClass(ColumnName = "DOPLNKY")]
-        public string Doplnky { get; set; }
+        //[SqlClass(ColumnName = "DOPLNKY")]
+        //public string Doplnky { get; set; }
+
+        public override bool Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool Insert()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool Drop()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

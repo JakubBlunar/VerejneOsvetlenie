@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Db;
 
 namespace VerejneOsvetlenieData.Data.Interfaces
@@ -18,9 +19,12 @@ namespace VerejneOsvetlenieData.Data.Interfaces
         {
             var atribut = SqlClassAttribute.ExtractSqlClassAttribute(this);
             var db = new Databaza();
+            var stlpce = string.Join(", ", this.GetType().GetProperties()
+                .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true)
+                .Select(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.ColumnName));
             var iterator =
                 db.SpecialSelect(
-                    $"select * from {atribut.TableName} where {string.Format(atribut.TableKeyContraint, paIdEntity)}");
+                    $"select {stlpce} from {atribut.TableName} where {string.Format(atribut.TableKeyContraint, paIdEntity)}");
             var enumerator = iterator.GetEnumerator();
             if (enumerator.MoveNext())
             {
@@ -37,7 +41,7 @@ namespace VerejneOsvetlenieData.Data.Interfaces
         public static SqlEntita MapujRiadokSelectu<TData>(Dictionary<string, object> paRiadok, TData paExistujucaEntita = null) where TData : SqlEntita
         {
             var entita = paExistujucaEntita ?? System.Activator.CreateInstance<TData>();
-            var props = typeof(TData).GetProperties();
+            var props = entita.GetType().GetProperties();
             foreach (var propertyInfo in props)
             {
                 var atribut = SqlClassAttribute.ExtractSqlClassAttribute(propertyInfo);

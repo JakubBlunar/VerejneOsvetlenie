@@ -62,13 +62,12 @@ namespace VerejneOsvetlenie.Views
         private void GenerujPodlaNeznamehoTypu()
         {
             var props = DataContext.GetType().GetProperties();
-            FormularTitulok.Text = this.DajAtributTabulky(ModelAkoEntita)?.ElementName;
+            FormularTitulok.Text = DataContext.GetType().Name;
             foreach (var propertyInfo in props)
             {
                 this.DajNovyRiadok();
-                var atribut = this.DajAtributStlpca(propertyInfo);
-                var label = this.DajLabel(propertyInfo, null);
-                var box = this.DajInputBox(propertyInfo, atribut);
+                var label = this.DajLabel(propertyInfo);
+                var box = this.DajInputBox(propertyInfo);
 
                 label.SetValue(Grid.RowProperty, Formular.RowDefinitions.Count - 1);
                 label.SetValue(Grid.ColumnProperty, 0);
@@ -109,14 +108,14 @@ namespace VerejneOsvetlenie.Views
             }
         }
 
-        private TextBox DajInputBox(PropertyInfo paPropertyInfo, SqlClassAttribute paAttribut)
+        private TextBox DajInputBox(PropertyInfo paPropertyInfo, SqlClassAttribute paAttribut = null)
         {
             var box = new TextBox
             {
                 FontSize = 20,
                 IsReadOnly = !paPropertyInfo.CanWrite,
                 Margin = new Thickness(5, 5, 0, 5),
-                MaxLength = paAttribut.Length != 0 ? paAttribut.Length : 50
+                MaxLength = (paAttribut?.Length ?? 0) != 0 ? paAttribut.Length : 50
             };
             box.SetBinding(TextBox.TextProperty, new Binding()
             {
@@ -129,7 +128,7 @@ namespace VerejneOsvetlenie.Views
             return box;
         }
 
-        private TextBlock DajLabel(PropertyInfo paPropertyInfo, SqlClassAttribute paAttribut)
+        private TextBlock DajLabel(PropertyInfo paPropertyInfo, SqlClassAttribute paAttribut = null)
         {
             return new TextBlock
             {

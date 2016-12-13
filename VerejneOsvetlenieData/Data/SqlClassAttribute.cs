@@ -75,12 +75,12 @@ namespace VerejneOsvetlenieData.Data
 
         public static SqlClassAttribute ExtractSqlClassAttribute(PropertyInfo paPropertyInfo)
         {
-            return paPropertyInfo.GetCustomAttributes(typeof(SqlClassAttribute), false).OfType<SqlClassAttribute>().First();
+            return paPropertyInfo.GetCustomAttributes(typeof(SqlClassAttribute), false).OfType<SqlClassAttribute>()?.First();
         }
 
         public static SqlClassAttribute ExtractSqlClassAttribute(SqlEntita paEntita)
         {
-            return paEntita.GetType().GetCustomAttributes(typeof(SqlClassAttribute), false).OfType<SqlClassAttribute>().First();
+            return paEntita.GetType().GetCustomAttributes(typeof(SqlClassAttribute), false).OfType<SqlClassAttribute>()?.First();
         }
     }
 }
