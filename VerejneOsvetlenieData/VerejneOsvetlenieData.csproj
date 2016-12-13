@@ -43,9 +43,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Interfaces\SqlEntita.cs" />
+    <Compile Include="Data\SInfo.cs" />
     <Compile Include="Data\SKontrola.cs" />
+    <Compile Include="Data\SLampa.cs" />
+    <Compile Include="Data\SLampaNaStlpe.cs" />
     <Compile Include="Data\SqlClassAttribute.cs" />
+    <Compile Include="Data\SServis.cs" />
+    <Compile Include="Data\SSluzba.cs" />
+    <Compile Include="Data\SStlp.cs" />
+    <Compile Include="Data\STechnik.cs" />
+    <Compile Include="Data\SUlica.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Db\Db.csproj">
+      <Project>{f132a6f0-0e3b-4ad7-91ba-b00f81ddb8cc}</Project>
+      <Name>Db</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

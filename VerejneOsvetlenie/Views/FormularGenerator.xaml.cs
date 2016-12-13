@@ -141,12 +141,12 @@ namespace VerejneOsvetlenie.Views
 
         private SqlClassAttribute DajAtributTabulky(SqlEntita paEntita)
         {
-            return paEntita.GetType().GetCustomAttributes(typeof(SqlClassAttribute), false).OfType<SqlClassAttribute>().First();
+            return SqlClassAttribute.ExtractSqlClassAttribute(paEntita);
         }
 
         private SqlClassAttribute DajAtributStlpca(PropertyInfo paPropertyInfo)
         {
-            return paPropertyInfo.GetCustomAttributes(typeof(SqlClassAttribute), false).OfType<SqlClassAttribute>().First();
+            return SqlClassAttribute.ExtractSqlClassAttribute(paPropertyInfo);
         }
 
         private RowDefinition DajNovyRiadok()
