@@ -64,6 +64,7 @@ namespace VerejneOsvetlenie.Views
             DataGrid.ItemsSource = _aktualnyVystup.Rows;
             while (DataGrid.Columns.Count - _aktualnyVystup.Columns.Count > 0)
                 DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);
+            PocetRiadkov.Text = _aktualnyVystup.Rows.Count().ToString();
         }
     }
 }

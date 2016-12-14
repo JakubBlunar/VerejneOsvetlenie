@@ -43,7 +43,8 @@
             <Button HorizontalAlignment="Right"
                     VerticalAlignment="Center"
                     Padding="5"
-                    Margin="0,2">Správa</Button>
+                    Margin="0,2"
+                    Click="OtvorSpravuZaznamov">Správa</Button>
         </Grid>
         <Grid Row="1">
             <views:TableGenerator DataContext="{Binding ElementName=OznacenyVystup, Path=SelectedItem}" />

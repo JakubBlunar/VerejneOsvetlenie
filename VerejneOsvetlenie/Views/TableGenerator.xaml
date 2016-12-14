@@ -7,7 +7,26 @@
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
-    <DataGrid x:Name="DataGrid" HorizontalAlignment="Stretch" CanUserResizeColumns="False" CanUserResizeRows="True">
-        
-    </DataGrid>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="DataGrid"
+                  Grid.Row="0"
+                  HorizontalAlignment="Stretch"
+                  CanUserResizeColumns="False"
+                  CanUserResizeRows="True">
+
+        </DataGrid>
+        <Grid Row="1"
+              Background="LightGreen"
+              Opacity="0.8">
+            <TextBlock Text="nájdených "
+                       Margin="5,0"
+                       FontSize="15">
+                <Run x:Name="PocetRiadkov" Text="0" /> výsledkov
+            </TextBlock>
+        </Grid>
+    </Grid>
 </UserControl>

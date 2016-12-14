@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Db;
 using VerejneOsvetlenieData.Annotations;
+using VerejneOsvetlenieData.Data.Tables;
 
 namespace VerejneOsvetlenieData.Data.Interfaces
 {
@@ -62,6 +63,17 @@ namespace VerejneOsvetlenieData.Data.Interfaces
                 }
             }
             return entita;
+        }
+
+        public IVystup GetSelectOnTableData()
+        {
+            var atribut = SqlClassAttribute.ExtractSqlClassAttribute(this);
+            var stlpce = string.Join(", ", this.GetType().GetProperties()
+                .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
+                && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == false)
+                .Select(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.ColumnName));
+            var select = $"select distinct {stlpce} from {atribut.TableName} where {atribut.TableKey}";
+            return new VystupSelect(select);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

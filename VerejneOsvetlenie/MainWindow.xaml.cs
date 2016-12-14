@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VerejneOsvetlenie.ViewModels;
+using VerejneOsvetlenie.Views;
 
 namespace VerejneOsvetlenie
 {
@@ -32,6 +33,12 @@ namespace VerejneOsvetlenie
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.NacitajTechnika();
+        }
+
+        private void OtvorSpravuZaznamov(object sender, RoutedEventArgs e)
+        {
+            var okno = new SpravaZaznamovWindow();
+            okno.Show();
         }
     }
 }
