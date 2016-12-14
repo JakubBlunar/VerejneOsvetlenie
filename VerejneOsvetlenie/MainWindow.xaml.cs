@@ -21,7 +21,7 @@ namespace VerejneOsvetlenie
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindowViewModel WindowViewModel => DataContext as MainWindowViewModel;
+        public MainViewModel ViewModel => DataContext as MainViewModel;
 
         public MainWindow()
         {
@@ -31,7 +31,7 @@ namespace VerejneOsvetlenie
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            WindowViewModel.NacitajTechnika();
+            ViewModel.NacitajTechnika();
         }
     }
 }

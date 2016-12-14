@@ -5,12 +5,18 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using PropertyChanged;
 using VerejneOsvetlenieData.Data;
+using VerejneOsvetlenieData.Data.Tables;
+using System.Collections.ObjectModel;
 
 namespace VerejneOsvetlenie.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    [ImplementPropertyChanged]
+    public class MainViewModel : INotifyPropertyChanged
     {
+        public ObservableCollection<Select> Vystupy { get; set; }
+
         private STechnik _mTechnik;
         public STechnik Technik
         {
@@ -24,7 +30,6 @@ namespace VerejneOsvetlenie.ViewModels
                 }
             }
         }
-
 
         private SStlp _mStlp;
         public SStlp Stlp
@@ -40,16 +45,30 @@ namespace VerejneOsvetlenie.ViewModels
             }
         }
 
+        public Select SelectTest { get; set; }
+
         public void NacitajTechnika()
         {
-            Technik = new STechnik();
-            Technik.SelectPodlaId("8612056244");
+            //Technik = new STechnik();
+            //Technik.SelectPodlaId("8612056244");
 
-            Stlp = new SStlp();
-            Stlp.SelectPodlaId(0);
+            //Stlp = new SStlp();
+            //Stlp.SelectPodlaId(0);
 
-            var servis = new SServis();
-            servis.SelectPodlaId(1131);
+            //var servis = new SServis();
+            //servis.SelectPodlaId(1131);
+
+            
+            InitVystupy();
+        }
+
+        private void InitVystupy()
+        {
+            Vystupy = new ObservableCollection<Select>
+            {
+                new PomenovanyVystup("Testovací výstup 1","select * from s_technik", "rodné číslo", "meno", "priezvisko"),
+                new PomenovanyVystup("Testovací výstup 2","select rodne_cislo, datum, popis, trvanie from s_sluzba", "rodné číslo", "dátum", "popis", "trvanie")
+            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

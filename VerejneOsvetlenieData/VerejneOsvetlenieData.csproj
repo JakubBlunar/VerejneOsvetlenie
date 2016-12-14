@@ -59,6 +59,8 @@
     <Compile Include="Data\SStlp.cs" />
     <Compile Include="Data\STechnik.cs" />
     <Compile Include="Data\SUlica.cs" />
+    <Compile Include="Data\Tables\PomenovanyVystup.cs" />
+    <Compile Include="Data\Tables\Select.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
