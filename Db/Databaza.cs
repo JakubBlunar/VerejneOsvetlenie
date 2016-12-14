@@ -1259,7 +1259,7 @@ namespace Db
 
         public Vysledok VlozKontroluLampy(
             string rodCislotechnika, int idLampy, string popis,
-            string stav, int trvanie, DateTime pDatum, int svietivost)
+            char stav, int trvanie, DateTime pDatum, int svietivost)
         {
             var vysledok = new Vysledok();
 
@@ -1321,7 +1321,7 @@ namespace Db
 
         }
 
-        public Vysledok VlozServisuLampy(
+        public Vysledok VlozServisLampy(
             string rodCislotechnika, int idLampy, string popis,
             int trvanie, DateTime pDatum, int cena)
         {

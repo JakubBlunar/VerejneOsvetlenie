@@ -41,5 +41,13 @@ namespace VerejneOsvetlenieData.Data
         {
             return !Databaza.ZmazInfoOStlpe(Id).JeChyba;
         }
+
+        public override bool SelectPodlaId(object paIdEntity)
+        {
+            Stlp = new SStlp();
+            bool b1 = base.SelectPodlaId(paIdEntity);
+            bool b2 = Stlp.SelectPodlaId(Cislo);
+            return b1 && b2;
+        }
     }
 }

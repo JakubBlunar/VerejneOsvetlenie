@@ -17,7 +17,7 @@ namespace VerejneOsvetlenieData.Data
         public STechnik Technik { get; set; }
 
         [SqlClass(ColumnName = "DATUM", DisplayName = "Dátum")]
-        public DateTime Datum { get; set; }
+        public string Datum { get; set; }
 
         [SqlClass(ColumnName = "POPIS", DisplayName = "Popis")]
         public string Popis { get; set; }
@@ -38,6 +38,14 @@ namespace VerejneOsvetlenieData.Data
         public override bool Drop()
         {
             return Databaza.ZmazSluzbu(IdSluzby).JeChyba;
+        }
+
+        public override bool SelectPodlaId(object paIdEntity)
+        {
+            Technik = new STechnik();
+            bool b1 = base.SelectPodlaId(paIdEntity);
+            bool b2 = Technik.SelectPodlaId(RodneCislo);
+            return b1 && b2;
         }
     }
 }

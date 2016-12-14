@@ -11,7 +11,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "ID_LAMPY", DisplayName = null)]
         public int IdLampy { get; set; }
         [SqlClass(ColumnName = "ID_LAMPY", IsReference = true)]
-        public SLampa Lampa { get; set; }
+        public SLampaNaStlpe LampaNaStlpe { get; set; }
 
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]
         public int IdSluzby { get; set; }
@@ -31,6 +31,16 @@ namespace VerejneOsvetlenieData.Data
         public override bool Update()
         {
             throw new NotImplementedException();
+        }
+
+        public override bool SelectPodlaId(object paIdEntity)
+        {
+            Sluzba = new SSluzba();
+            LampaNaStlpe = new SLampaNaStlpe();
+            bool b1 = base.SelectPodlaId(paIdEntity);
+            bool b2 = Sluzba.SelectPodlaId(IdSluzby);
+            bool b3 = LampaNaStlpe.SelectPodlaId(IdLampy);
+            return b1 && b2 && b3;
         }
     }
 }

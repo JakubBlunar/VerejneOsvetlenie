@@ -25,24 +25,36 @@ namespace VerejneOsvetlenieData.Data
         public char Stav { get; set; }
 
         [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "Dátum inštalácie")]
-        public DateTime DatumInstalacie { get; set; }
+        public string DatumInstalacie { get; set; }
 
         [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "Dátum demontáže")]
-        public DateTime? DatumDemontaze { get; set; }
+        public string DatumDemontaze { get; set; }
 
         public override bool Update()
         {
-            return !Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DatumInstalacie, DatumDemontaze).JeChyba;
+            DateTime? demontaz = null;
+            if (DatumDemontaze != "")
+                demontaz = DateTime.Parse(DatumDemontaze);
+            return !Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie),demontaz).JeChyba;
         }
 
         public override bool Insert()
         {
-            return !Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DatumInstalacie).JeChyba;
+            return !Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie)).JeChyba;
         }
 
         public override bool Drop()
         {
             return !Databaza.ZmazLampuNaStlpe(IdLampy).JeChyba;
+        }
+
+        public override bool SelectPodlaId(object paIdEntity)
+        {
+            Stlp = new SStlp();
+            Lampa = new SLampa();
+            return base.SelectPodlaId(paIdEntity)
+                && Stlp.SelectPodlaId(Cislo)
+                && Lampa.SelectPodlaId(IdTypu);
         }
     }
 }

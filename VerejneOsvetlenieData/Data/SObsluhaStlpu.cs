@@ -31,5 +31,15 @@ namespace VerejneOsvetlenieData.Data
         {
             throw new System.NotImplementedException();
         }
+
+        public override bool SelectPodlaId(object paIdEntity)
+        {
+            Stlp = new SStlp();
+            Sluzba = new SSluzba();
+            bool b1 = base.SelectPodlaId(paIdEntity);
+            bool b2 = Stlp.SelectPodlaId(Cislo);
+            bool b3 = Sluzba.SelectPodlaId(IdSluzby);
+            return b1 && b2 && b3;
+        }
     }
 }

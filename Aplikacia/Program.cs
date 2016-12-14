@@ -4,7 +4,6 @@ using System.IO;
 using System.Text;
 using Db;
 
-
 namespace Aplikacia
 {
     class Program

@@ -23,7 +23,7 @@ namespace VerejneOsvetlenieData.Data
         public int Poradie { get; set; }
 
         [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "Dátum inštalácie")]
-        public DateTime? DatumInstalacie { get; set; }
+        public string DatumInstalacie { get; set; }
 
         [SqlClass(ColumnName = "TYP", DisplayName = "Typ")]
         public string Typ { get; set; }
@@ -44,6 +44,14 @@ namespace VerejneOsvetlenieData.Data
         public override bool Drop()
         {
             throw new System.NotImplementedException();
+        }
+
+        public override bool SelectPodlaId(object paIdEntity)
+        {
+            Ulica = new SUlica();
+            bool b1 = base.SelectPodlaId(paIdEntity);
+            bool b2 = Ulica.SelectPodlaId(IdUlice);
+            return b1 && b2;
         }
     }
 }
