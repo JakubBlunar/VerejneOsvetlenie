@@ -72,7 +72,7 @@ namespace VerejneOsvetlenieData.Data.Interfaces
                 .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
                 && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == false)
                 .Select(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.ColumnName));
-            var select = $"select distinct {stlpce} from {atribut.TableName} where {atribut.TableKey}";
+            var select = $"select distinct {stlpce} from {atribut.TableName}";
             return new VystupSelect(select);
         }
 

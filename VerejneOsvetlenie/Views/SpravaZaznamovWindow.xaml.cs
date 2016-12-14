@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VerejneOsvetlenie.ViewModels;
 
 namespace VerejneOsvetlenie.Views
 {
@@ -19,9 +20,17 @@ namespace VerejneOsvetlenie.Views
     /// </summary>
     public partial class SpravaZaznamovWindow : Window
     {
+        public SpravaZaznamovViewModel Model => DataContext as SpravaZaznamovViewModel;
         public SpravaZaznamovWindow()
         {
             InitializeComponent();
+        }
+
+        private void VybranyNovyTypZaznamov(object sender, SelectionChangedEventArgs e)
+        {
+            Model.AktualnyTypZaznamu = ((ListView)sender).SelectedItem as ZaznamInfo;
+            if (Model?.AktualnyTypZaznamu != null)
+                Model.AktualnyVystup = Model.AktualnyTypZaznamu.DajInstanciu().GetSelectOnTableData();
         }
     }
 }
