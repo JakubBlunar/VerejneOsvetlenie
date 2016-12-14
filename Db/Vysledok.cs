@@ -18,7 +18,12 @@ namespace Db
         }
         public void NastavChybu(string pPopis)
         {
-            Popis = pPopis;
+            Popis = pPopis + "\n";
+            JeChyba = true;
+        }
+        public void PridajChybu(string pPopis)
+        {
+            Popis += pPopis + "\n";
             JeChyba = true;
         }
     }

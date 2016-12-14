@@ -49,6 +49,7 @@
     <Compile Include="GeneratorHelpers\StlpGeneratorHelper.cs" />
     <Compile Include="ProcedureParameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validations.cs" />
     <Compile Include="Vysledok.cs" />
   </ItemGroup>
   <ItemGroup>

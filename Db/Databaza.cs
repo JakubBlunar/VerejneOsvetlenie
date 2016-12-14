@@ -263,7 +263,23 @@ namespace Db
             DateTime datumInstalacie, DateTime? datumDemontaze = null
             )
         {
+
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu");
+            if (idDoplnku < 0)
+                vysledok.PridajChybu("Zaporne id doplnku");
+            if (popisDoplnku.Length > 500)
+                vysledok.PridajChybu("Popis doplnku presahuje 500 znakov.");
+            if (datumInstalacie > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum instalacie doplnku.");
+            if (datumDemontaze > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum demontaze doplnku.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
             var dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy HH:mm") ?? "null";
@@ -309,6 +325,19 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu");
+            if (popisDoplnku.Length > 500)
+                vysledok.PridajChybu("Popis doplnku presahuje 500 znakov.");
+            if (datumInstalacie > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum instalacie doplnku.");
+            if (datumDemontaze > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum demontaze doplnku.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
             string dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy HH:mm") ?? "null";
 
@@ -347,9 +376,17 @@ namespace Db
             return vysledok;
 
         }
+
         public Vysledok ZmazTypLampy(int idTypu)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (idTypu < 0)
+                vysledok.PridajChybu("Zaporne id typu lampy");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             using (var cmd = new OracleCommand("delete_typ_lampy", ActiveConnection))
             {
@@ -387,6 +424,13 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (idLampy < 0)
+                vysledok.PridajChybu("Zaporne id lampy.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             using (var cmd = new OracleCommand("delete_lampa_na_stlpe", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -422,6 +466,13 @@ namespace Db
         public Vysledok ZmazTechnika(string rodCislo)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislo))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             using (var cmd = new OracleCommand("delete_sluzba", ActiveConnection))
             {
@@ -459,6 +510,13 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (idSluzby < 0)
+                vysledok.PridajChybu("Zaporne id sluzby.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             using (var cmd = new OracleCommand("delete_sluzba", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -494,6 +552,13 @@ namespace Db
         public Vysledok ZmazUlicu(int idUlice)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (idUlice < 0)
+                vysledok.PridajChybu("Zaporne id ulice.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             using (var cmd = new OracleCommand("delete_ulica", ActiveConnection))
             {
@@ -531,6 +596,13 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (idInfa < 0)
+                vysledok.PridajChybu("Zaporne id infa o stlpe.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             using (var cmd = new OracleCommand("delete_info", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -567,6 +639,17 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (meno.Length > 30)
+                vysledok.PridajChybu("Meno technika presahuje 30 znakov.");
+            if (priezvisko.Length > 30)
+                vysledok.PridajChybu("Priezvisko technika presahuje 30 znakov.");
+            if (!Validations.ValidRC(rodCislo))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             using (var cmd = new OracleCommand("insert_technik", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -601,12 +684,21 @@ namespace Db
 
         }
 
-
         public Vysledok UpdateUlica(int idUlice, string nazov, string mesto = null)
         {
             var vysledok = new Vysledok();
-
             var m = mesto ?? "null";
+
+            #region parameterCheck
+            if (nazov.Length > 30)
+                vysledok.PridajChybu("Nazov ulice presahuje 30 znakov.");
+            if (mesto.Length > 30)
+                vysledok.PridajChybu("Nazov mesta presahuje 30 znakov.");
+            if (idUlice < 0)
+                vysledok.PridajChybu("Zaporne id ulice.");          
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             using (var cmd = new OracleCommand("update_ulica", ActiveConnection))
             {
@@ -645,8 +737,16 @@ namespace Db
         public Vysledok InsertUlica(string nazov, string mesto = null)
         {
             var vysledok = new Vysledok();
-
             var m = mesto ?? "null";
+
+            #region parameterCheck
+            if (nazov.Length > 30)
+                vysledok.PridajChybu("Nazov ulice presahuje 30 znakov.");
+            if (mesto.Length > 30)
+                vysledok.PridajChybu("Nazov mesta presahuje 30 znakov.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             using (var cmd = new OracleCommand("insert_ulica", ActiveConnection))
             {
@@ -685,6 +785,13 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (svietivost < 0)
+                vysledok.PridajChybu("Zaporna svietivost.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             using (var cmd = new OracleCommand("insert_typ_lampy", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -722,6 +829,19 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu.");
+            if (idTypu < 0)
+                vysledok.PridajChybu("Zaporne id typu lampy.");
+            if (!"SN".Contains(stav + ""))
+                vysledok.PridajChybu("nespravne zadany stav lampy. (S,N)");
+            if (datumInstalacie > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum instalacie");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
 
             using (var cmd = new OracleCommand("update_lampa_na_stlpe", ActiveConnection))
@@ -758,10 +878,24 @@ namespace Db
 
         }
 
-
         public Vysledok UpdateLampaNaStlpe(int idLampy, int idStlpu, int idTypu, char stav, DateTime datumInstalacie, DateTime? datumDemontaze)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu.");
+            if (idLampy < 0)
+                vysledok.PridajChybu("Zaporne id lampy.");
+            if (idTypu < 0)
+                vysledok.PridajChybu("Zaporne id typu lampy.");
+            if (!"SN".Contains(stav + ""))
+                vysledok.PridajChybu("nespravne zadany stav lampy. (S,N)");
+            if (datumInstalacie > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum instalacie");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
             var dDemontaze = datumDemontaze?.ToString("dd.MM.yyyy HH:mm") ?? "null";
@@ -806,6 +940,15 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (idTypu < 0)
+                vysledok.PridajChybu("Zaporne id typu lampy.");
+            if (svietivost < 0)
+                vysledok.PridajChybu("Zaporna svietivost.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             using (var cmd = new OracleCommand("update_typ_lampy", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -842,6 +985,17 @@ namespace Db
         public Vysledok UpdateInfoStlpu(int idZaznamu, int idStlpu, char typ, byte[] data)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (idZaznamu < 0)
+                vysledok.PridajChybu("Zaporne id zaznamu.");
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu.");
+            if (!"IQ".Contains(typ + ""))
+                vysledok.PridajChybu("nespravne zadany typ infa o stlpe. (I,Q)");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             using (var cmd = new OracleCommand("update_info_stlpu", ActiveConnection))
             {
@@ -887,6 +1041,15 @@ namespace Db
         {
             var vysledok = new Vysledok();
 
+            #region parameterCheck
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu.");
+            if (!"IQ".Contains(typ + ""))
+                vysledok.PridajChybu("nespravne zadany typ infa o stlpe. (I,Q)");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
             using (var cmd = new OracleCommand("vloz_info_stlpu", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -926,11 +1089,20 @@ namespace Db
             return vysledok;
         }
 
-
-
         public Vysledok UpdateTechnik(string rodCislo, string meno, string priezvisko)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (meno.Length > 30)
+                vysledok.PridajChybu("Meno technika presahuje 30 znakov.");
+            if (priezvisko.Length > 30)
+                vysledok.PridajChybu("Priezvisko technika presahuje 30 znakov.");
+            if (!Validations.ValidRC(rodCislo))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             using (var cmd = new OracleCommand("update_technik", ActiveConnection))
             {
@@ -965,12 +1137,28 @@ namespace Db
             return vysledok;
         }
 
-
         public Vysledok VlozKontroluStlpu(
             string rodCislotechnika, int idStlpu, string popis,
-            string stav, int trvanie, DateTime pDatum)
+            char stav, int trvanie, DateTime pDatum)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislotechnika))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu");
+            if (popis.Length > 500)
+                vysledok.PridajChybu("Popis kontroly presahuje 500 znakov.");
+            if (!"DZ".Contains(stav + ""))
+                vysledok.PridajChybu("nespravne zadany stav. (D,Z)");
+            if (trvanie < 0)
+                vysledok.PridajChybu("Zaporne trvanie kontroly stlpu");
+            if (pDatum > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum kontroly slpu");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
 
@@ -1011,9 +1199,26 @@ namespace Db
 
         public Vysledok VlozServisStlpu(
             string rodCislotechnika, int idStlpu, string popis,
-            string stav, int trvanie, DateTime pDatum, int cena)
+            int trvanie, DateTime pDatum, int cena)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislotechnika))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu");
+            if (popis.Length > 500)
+                vysledok.PridajChybu("Popis kontroly presahuje 500 znakov.");
+            if (trvanie < 0)
+                vysledok.PridajChybu("Zaporne trvanie kontroly stlpu");
+            if (pDatum > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum kontroly slpu");
+            if (cena < 0)
+                vysledok.PridajChybu("Zaporne naklady na servis stlpu");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
 
@@ -1023,7 +1228,6 @@ namespace Db
                 cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
                 cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
                 cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
-                cmd.Parameters.Add("pa_stav", "char").Value = stav;
                 cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
                 cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
                 cmd.Parameters.Add("pa_cena", "number").Value = cena;
@@ -1058,6 +1262,25 @@ namespace Db
             string stav, int trvanie, DateTime pDatum, int svietivost)
         {
             var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislotechnika))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (idLampy < 0)
+                vysledok.PridajChybu("Zaporne id lampy.");
+            if (popis.Length > 500)
+                vysledok.PridajChybu("Popis kontroly presahuje 500 znakov.");
+            if (!"DZ".Contains(stav + ""))
+                vysledok.PridajChybu("nespravne zadany stav. (D,Z)");
+            if (trvanie < 0)
+                vysledok.PridajChybu("Zaporne trvanie kontroly lampy");
+            if (pDatum > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum kontroly lampy");
+            if (svietivost < 0)
+                vysledok.PridajChybu("Zaporna svietivost.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
 
@@ -1100,9 +1323,26 @@ namespace Db
 
         public Vysledok VlozServisuLampy(
             string rodCislotechnika, int idLampy, string popis,
-            string stav, int trvanie, DateTime pDatum, int cena)
+            int trvanie, DateTime pDatum, int cena)
         {
             var vysledok = new Vysledok();
+            
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislotechnika))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (idLampy < 0)
+                vysledok.PridajChybu("Zaporne id lampy.");
+            if (popis.Length > 500)
+                vysledok.PridajChybu("Popis kontroly presahuje 500 znakov.");
+            if (trvanie < 0)
+                vysledok.PridajChybu("Zaporne trvanie kontroly lampy");
+            if (pDatum > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum kontroly lampy");
+            if (cena < 0)
+                vysledok.PridajChybu("Zaporne naklady na servis lampy");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
 
             string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
 
@@ -1112,7 +1352,6 @@ namespace Db
                 cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
                 cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
                 cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
-                cmd.Parameters.Add("pa_stav", "char").Value = stav;
                 cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
                 cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
                 cmd.Parameters.Add("pa_cena", "number").Value = cena;
@@ -1141,9 +1380,6 @@ namespace Db
             }
             return vysledok;
         }
-
-
-
 
 
         public void ExecuteNonQueryOwn(string sql)
