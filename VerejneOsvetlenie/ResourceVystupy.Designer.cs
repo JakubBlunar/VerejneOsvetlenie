@@ -117,9 +117,9 @@ namespace VerejneOsvetlenie {
         ///  )
         ///);.
         /// </summary>
-        public static string vystup_D4 {
+        public static string vystup_D2 {
             get {
-                return ResourceManager.GetString("vystup_D4", resourceCulture);
+                return ResourceManager.GetString("vystup_D2", resourceCulture);
             }
         }
         

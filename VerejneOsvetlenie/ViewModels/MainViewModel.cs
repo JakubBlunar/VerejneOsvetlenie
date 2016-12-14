@@ -81,16 +81,20 @@ namespace VerejneOsvetlenie.ViewModels
             };
 
             var vystup4 = ResourceVystupy.vystup_4.Replace("\r\n", " ").Replace(";", "");
-            Vystupy.Add(new PomenovanyVystup("Výstup 4", new VystupSelect(vystup4, "Id Ulice", "Názov", "Mesto")));
+            Vystupy.Add(new PomenovanyVystup("Výpis ulíc, na ktorých je viac ako 15% nesvietiacich lámp.",
+                new VystupSelect(vystup4, "Id Ulice", "Názov", "Mesto")));
 
             var vystup7 = ResourceVystupy.vystup_7.Replace("\r\n", " ").Replace(";", "");
-            Vystupy.Add(new PomenovanyVystup("Výstup 7", new VystupSelect(vystup7, "Číslo", "Svietivost" )));
+            Vystupy.Add(new PomenovanyVystup("Výpis 10% stĺpov s celkovou najnižšou svietivosťou lámp.",
+                new VystupSelect(vystup7, "Číslo Stĺpu", "Svietivost" )));
 
-            var vystupD4 = ResourceVystupy.vystup_D4.Replace("\r\n", " ").Replace(";", "");
-            Vystupy.Add(new PomenovanyVystup("Dodatočný výstup 4", new VystupSelect(vystupD4, "Id Typu","Svietivosť")));
+            var vystupD4 = ResourceVystupy.vystup_D2.Replace("\r\n", " ").Replace(";", "");
+            Vystupy.Add(new PomenovanyVystup("Výpis typu lampy, ktorá sa najviac kazí.",
+                new VystupSelect(vystupD4, "Id Typu","Svietivosť")));
 
             var vystupD5 = ResourceVystupy.vystup_D5.Replace("\r\n", " ").Replace(";","");
-            Vystupy.Add(new PomenovanyVystup("Dodatočný výstup 5", new VystupSelect(vystupD5, "Číslo", "Ulica", "Poradie")));
+            Vystupy.Add(new PomenovanyVystup("Výpis stĺpov, ktorých všetky fotografie sú staršie ako rok.",
+                new VystupSelect(vystupD5, "Číslo Stĺpu", "Ulica", "Poradie")));
             
         }
 
