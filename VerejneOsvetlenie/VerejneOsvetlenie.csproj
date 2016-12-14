@@ -119,6 +119,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Db\Db.csproj">
+      <Project>{f132a6f0-0e3b-4ad7-91ba-b00f81ddb8cc}</Project>
+      <Name>Db</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VerejneOsvetlenieData\VerejneOsvetlenieData.csproj">
       <Project>{47f1b967-cb1f-4dbe-a111-e5c7c07a400c}</Project>
       <Name>VerejneOsvetlenieData</Name>

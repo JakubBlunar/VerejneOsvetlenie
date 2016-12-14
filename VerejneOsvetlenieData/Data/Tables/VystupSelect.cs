@@ -9,14 +9,14 @@ using PropertyChanged;
 namespace VerejneOsvetlenieData.Data.Tables
 {
     [ImplementPropertyChanged]
-    public class Select
+    public class VystupSelect : IVystup
     {
-        public event EventHandler SelectDataHotove;
+        public event EventHandler VystupSpracovany;
         public string SelectString { get; private set; }
         private readonly Databaza _databaza;
         public List<string> Columns { get; private set; }
         public string ErrorMessage { get; private set; }
-
+        
         public IEnumerable<List<object>> Rows
         {
             get
@@ -31,7 +31,7 @@ namespace VerejneOsvetlenieData.Data.Tables
         }
         private IEnumerable<Dictionary<string, object>> _result;
 
-        public Select(string paSelectString, params string[] paCollumnNames)
+        public VystupSelect(string paSelectString, params string[] paCollumnNames)
         {
             SelectString = paSelectString;
             _databaza = new Databaza();
@@ -39,7 +39,7 @@ namespace VerejneOsvetlenieData.Data.Tables
             Columns.AddRange(paCollumnNames);
         }
 
-        public bool SelectData()
+        private bool SelectData()
         {
             try
             {
@@ -62,13 +62,18 @@ namespace VerejneOsvetlenieData.Data.Tables
             }
             finally
             {
-                OnSelectDataHotove();
+                OnVystupSpracovany();
             }
         }
 
-        protected virtual void OnSelectDataHotove()
+        public bool SpustiVystup()
         {
-            SelectDataHotove?.Invoke(this, EventArgs.Empty);
+            return this.SelectData();
+        }
+
+        protected virtual void OnVystupSpracovany()
+        {
+            VystupSpracovany?.Invoke(this, EventArgs.Empty);
         }
     }
 }

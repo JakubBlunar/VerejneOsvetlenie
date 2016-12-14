@@ -8,18 +8,15 @@ using PropertyChanged;
 namespace VerejneOsvetlenieData.Data.Tables
 {
     [ImplementPropertyChanged]
-    public class PomenovanyVystup : Select
+    public class PomenovanyVystup
     {
         public string Nazov { get; set; }
+        public IVystup Vystup { get; set; }
 
-        public PomenovanyVystup(string paNazov, string paSelectString, params string[] paCollumnNames) : base(paSelectString, paCollumnNames)
+        public PomenovanyVystup(string paNazov, IVystup paVystup)
         {
             Nazov = paNazov;
-        }
-
-        public PomenovanyVystup(string paSelectString, params string[] paCollumnNames) : base(paSelectString, paCollumnNames)
-        {
-            Nazov = string.Empty;
+            Vystup = paVystup;
         }
 
         public override string ToString()

@@ -91,7 +91,7 @@ namespace Db
         /// <param name="vysledok">funguje podobne ako out parameter akurát nie je povinný pokiaľ ho procedúra neobsahuje</param>
         /// <param name="procedureParameters"></param>
         /// <returns></returns>
-        public IEnumerable<List<string>> RunProcedureWithOutput(string nameOfProcedure, Vysledok vysledok, params ProcedureParameter[] procedureParameters)
+        public IEnumerable<List<object>> RunProcedureWithOutput(string nameOfProcedure, Vysledok vysledok, params ProcedureParameter[] procedureParameters)
         {
             StringBuilder b = new StringBuilder();
             string storedProcedure = nameOfProcedure;
@@ -160,7 +160,7 @@ namespace Db
                         var oracleStrings = pLines.Value as OracleString[];
                         var a = string.Empty;
                         if (oracleStrings != null)
-                            yield return oracleStrings[i].ToString().Split(';').ToList();
+                            yield return oracleStrings[i].ToString().Split(';').Cast<object>().ToList();
                     }
                     cmd.ExecuteNonQuery();
 

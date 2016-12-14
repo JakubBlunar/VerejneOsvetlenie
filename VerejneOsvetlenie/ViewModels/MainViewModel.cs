@@ -15,7 +15,7 @@ namespace VerejneOsvetlenie.ViewModels
     [ImplementPropertyChanged]
     public class MainViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Select> Vystupy { get; set; }
+        public ObservableCollection<PomenovanyVystup> Vystupy { get; set; }
 
         private STechnik _mTechnik;
         public STechnik Technik
@@ -45,7 +45,7 @@ namespace VerejneOsvetlenie.ViewModels
             }
         }
 
-        public Select SelectTest { get; set; }
+        public VystupSelect VystupSelectTest { get; set; }
 
         public void NacitajTechnika()
         {
@@ -64,10 +64,10 @@ namespace VerejneOsvetlenie.ViewModels
 
         private void InitVystupy()
         {
-            Vystupy = new ObservableCollection<Select>
+            Vystupy = new ObservableCollection<PomenovanyVystup>
             {
-                new PomenovanyVystup("Testovací výstup 1","select * from s_technik", "rodné číslo", "meno", "priezvisko"),
-                new PomenovanyVystup("Testovací výstup 2","select rodne_cislo, datum, popis, trvanie from s_sluzba", "rodné číslo", "dátum", "popis", "trvanie")
+                new PomenovanyVystup("Testovací výstup 1", new VystupSelect("select * from s_technik", "rodné číslo", "meno", "priezvisko")),
+                new PomenovanyVystup("Testovací výstup 2", new VystupProcedura("reklamacia_technika", false, new [] {"rodné číslo", "meno", "priezvisko", "trvanie"}))
             };
         }
 

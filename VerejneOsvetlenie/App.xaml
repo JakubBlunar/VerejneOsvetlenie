@@ -4,6 +4,15 @@
              xmlns:local="clr-namespace:VerejneOsvetlenie"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="TextBlock" x:Key="Nadpisy">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize"
+                    Value="18" />
+            <Setter Property="FontWeight"
+                    Value="ExtraLight"/>
+        </Style>
     </Application.Resources>
 </Application>

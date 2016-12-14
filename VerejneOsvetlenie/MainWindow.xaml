@@ -25,17 +25,25 @@
     <!--
         <views:TableGenerator DataContext="{Binding SelectTest}"></views:TableGenerator>
     </Grid>-->
-    <Grid>
+    <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Row="0">
             <StackPanel Orientation="Horizontal">
-                <TextBlock>Vyberte požadovaný výstup:</TextBlock>
+                <TextBlock Style="{StaticResource Nadpisy}" VerticalAlignment="Center"
+                           Margin="0,0,15,0">Vyberte požadovaný výstup:</TextBlock>
                 <ComboBox x:Name="OznacenyVystup"
+                          VerticalAlignment="Center"
+                          SelectedIndex="0"
                           ItemsSource="{Binding Vystupy}"></ComboBox>
             </StackPanel>
+            
+            <Button HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Padding="5"
+                    Margin="0,2">Správa</Button>
         </Grid>
         <Grid Row="1">
             <views:TableGenerator DataContext="{Binding ElementName=OznacenyVystup, Path=SelectedItem}" />

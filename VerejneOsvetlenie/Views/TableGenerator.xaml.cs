@@ -21,8 +21,8 @@ namespace VerejneOsvetlenie.Views
     /// </summary>
     public partial class TableGenerator : UserControl
     {
-        public Select Model => DataContext as Select;
-        private Select _aktualnySelect;
+        public PomenovanyVystup Model => DataContext as PomenovanyVystup;
+        private IVystup _aktualnyVystup;
 
         public TableGenerator()
         {
@@ -33,37 +33,37 @@ namespace VerejneOsvetlenie.Views
         private void TableGenerator_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             DataGrid.Columns.Clear();
-            if (_aktualnySelect != null)
-                _aktualnySelect.SelectDataHotove -= Model_SelectDataHotove;
+            if (_aktualnyVystup != null)
+                _aktualnyVystup.VystupSpracovany -= ModelOnVystupSpracovany;
             if (Model == null)
             {
-                _aktualnySelect = null;
+                _aktualnyVystup = null;
                 return;
             }
-            Model.SelectDataHotove += Model_SelectDataHotove;
-            _aktualnySelect = Model;
-            Model.SelectData();
+            _aktualnyVystup = Model.Vystup;
+            _aktualnyVystup.VystupSpracovany += ModelOnVystupSpracovany;
+            _aktualnyVystup.SpustiVystup();
         }
 
-        private void Model_SelectDataHotove(object sender, EventArgs e)
+        private void ModelOnVystupSpracovany(object sender, EventArgs eventArgs)
         {
             GenerujTabulku();
         }
 
         private void GenerujTabulku()
         {
-            for (int i = 0; i < Model.Columns.Count; i++)
+            for (int i = 0; i < _aktualnyVystup.Columns.Count; i++)
             {
                 var stlpec = new DataGridTextColumn
                 {
-                    Header = Model.Columns[i],
+                    Header = _aktualnyVystup.Columns[i],
                     Binding = new Binding($"[{i}]")
                 };
                 DataGrid.Columns.Add(stlpec);
             }
-            DataGrid.ItemsSource = Model.Rows;
-            DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);
-            DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);
+            DataGrid.ItemsSource = _aktualnyVystup.Rows;
+            while (DataGrid.Columns.Count - _aktualnyVystup.Columns.Count > 0)
+                DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);
         }
     }
 }
