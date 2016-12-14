@@ -1,38 +1,48 @@
 using PropertyChanged;
+using System;
 using VerejneOsvetlenieData.Data.Interfaces;
 
 namespace VerejneOsvetlenieData.Data
 {
     [ImplementPropertyChanged]
-    [SqlClass(TableName = "S_LAMPA_NA_STLPE", DisplayName = "lampa na ståpe", TableKey = "id_lampy")]
+    [SqlClass(TableName = "S_LAMPA_NA_STLPE", DisplayName = "lampa na ståpe", TableKey = "ID_LAMPY")]
     public class SLampaNaStlpe : SqlEntita
     {
         [SqlClass(ColumnName = "ID_LAMPY", DisplayName = null)]
-        public string IdLampy { get; set; }
+        public int IdLampy { get; set; }
+
         [SqlClass(ColumnName = "CISLO", DisplayName = null)]
-        public string Cislo { get; set; }
+        public int Cislo { get; set; }
+        [SqlClass(ColumnName = "CISLO", IsReference = true)]
+        public SStlp Stlp { get; set; }
+
         [SqlClass(ColumnName = "ID_TYPU", DisplayName = null)]
-        public string IdTypu { get; set; }
-        [SqlClass(ColumnName = "STAV")]
-        public string Stav { get; set; }
-        [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "")]
-        public string DatumInstalacie { get; set; }
-        [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "")]
-        public string DatumDemontaze { get; set; }
+        public int IdTypu { get; set; }
+        [SqlClass(ColumnName = "ID_TYPU", IsReference = true)]
+        public SLampa Lampa { get; set; }
+
+        [SqlClass(ColumnName = "STAV", DisplayName = "Stav")]
+        public char Stav { get; set; }
+
+        [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "Dátum inštalácie")]
+        public DateTime DatumInstalacie { get; set; }
+
+        [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "Dátum demontáže")]
+        public DateTime? DatumDemontaze { get; set; }
 
         public override bool Update()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DatumInstalacie, DatumDemontaze).JeChyba;
         }
 
         public override bool Insert()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DatumInstalacie).JeChyba;
         }
 
         public override bool Drop()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.ZmazLampuNaStlpe(IdLampy).JeChyba;
         }
     }
 }

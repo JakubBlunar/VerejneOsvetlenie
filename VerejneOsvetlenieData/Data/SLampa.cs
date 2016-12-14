@@ -4,29 +4,31 @@ using VerejneOsvetlenieData.Data.Interfaces;
 namespace VerejneOsvetlenieData.Data
 {
     [ImplementPropertyChanged]
-    [SqlClass(TableName = "S_LAMPA", DisplayName = "Lampa", TableKey = "id_typu")]
+    [SqlClass(TableName = "S_LAMPA", DisplayName = "Lampa", TableKey = "ID_TYPU")]
     public class SLampa : SqlEntita
     {
         [SqlClass(ColumnName = "ID_TYPU", DisplayName = null)]
-        public string IdTypu { get; set; }
+        public int IdTypu { get; set; }
+
         [SqlClass(ColumnName = "TYP")]
-        public string Typ { get; set; }
-        [SqlClass(ColumnName = "SVIETIVOST", DisplayName = "svietivosù")]
-        public string Svietivost { get; set; }
+        public char Typ { get; set; }
+
+        [SqlClass(ColumnName = "SVIETIVOST", DisplayName = "Svietivosù")]
+        public int Svietivost { get; set; }
 
         public override bool Update()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.UpdateTypLampy(IdTypu,Svietivost,Typ).JeChyba;
         }
 
         public override bool Insert()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.InsertTypLampy(Typ, Svietivost).JeChyba;
         }
 
         public override bool Drop()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.ZmazTypLampy(IdTypu).JeChyba;
         }
     }
 }

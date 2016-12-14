@@ -5,14 +5,16 @@ using VerejneOsvetlenieData.Data.Interfaces;
 namespace VerejneOsvetlenieData.Data
 {
     [ImplementPropertyChanged]
-    [SqlClass(TableName = "S_ULICA", DisplayName = "Ulica")]
+    [SqlClass(TableName = "S_ULICA", DisplayName = "Ulica", TableKey = "ID_ULICE")]
     public class SUlica : SqlEntita
     {
         [SqlClass(ColumnName = "ID_ULICE", DisplayName = null)]
         public int IdUlice { get; set; }
-        [SqlClass(ColumnName = "NAZOV", DisplayName = "názov")]
+
+        [SqlClass(ColumnName = "NAZOV", DisplayName = "Ulica")]
         public string Nazov { get; set; }
-        [SqlClass(ColumnName = "MESTO", DisplayName = "")]
+
+        [SqlClass(ColumnName = "MESTO", DisplayName = "Mesto")]
         public string Mesto { get; set; }
 
         public override bool Update()

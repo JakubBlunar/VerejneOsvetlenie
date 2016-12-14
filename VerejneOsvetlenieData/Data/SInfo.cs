@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
@@ -6,14 +5,16 @@ using VerejneOsvetlenieData.Data.Interfaces;
 namespace VerejneOsvetlenieData.Data
 {
     [ImplementPropertyChanged]
-    [SqlClass(TableName = "S_INFO", DisplayName = "info o ståpe", TableKey = "id")]
+    [SqlClass(TableName = "S_INFO", DisplayName = "info o ståpe", TableKey = "ID")]
     public class SInfo : SqlEntita
     {
         [SqlClass(ColumnName = "ID", DisplayName = null)]
         public int Id { get; set; }
 
-        [SqlClass(ColumnName = "CISLO", DisplayName = null, IsBitmapImage = true)]
+        [SqlClass(ColumnName = "CISLO", DisplayName = null)]
         public int Cislo { get; set; }
+        [SqlClass(ColumnName = "CISLO", IsReference = true)]
+        public SStlp Stlp { get; set; }
 
         [SqlClass(ColumnName = "DATA", DisplayName = "obrázok", IsBitmapImage = true)]
         public MemoryStream Data { get; set; }
@@ -25,9 +26,6 @@ namespace VerejneOsvetlenieData.Data
         {
             Data?.Dispose();
         }
-
-        //[SqlClass(ColumnName = "DATUM", DisplayName = "dátum")]
-        //public DateTime Datum { get; set; }
 
         public override bool Update()
         {

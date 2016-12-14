@@ -53,6 +53,8 @@
     <Compile Include="Data\SKontrola.cs" />
     <Compile Include="Data\SLampa.cs" />
     <Compile Include="Data\SLampaNaStlpe.cs" />
+    <Compile Include="Data\SObsluhaLampy.cs" />
+    <Compile Include="Data\SObsluhaStlpu.cs" />
     <Compile Include="Data\SqlClassAttribute.cs" />
     <Compile Include="Data\SServis.cs" />
     <Compile Include="Data\SSluzba.cs" />

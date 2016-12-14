@@ -695,7 +695,7 @@ namespace Db
             if (mesto.Length > 30)
                 vysledok.PridajChybu("Nazov mesta presahuje 30 znakov.");
             if (idUlice < 0)
-                vysledok.PridajChybu("Zaporne id ulice.");          
+                vysledok.PridajChybu("Zaporne id ulice.");
             if (vysledok.JeChyba)
                 return vysledok;
             #endregion
@@ -1326,7 +1326,7 @@ namespace Db
             int trvanie, DateTime pDatum, int cena)
         {
             var vysledok = new Vysledok();
-            
+
             #region parameterCheck
             if (!Validations.ValidRC(rodCislotechnika))
                 vysledok.PridajChybu("Nespravne rodne cislo.");
@@ -1380,7 +1380,6 @@ namespace Db
             }
             return vysledok;
         }
-
 
         public void ExecuteNonQueryOwn(string sql)
         {
