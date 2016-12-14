@@ -38,7 +38,7 @@ namespace VerejneOsvetlenieData.Data
         /// <summary>
         /// Format {0}..{n} kde sa vložia podmienky na presnú identifikáciu záznamu v tabuľke
         /// </summary>
-        public string TableKeyContraint { get; set; }
+        public string TableKey { get; set; }
 
         /// <summary>
         /// Názov pre label ak null tak sa nezobrazí
@@ -57,6 +57,8 @@ namespace VerejneOsvetlenieData.Data
 
         public bool IsBitmapImage { get; set; }
 
+        public bool IsReference { get; set; }
+        
         /// <summary>
         /// Názov pre label
         /// </summary>
@@ -81,6 +83,11 @@ namespace VerejneOsvetlenieData.Data
         public static SqlClassAttribute ExtractSqlClassAttribute(SqlEntita paEntita)
         {
             return paEntita.GetType().GetCustomAttributes(typeof(SqlClassAttribute), false).OfType<SqlClassAttribute>()?.First();
+        }
+
+        public static SqlClassAttribute ExtractSqlClassAttribute(Type paType)
+        {
+            return paType.GetCustomAttributes(typeof(SqlClassAttribute), false).OfType<SqlClassAttribute>()?.First();
         }
     }
 }

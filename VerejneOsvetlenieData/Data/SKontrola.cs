@@ -1,18 +1,20 @@
 ﻿using System.Drawing;
 using System.Windows.Media.Imaging;
+using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
 
 namespace VerejneOsvetlenieData.Data
 {
-    [SqlClass(TableName = "S_KONTROLA", DisplayName = "Kontrola", TableKeyContraint = "id_sluzby = {0}")]
+    [ImplementPropertyChanged]
+    [SqlClass(TableName = "S_KONTROLA", DisplayName = "Kontrola", TableKey = "id_sluzby")]
     public class SKontrola : SqlEntita
     {
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]
-        public string IdSluzby { get; set; }
+        public int IdSluzby { get; set; }
         [SqlClass(ColumnName = "STAV")]
-        public string Stav { get; set; }
+        public char Stav { get; set; }
         [SqlClass(ColumnName = "SVIETIVOST", DisplayName = "Svietivosť")]
-        public string Svietivost { get; set; }
+        public int Svietivost { get; set; }
 
         public override bool Update()
         {
@@ -21,7 +23,7 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Insert()
         {
-            throw new System.NotImplementedException();
+            throw new System.NotImplementedException();//Databaza.VlozKontroluStlpu()
         }
 
         public override bool Drop()

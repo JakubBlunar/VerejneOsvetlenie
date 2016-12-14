@@ -54,8 +54,8 @@ namespace VerejneOsvetlenie.Views
                 return;
             if (ModelAkoEntita != null)
                 GenerujPodlaSqlEntity();
-            else
-                GenerujPodlaNeznamehoTypu();
+            //else
+            //    GenerujPodlaNeznamehoTypu();
 
         }
 
@@ -81,11 +81,14 @@ namespace VerejneOsvetlenie.Views
         private void GenerujPodlaSqlEntity()
         {
             var model = ModelAkoEntita;
+            FormularTitulok.Text = DajAtributTabulky(model).ElementName;
             var props = model.GetType().GetProperties();
             foreach (var propertyInfo in props)
             {
-                DajNovyRiadok();
                 var atribut = this.DajAtributStlpca(propertyInfo);
+                if(atribut.ShowElement == false)
+                    continue;
+                DajNovyRiadok();
                 var label = DajLabel(propertyInfo, atribut);
                 UIElement inputBoxOrImage = null;
                 if (atribut?.IsBitmapImage == false)

@@ -43,6 +43,44 @@ namespace Db
             };
         }
 
+        public void RunProcedure(string nameOfProcedure, Vysledok vysledok,
+            params ProcedureParameter[] procedureParameters)
+        {
+            using (OracleCommand cmd = Databaza.ActiveConnection.CreateCommand())
+            {
+
+                cmd.CommandText = nameOfProcedure;
+                cmd.CommandType = CommandType.StoredProcedure;
+                foreach (ProcedureParameter parameter in procedureParameters)
+                {
+                    cmd.Parameters.Add(parameter.NazovParametra, parameter.DbNazovTypu).Value
+                        = parameter.HodnotaParametra;
+                }
+                if (vysledok != null)
+                {
+                    cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                    cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                }
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok?.NastavChybu("Chyba pri vykonavani procdury");
+                }
+
+                if (vysledok != null)
+                {
+                    if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                        vysledok.Popis = "Success";
+                    else
+                        vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+        }
+
         /// <summary>
         /// Metóda na volanie procedúry
         /// zadáte názov procedúry

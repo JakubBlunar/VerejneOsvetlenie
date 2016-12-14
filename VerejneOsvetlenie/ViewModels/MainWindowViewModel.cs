@@ -47,6 +47,9 @@ namespace VerejneOsvetlenie.ViewModels
 
             Stlp = new SStlp();
             Stlp.SelectPodlaId(0);
+
+            var servis = new SServis();
+            servis.SelectPodlaId(1131);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -1,7 +1,11 @@
+using PropertyChanged;
+using VerejneOsvetlenieData.Data.Interfaces;
+
 namespace VerejneOsvetlenieData.Data
 {
-    [SqlClass(TableName = "S_SLUZBA", DisplayName = "", TableKeyContraint = "id_sluzby = {0}")]
-    public class SSluzba
+    [ImplementPropertyChanged]
+    [SqlClass(TableName = "S_SLUZBA", DisplayName = "", TableKey = "id_sluzby")]
+    public class SSluzba : SqlEntita
     {
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]
         public string IdSluzby { get; set; }
@@ -13,5 +17,20 @@ namespace VerejneOsvetlenieData.Data
         public string Popis { get; set; }
         [SqlClass(ColumnName = "TRVANIE")]
         public string Trvanie { get; set; }
+
+        public override bool Update()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool Insert()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override bool Drop()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

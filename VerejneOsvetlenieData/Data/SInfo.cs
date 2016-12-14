@@ -1,19 +1,47 @@
+using System;
 using System.IO;
+using PropertyChanged;
+using VerejneOsvetlenieData.Data.Interfaces;
 
 namespace VerejneOsvetlenieData.Data
 {
-    [SqlClass(TableName = "S_INFO", DisplayName = "info o ståpe", TableKeyContraint = "id = {0}")]
-    public class SInfo
+    [ImplementPropertyChanged]
+    [SqlClass(TableName = "S_INFO", DisplayName = "info o ståpe", TableKey = "id")]
+    public class SInfo : SqlEntita
     {
         [SqlClass(ColumnName = "ID", DisplayName = null)]
-        public string Id { get; set; }
+        public int Id { get; set; }
+
         [SqlClass(ColumnName = "CISLO", DisplayName = null, IsBitmapImage = true)]
-        public string Cislo { get; set; }
+        public int Cislo { get; set; }
+
         [SqlClass(ColumnName = "DATA", DisplayName = "obrázok", IsBitmapImage = true)]
-        public FileStream Data { get; set; }
+        public MemoryStream Data { get; set; }
+
         [SqlClass(ColumnName = "TYP")]
-        public string Typ { get; set; }
-        [SqlClass(ColumnName = "DATUM", DisplayName = "dátum")]
-        public string Datum { get; set; }
+        public char Typ { get; set; }
+
+        ~SInfo()
+        {
+            Data?.Dispose();
+        }
+
+        //[SqlClass(ColumnName = "DATUM", DisplayName = "dátum")]
+        //public DateTime Datum { get; set; }
+
+        public override bool Update()
+        {
+            return !Databaza.UpdateInfoStlpu(Id, Cislo, Typ, Data.ToArray()).JeChyba;
+        }
+
+        public override bool Insert()
+        {
+            return !Databaza.VlozInfoStlpu(Cislo, Typ, Data.ToArray()).JeChyba;
+        }
+
+        public override bool Drop()
+        {
+            return !Databaza.ZmazInfoOStlpe(Id).JeChyba;
+        }
     }
 }

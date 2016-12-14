@@ -1,8 +1,10 @@
+using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
 
 namespace VerejneOsvetlenieData.Data
 {
-    [SqlClass(TableName = "S_STLP", DisplayName = "Ståp", TableKeyContraint = "cislo = {0}")]
+    [ImplementPropertyChanged]
+    [SqlClass(TableName = "S_STLP", DisplayName = "Ståp", TableKey = "cislo")]
     public class SStlp : SqlEntita
     {
         [SqlClass(ColumnName = "CISLO", DisplayName = null)]

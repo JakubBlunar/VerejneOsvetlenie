@@ -1,12 +1,15 @@
+using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
 
 namespace VerejneOsvetlenieData.Data
 {
-    [SqlClass(TableName = "S_TECHNIK", DisplayName = "Technik", TableKeyContraint = "rodne_cislo = {0}")]
+    [ImplementPropertyChanged]
+    [SqlClass(TableName = "S_TECHNIK", DisplayName = "Technik", TableKey = "rodne_cislo")]
     public class STechnik : SqlEntita
     {
-        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = "")]
+        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = "rodné èíslo")]
         public string RodneCislo { get; set; }
+
         [SqlClass(ColumnName = "MENO")]
         public string Meno { get; set; }
         [SqlClass(ColumnName = "PRIEZVISKO")]
@@ -14,17 +17,17 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.UpdateTechnik(RodneCislo, Meno, Priezvisko).JeChyba;
         }
 
         public override bool Insert()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.VlozTechnika(RodneCislo, Meno, Priezvisko).JeChyba;
         }
 
         public override bool Drop()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.ZmazTechnika(RodneCislo).JeChyba;
         }
     }
 }
