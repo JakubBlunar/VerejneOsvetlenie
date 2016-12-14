@@ -161,6 +161,9 @@
   <ItemGroup>
     <None Include="Resources\vystup D2.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\vystup D3.sql" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.1.29.2\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.1.29.2\build\dotnet\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
