@@ -72,6 +72,13 @@ namespace VerejneOsvetlenie.ViewModels
             {
                 new PomenovanyVystup("Testovací výstup 1", new VystupSelect("select * from s_technik", "rodné číslo", "meno", "priezvisko")),
                 new PomenovanyVystup("Testovací výstup 2", new VystupProcedura("reklamacia_technika", false, new [] {"rodné číslo", "meno", "priezvisko", "trvanie"})),
+                new PomenovanyVystup("Testovací výstup s parametrami", 
+                new VystupProcedura("vypis_chybnych_ulic", 
+                false, 
+                new [] {"id_ulice", "názov", "počet", "poradie"}, 
+                new ProcedureParameter("pocet", "number", 500),
+                new ProcedureParameter("pa_odkedy", "date", DateTime.Now.AddYears(-10).ToString("dd.MM.yyyy")),
+                new ProcedureParameter("pa_dokedy", "date", DateTime.Now.ToString("dd.MM.yyyy"))))
             };
 
             var vystup4 = ResourceVystupy.vystup_4.Replace("\r\n", " ").Replace(";", "");

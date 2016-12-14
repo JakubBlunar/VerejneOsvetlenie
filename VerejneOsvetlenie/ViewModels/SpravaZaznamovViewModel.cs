@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PropertyChanged;
 using VerejneOsvetlenieData.Data;
+using VerejneOsvetlenieData.Data.Interfaces;
+using VerejneOsvetlenieData.Data.Tables;
 
 namespace VerejneOsvetlenie.ViewModels
 {
@@ -14,6 +16,24 @@ namespace VerejneOsvetlenie.ViewModels
     {
         public ObservableCollection<ZaznamInfo> ZaznamyNaSpravu { get; set; }
 
+        public ZaznamInfo AktualnyTypZaznamu { get; set; }
+        public IVystup AktualnyVystup { get; set; }
+
+        public SpravaZaznamovViewModel()
+        {
+            this.InitTypy();
+        }
+
+        private void InitTypy()
+        {
+            ZaznamyNaSpravu = new ObservableCollection<ZaznamInfo>
+            {
+                new ZaznamInfo() { NazovZaznamu = "technici",  TypZaznamu = typeof(STechnik)},
+                new ZaznamInfo() { NazovZaznamu = "lampy",  TypZaznamu = typeof(SLampa)}
+            };
+        }
+
+
 
     }
 
@@ -21,5 +41,10 @@ namespace VerejneOsvetlenie.ViewModels
     {
         public string NazovZaznamu { get; set; }
         public Type TypZaznamu { get; set; }
+
+        public SqlEntita DajInstanciu()
+        {
+            return System.Activator.CreateInstance(TypZaznamu) as SqlEntita;
+        }
     }
 }

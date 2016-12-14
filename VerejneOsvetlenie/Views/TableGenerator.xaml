@@ -9,17 +9,35 @@
              d:DesignWidth="300">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+        <Grid Row="0"
+              Background="LightGray">
+            <StackPanel x:Name="Filter" Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                <StackPanel Orientation="Horizontal"
+                            x:Name="FilterInput">
+                    
+                </StackPanel>
+                <Button HorizontalAlignment="Right"
+                        Padding="5"
+                        x:Name="FilterButton"
+                        Click="SpustiFilter">Spusti</Button>
+            </StackPanel>
+        </Grid>
         <DataGrid x:Name="DataGrid"
-                  Grid.Row="0"
+                  Grid.Row="1"
                   HorizontalAlignment="Stretch"
                   CanUserResizeColumns="False"
-                  CanUserResizeRows="True">
+                  CanUserResizeRows="True"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  SelectionChanged="UserKlikolNaRiadok">
 
         </DataGrid>
-        <Grid Row="1"
+        <Grid Row="2"
               Background="LightGreen"
               Opacity="0.8">
             <TextBlock Text="nájdených "

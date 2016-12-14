@@ -16,7 +16,9 @@ namespace VerejneOsvetlenieData.Data.Tables
         private readonly Databaza _databaza;
         public List<string> Columns { get; private set; }
         public string ErrorMessage { get; private set; }
-        
+        public ProcedureParameter[] ParametrePreVystup => null;
+
+
         public IEnumerable<List<object>> Rows
         {
             get
