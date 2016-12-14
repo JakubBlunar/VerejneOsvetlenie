@@ -9,7 +9,9 @@ using PropertyChanged;
 using VerejneOsvetlenieData.Data;
 using VerejneOsvetlenieData.Data.Tables;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
+using Db;
 
 namespace VerejneOsvetlenie.ViewModels
 {
@@ -87,7 +89,22 @@ namespace VerejneOsvetlenie.ViewModels
             var vystupD5 = ResourceVystupy.vystup_D5.Replace("\r\n", " ").Replace(";","");
             Vystupy.Add(new PomenovanyVystup("Výpis stĺpov, ktorých všetky fotografie sú staršie ako rok.",
                 new VystupSelect(vystupD5, "Číslo Stĺpu", "Ulica", "Poradie")));
-            
+
+            Vystupy.Add(new PomenovanyVystup("Výpis stĺpov, na ktorých sme menili dopravnú značku minulý rok viac ako 2x.",
+                new VystupProcedura("menene_znacky_na_stlpe", false, new[] {"Číslo Stĺpu"}, 
+                new ProcedureParameter("PA_POC_ROKOV_DOZADU", "number", 1), new ProcedureParameter("PA_POC_MENENI", "number", 2))));
+           
+
+            DateTime datumOd = DateTime.ParseExact("24.05.1994 13:26", "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture);
+            DateTime datumDo = DateTime.Now;
+
+            Vystupy.Add(new PomenovanyVystup("Výpis prvých desať technikov, podľa počtu servisných zásahov za definované obdobie.",
+                new VystupProcedura("najlepsi_technici", false, new[] { "Rodné číslo", "Počet zásahov" },
+                new ProcedureParameter("datum_od", "varchar2", datumOd.ToString("dd.MM.yyyy") ),
+                new ProcedureParameter("datum_do", "varchar2", datumDo.ToString("dd.MM.yyyy")),
+                new ProcedureParameter("pocet", "number", 10)
+            )));
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

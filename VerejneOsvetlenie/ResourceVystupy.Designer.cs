@@ -124,6 +124,24 @@ namespace VerejneOsvetlenie {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select cislo from (  
+        ///    select ss.cislo, count(nest.id) poc
+        ///    from s_stlp ss, table(select doplnky from s_stlp c where c.cislo = ss.cislo) nest
+        ///    where nest.typ_doplnku IN(&apos;Z&apos;, &apos;O&apos;)
+        ///    and extract( year from nest.datum_instalacie) = extract( year from add_months(sysdate, -12 ))
+        ///    group by ss.cislo
+        ///) where poc &gt; 1;
+        ///
+        ///
+        ///.
+        /// </summary>
+        public static string vystup_D3 {
+            get {
+                return ResourceManager.GetString("vystup_D3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select cislo, id_ulice, poradie from s_stlp ss 
         ///where not exists(
         /// select &apos;x&apos; from s_info si

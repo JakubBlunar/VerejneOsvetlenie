@@ -127,6 +127,9 @@
   <data name="vystup_D2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\vystup D2.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
   </data>
+  <data name="vystup_D3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\vystup D3.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
+  </data>
   <data name="vystup_D5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\vystup D5.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;windows-1250</value>
   </data>
