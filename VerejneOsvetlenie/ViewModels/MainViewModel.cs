@@ -9,6 +9,7 @@ using PropertyChanged;
 using VerejneOsvetlenieData.Data;
 using VerejneOsvetlenieData.Data.Tables;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace VerejneOsvetlenie.ViewModels
 {
@@ -64,11 +65,25 @@ namespace VerejneOsvetlenie.ViewModels
 
         private void InitVystupy()
         {
+
             Vystupy = new ObservableCollection<PomenovanyVystup>
             {
                 new PomenovanyVystup("Testovací výstup 1", new VystupSelect("select * from s_technik", "rodné číslo", "meno", "priezvisko")),
-                new PomenovanyVystup("Testovací výstup 2", new VystupProcedura("reklamacia_technika", false, new [] {"rodné číslo", "meno", "priezvisko", "trvanie"}))
+                new PomenovanyVystup("Testovací výstup 2", new VystupProcedura("reklamacia_technika", false, new [] {"rodné číslo", "meno", "priezvisko", "trvanie"})),
             };
+
+            var vystup4 = ResourceVystupy.vystup_4.Replace("\r\n", " ").Replace(";", "");
+            Vystupy.Add(new PomenovanyVystup("Výstup 4", new VystupSelect(vystup4, "Id Ulice", "Názov", "Mesto")));
+
+            var vystup7 = ResourceVystupy.vystup_7.Replace("\r\n", " ").Replace(";", "");
+            Vystupy.Add(new PomenovanyVystup("Výstup 7", new VystupSelect(vystup7, "Číslo", "Svietivost" )));
+
+            var vystupD4 = ResourceVystupy.vystup_D4.Replace("\r\n", " ").Replace(";", "");
+            Vystupy.Add(new PomenovanyVystup("Dodatočný výstup 4", new VystupSelect(vystupD4, "Id Typu","Svietivosť")));
+
+            var vystupD5 = ResourceVystupy.vystup_D5.Replace("\r\n", " ").Replace(";","");
+            Vystupy.Add(new PomenovanyVystup("Dodatočný výstup 5", new VystupSelect(vystupD5, "Číslo", "Ulica", "Poradie")));
+            
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
