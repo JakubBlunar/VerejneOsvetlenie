@@ -38,6 +38,7 @@ namespace VerejneOsvetlenie.Views
         private void TableGenerator_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             DataGrid.Columns.Clear();
+            DataGrid.ItemsSource = null;
             if (_aktualnyVystup != null)
                 _aktualnyVystup.VystupSpracovany -= ModelOnVystupSpracovany;
             if (Model == null && !(DataContext is IVystup))
@@ -48,7 +49,23 @@ namespace VerejneOsvetlenie.Views
 
             _aktualnyVystup = Model?.Vystup ?? DataContext as IVystup;
             _aktualnyVystup.VystupSpracovany += ModelOnVystupSpracovany;
-            _aktualnyVystup.SpustiVystup();
+            if (_aktualnyVystup.ParametrePreVystup == null || !_aktualnyVystup.ParametrePreVystup.Any())
+                _aktualnyVystup.SpustiVystup();
+
+            FilterInput.Children.Clear();
+            if (_aktualnyVystup.ParametrePreVystup != null)
+            {
+                foreach (var parameter in _aktualnyVystup.ParametrePreVystup)
+                {
+                    var label = this.DajLabel(parameter);
+                    var inputBox = this.DajInputBox(parameter);
+                    FilterInput.Children.Add(label);
+                    FilterInput.Children.Add(inputBox);
+                }
+            }
+            else
+                Filter.Visibility = Visibility.Hidden;
+            Filter.Visibility = FilterInput.Children.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void ModelOnVystupSpracovany(object sender, EventArgs eventArgs)
@@ -58,7 +75,6 @@ namespace VerejneOsvetlenie.Views
 
         private void GenerujTabulku()
         {
-            FilterInput.Children.Clear();
             for (int i = 0; i < _aktualnyVystup.Columns.Count; i++)
             {
                 var stlpec = new DataGridTextColumn
@@ -72,21 +88,6 @@ namespace VerejneOsvetlenie.Views
             while (DataGrid.Columns.Count - _aktualnyVystup.Columns.Count > 0)
                 DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);
             PocetRiadkov.Text = _aktualnyVystup.Rows.Count().ToString();
-            //FilterInput
-            if (_aktualnyVystup.ParametrePreVystup == null)
-            {
-                Filter.Visibility = Visibility.Hidden;
-                return;
-            }
-            foreach (var parameter in _aktualnyVystup.ParametrePreVystup)
-            {
-                var label = this.DajLabel(parameter);
-                var inputBox = this.DajInputBox(parameter);
-                FilterInput.Children.Add(label);
-                FilterInput.Children.Add(inputBox);
-            }
-
-            Filter.Visibility = FilterInput.Children.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         protected virtual void OnUserKlikolNaElement(Dictionary<string, object> e)

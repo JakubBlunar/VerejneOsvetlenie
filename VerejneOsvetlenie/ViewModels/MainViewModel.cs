@@ -76,8 +76,8 @@ namespace VerejneOsvetlenie.ViewModels
                 false, 
                 new [] {"id_ulice", "názov", "počet", "poradie"}, 
                 new ProcedureParameter("pocet", "number", 500),
-                new ProcedureParameter("pa_odkedy", "date", DateTime.Now.AddYears(-10).ToString("dd.MM.yyyy")),
-                new ProcedureParameter("pa_dokedy", "date", DateTime.Now.ToString("dd.MM.yyyy"))))
+                new ProcedureParameter("pa_odkedy", "date", DateTime.Now.AddYears(-10).ToString("yyyy-MM-dd")),
+                new ProcedureParameter("pa_dokedy", "date", DateTime.Now.ToString("yyyy-MM-dd"))))
             };
 
             var vystup4 = ResourceVystupy.vystup_4.Replace("\r\n", " ").Replace(";", "");
