@@ -31,7 +31,7 @@ namespace VerejneOsvetlenie.Views
         public PomenovanyVystup Model => DataContext as PomenovanyVystup;
         private IVystup _aktualnyVystup;
         public event EventHandler<Dictionary<string, object>> UserKlikolNaElement;
-        public event EventHandler<object> UserKlikolNaElementMamId;
+        public event EventHandler<Dictionary<string, object>> UserKlikolNaElementMamId;
 
         public TableGenerator()
         {
@@ -76,7 +76,7 @@ namespace VerejneOsvetlenie.Views
         {
             if (_aktualnyVystup.Rows.Any() && _aktualnyVystup.Rows.ElementAt(0)[0].ToString().Contains("<?xml"))
             {
-                PocetRiadkov.Text = 1+"";
+                PocetRiadkov.Text = 1 + "";
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(_aktualnyVystup.Rows.ElementAt(0)[0].ToString());
                 using (XmlTextWriter writer = new XmlTextWriter("temp", null))
@@ -85,12 +85,12 @@ namespace VerejneOsvetlenie.Views
                     doc.Save(writer);
                 }
                 Process.Start("temp");
-              
+
             }
             else
-            { 
+            {
                 GenerujTabulku();
-            }    
+            }
         }
 
         private void GenerujTabulku()
@@ -106,8 +106,8 @@ namespace VerejneOsvetlenie.Views
             }
             DataGrid.ItemsSource = _aktualnyVystup.Rows;
             while (DataGrid.Columns.Count - _aktualnyVystup.Columns.Count > 0)
-                DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);          
-            PocetRiadkov.Text = _aktualnyVystup.Rows.Count().ToString();   
+                DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);
+            PocetRiadkov.Text = _aktualnyVystup.Rows.Count().ToString();
         }
 
         protected virtual void OnUserKlikolNaElement(Dictionary<string, object> e)
@@ -126,13 +126,25 @@ namespace VerejneOsvetlenie.Views
                 row.Add(DataGrid.Columns[i].Header.ToString(), values[i]);
             }
             OnUserKlikolNaElement(row);
-            var stlpec =
+            var stlpce =
                 DataGrid.Columns.FirstOrDefault(
-                    c => c.Header.ToString().ToLower() == _aktualnyVystup.KlucovyStlpec?.ToLower());
-            if (stlpec == null)
+                    c => _aktualnyVystup.KlucoveStlpce.Any(s => s.ToLower() == c.Header.ToString().ToLower()));
+            if (stlpce == null)
                 return;
-            var id = row.Values.ElementAt(DataGrid.Columns.IndexOf(stlpec));
-            OnUserKlikolNaElementMamId(id);
+            var dic = new Dictionary<string, object>();
+            foreach (var stlpec in _aktualnyVystup.KlucoveStlpce)
+            {
+                var dataGridStlpec =
+                    DataGrid.Columns.FirstOrDefault(c => c.Header.ToString().ToLower() == stlpec.ToLower());
+                var id = row.Values.ElementAt(DataGrid.Columns.IndexOf(stlpce));
+                if (dataGridStlpec != null)
+                {
+                    dic.Add(stlpec, id);
+                }
+            }
+
+
+            OnUserKlikolNaElementMamId(dic);
         }
 
         private TextBox DajInputBox(ProcedureParameter paParameter, SqlClassAttribute paAttribut = null)
@@ -172,7 +184,7 @@ namespace VerejneOsvetlenie.Views
             _aktualnyVystup.SpustiVystup();
         }
 
-        protected virtual void OnUserKlikolNaElementMamId(object e)
+        protected virtual void OnUserKlikolNaElementMamId(Dictionary<string, object> e)
         {
             UserKlikolNaElementMamId?.Invoke(this, e);
         }

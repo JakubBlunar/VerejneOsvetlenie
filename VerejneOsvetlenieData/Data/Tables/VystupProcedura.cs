@@ -16,7 +16,7 @@ namespace VerejneOsvetlenieData.Data.Tables
         public string ErrorMessage { get; private set; }
         public ProcedureParameter[] ParametrePreVystup { get; private set; }
         private bool _podporaVysledku;
-        public string KlucovyStlpec { get; set; }
+        public List<string> KlucoveStlpce { get; set; }
 
         public IEnumerable<List<object>> Rows
         {
@@ -40,7 +40,7 @@ namespace VerejneOsvetlenieData.Data.Tables
             Columns.AddRange(paCollumnNames);
             ParametrePreVystup = paParameters;
             _podporaVysledku = paPodporujeVysledok;
-            KlucovyStlpec = null;
+            KlucoveStlpce = null;
         }
 
         public bool SpustiVystup()
