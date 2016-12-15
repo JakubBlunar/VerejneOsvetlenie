@@ -52,12 +52,16 @@
     <Compile Include="Data\Interfaces\SqlEntita.cs" />
     <Compile Include="Data\SInfo.cs" />
     <Compile Include="Data\SKontrola.cs" />
+    <Compile Include="Data\SKontrolaLampy.cs" />
+    <Compile Include="Data\SKontrolaStlpu.cs" />
     <Compile Include="Data\SLampa.cs" />
     <Compile Include="Data\SLampaNaStlpe.cs" />
     <Compile Include="Data\SObsluhaLampy.cs" />
     <Compile Include="Data\SObsluhaStlpu.cs" />
     <Compile Include="Data\SqlClassAttribute.cs" />
     <Compile Include="Data\SServis.cs" />
+    <Compile Include="Data\SServisLampy.cs" />
+    <Compile Include="Data\SServisStlpu.cs" />
     <Compile Include="Data\SSluzba.cs" />
     <Compile Include="Data\SStlp.cs" />
     <Compile Include="Data\STechnik.cs" />

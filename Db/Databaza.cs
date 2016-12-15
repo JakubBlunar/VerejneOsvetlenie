@@ -1661,7 +1661,7 @@ namespace Db
             {
                 reader = command.ExecuteReader();
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 // ignored
             }
