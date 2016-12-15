@@ -74,7 +74,7 @@ namespace VerejneOsvetlenie.Views
 
         private void ModelOnVystupSpracovany(object sender, EventArgs eventArgs)
         {
-            if (_aktualnyVystup.Rows.ElementAt(0)[0].ToString().Contains("<?xml"))
+            if (_aktualnyVystup.Rows.Any() && _aktualnyVystup.Rows.ElementAt(0)[0].ToString().Contains("<?xml"))
             {
                 PocetRiadkov.Text = 1+"";
                 XmlDocument doc = new XmlDocument();
