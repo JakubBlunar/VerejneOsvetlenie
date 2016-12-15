@@ -24,6 +24,13 @@ namespace VerejneOsvetlenie.Views
         public SpravaZaznamovWindow()
         {
             InitializeComponent();
+            Tabulka.UserKlikolNaElementMamId += Tabulka_UserKlikolNaElementMamId;
+        }
+
+        private void Tabulka_UserKlikolNaElementMamId(object sender, object e)
+        {
+            Model.AktualnaEntita = Model.AktualnyTypZaznamu.DajInstanciu();
+            Model.AktualnaEntita.SelectPodlaId(e);
         }
 
         private void VybranyNovyTypZaznamov(object sender, SelectionChangedEventArgs e)

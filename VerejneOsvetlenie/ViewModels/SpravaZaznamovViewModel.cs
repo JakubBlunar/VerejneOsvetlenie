@@ -18,6 +18,7 @@ namespace VerejneOsvetlenie.ViewModels
 
         public ZaznamInfo AktualnyTypZaznamu { get; set; }
         public IVystup AktualnyVystup { get; set; }
+        public SqlEntita AktualnaEntita { get; set; }
 
         public SpravaZaznamovViewModel()
         {

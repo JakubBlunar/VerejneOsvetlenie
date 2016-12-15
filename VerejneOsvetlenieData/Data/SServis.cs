@@ -24,7 +24,13 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            throw new System.NotImplementedException();
+            if (ObsluhaStlpu != null && IdSluzby == ObsluhaStlpu.IdSluzby)
+                return !Databaza.UpdateServisuStlpu(IdSluzby, Sluzba.RodneCislo, ObsluhaStlpu.Cislo, Sluzba.Popis,
+                    Sluzba.Trvanie, DateTime.Parse(Sluzba.Datum), Cena).JeChyba;
+            if (ObsluhaLampy != null && IdSluzby == ObsluhaLampy.IdSluzby)
+                return !Databaza.UpdateServisuLampy(IdSluzby, Sluzba.RodneCislo, ObsluhaLampy.IdLampy, Sluzba.Popis,
+                    Sluzba.Trvanie, DateTime.Parse(Sluzba.Datum), Cena).JeChyba;
+            return false;
         }
 
         public override bool Insert()

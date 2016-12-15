@@ -1197,6 +1197,66 @@ namespace Db
             return vysledok;
         }
 
+        public Vysledok UpdateKontrolyStlpu(
+            int idSluzby, string rodCislotechnika, int idStlpu, string popis,
+            char stav, int trvanie, DateTime pDatum)
+        {
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislotechnika))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu");
+            if (popis.Length > 500)
+                vysledok.PridajChybu("Popis kontroly presahuje 500 znakov.");
+            if (!"DZ".Contains(stav + ""))
+                vysledok.PridajChybu("nespravne zadany stav. (D,Z)");
+            if (trvanie < 0)
+                vysledok.PridajChybu("Zaporne trvanie kontroly stlpu");
+            if (pDatum > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum kontroly slpu");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
+
+            using (var cmd = new OracleCommand("update_kontroly_stlpu", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
+                cmd.Parameters.Add("pa_stav", "char").Value = stav;
+                cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
+                cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
+                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+            return vysledok;
+        }
+
         public Vysledok VlozServisStlpu(
             string rodCislotechnika, int idStlpu, string popis,
             int trvanie, DateTime pDatum, int cena)
@@ -1232,6 +1292,66 @@ namespace Db
                 cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
                 cmd.Parameters.Add("pa_cena", "number").Value = cena;
 
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+            return vysledok;
+        }
+
+        public Vysledok UpdateServisuStlpu(int idSluzby,
+             string rodCislotechnika, int idStlpu, string popis,
+             int trvanie, DateTime pDatum, int cena)
+        {
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislotechnika))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (idStlpu < 0)
+                vysledok.PridajChybu("Zaporne id stlpu");
+            if (popis.Length > 500)
+                vysledok.PridajChybu("Popis kontroly presahuje 500 znakov.");
+            if (trvanie < 0)
+                vysledok.PridajChybu("Zaporne trvanie kontroly stlpu");
+            if (pDatum > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum kontroly slpu");
+            if (cena < 0)
+                vysledok.PridajChybu("Zaporne naklady na servis stlpu");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
+
+            using (var cmd = new OracleCommand("update_servisu_stlpu", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
+                cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
+                cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
+                cmd.Parameters.Add("pa_cena", "number").Value = cena;
+                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
 
@@ -1321,6 +1441,70 @@ namespace Db
 
         }
 
+        public Vysledok UpdateKontrolyLampy(int idSluzby,
+            string rodCislotechnika, int idLampy, string popis,
+            char stav, int trvanie, DateTime pDatum, int svietivost)
+        {
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislotechnika))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (idLampy < 0)
+                vysledok.PridajChybu("Zaporne id lampy.");
+            if (popis.Length > 500)
+                vysledok.PridajChybu("Popis kontroly presahuje 500 znakov.");
+            if (!"DZ".Contains(stav + ""))
+                vysledok.PridajChybu("nespravne zadany stav. (D,Z)");
+            if (trvanie < 0)
+                vysledok.PridajChybu("Zaporne trvanie kontroly lampy");
+            if (pDatum > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum kontroly lampy");
+            if (svietivost < 0)
+                vysledok.PridajChybu("Zaporna svietivost.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
+
+            using (var cmd = new OracleCommand("update_kontroly_lampy", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
+                cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
+                cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
+                cmd.Parameters.Add("pa_stav", "char").Value = stav;
+                cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
+                cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
+                cmd.Parameters.Add("pa_svietivost", "number").Value = svietivost;
+                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+            return vysledok;
+
+        }
+
         public Vysledok VlozServisLampy(
             string rodCislotechnika, int idLampy, string popis,
             int trvanie, DateTime pDatum, int cena)
@@ -1356,6 +1540,66 @@ namespace Db
                 cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
                 cmd.Parameters.Add("pa_cena", "number").Value = cena;
 
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+            return vysledok;
+        }
+
+        public Vysledok UpdateServisuLampy(int idSluzby,
+            string rodCislotechnika, int idLampy, string popis,
+            int trvanie, DateTime pDatum, int cena)
+        {
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (!Validations.ValidRC(rodCislotechnika))
+                vysledok.PridajChybu("Nespravne rodne cislo.");
+            if (idLampy < 0)
+                vysledok.PridajChybu("Zaporne id lampy.");
+            if (popis.Length > 500)
+                vysledok.PridajChybu("Popis kontroly presahuje 500 znakov.");
+            if (trvanie < 0)
+                vysledok.PridajChybu("Zaporne trvanie kontroly lampy");
+            if (pDatum > DateTime.Now)
+                vysledok.PridajChybu("Nespravny datum kontroly lampy");
+            if (cena < 0)
+                vysledok.PridajChybu("Zaporne naklady na servis lampy");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            string datum = pDatum.ToString("dd.MM.yyyy HH:mm");
+
+            using (var cmd = new OracleCommand("update_servisu_lampy", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
+                cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
+                cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
+                cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
+                cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
+                cmd.Parameters.Add("pa_cena", "number").Value = cena;
+                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
 

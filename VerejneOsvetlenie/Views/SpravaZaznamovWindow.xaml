@@ -47,6 +47,7 @@
             <TextBlock Text="{Binding AktualnyTypZaznamu.NazovZaznamu}"
                        Grid.Row="0"></TextBlock>
             <local:TableGenerator Grid.Row="1"
+                                  x:Name="Tabulka"
                                   DataContext="{Binding AktualnyVystup}" />
         </Grid>
         <Grid Grid.Column="2"
@@ -57,7 +58,8 @@
             </Grid.RowDefinitions>
             <TextBlock Text="Editácia"
                        Grid.Row="0"></TextBlock>
-            <local:FormularGenerator Grid.Row="1" />
+            <local:FormularGenerator Grid.Row="1"
+                                     DataContext="{Binding AktualnaEntita}"/>
         </Grid>
     </Grid>
 </Window>
