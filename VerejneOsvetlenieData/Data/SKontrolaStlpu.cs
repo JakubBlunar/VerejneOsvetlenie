@@ -50,7 +50,7 @@ namespace VerejneOsvetlenieData.Data
         public override bool SelectPodlaId(object paIdEntity)
         {
 
-            var s = "select cislo, id_sluzby, datum, nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where id_sluzby = "+ paIdEntity;
+            var s = "select cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy hh24:mi'), nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where id_sluzby = " + paIdEntity;
             var select = new VystupSelect(s,
                 "cislo", "id_sluzby", "datum", "popis", "trvanie", "stav");
             select.SpustiVystup();
@@ -74,7 +74,7 @@ namespace VerejneOsvetlenieData.Data
 
         public override IVystup GetSelectOnTableData()
         {
-            var s = "select cislo, id_sluzby, datum, nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby)";
+            var s = "select cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) order by id_sluzby desc";
             var select = new VystupSelect(s,
                 "cislo","id_sluzby","datum","popis","trvanie","stav" );
             select.KlucovyStlpec = "ID_SLUZBY";
