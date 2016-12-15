@@ -15,6 +15,6 @@ namespace VerejneOsvetlenieData.Data.Tables
         ProcedureParameter[] ParametrePreVystup { get; }
         IEnumerable<List<object>> Rows { get; }
         bool SpustiVystup();
-        List<string> KlucoveStlpce { get; }
+        string KlucovyStlpec { get; }
     }
 }

@@ -28,12 +28,11 @@ namespace VerejneOsvetlenie.Views
             Tabulka.FilterButton.Visibility = Visibility.Hidden;
         }
 
-        private void Tabulka_UserKlikolNaElementMamId(object sender, Dictionary<string, object> e)
+        private void Tabulka_UserKlikolNaElementMamId(object sender, object e)
         {
             Model.AktualnaEntita = Model.AktualnyTypZaznamu.DajInstanciu();
             Model.AktualnaEntita.SelectPodlaId(e);
         }
-
 
         private void VybranyNovyTypZaznamov(object sender, SelectionChangedEventArgs e)
         {

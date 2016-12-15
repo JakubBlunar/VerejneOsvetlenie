@@ -10,6 +10,7 @@ namespace VerejneOsvetlenieData.Data
     /// </summary>
     public class SqlClassAttribute : Attribute
     {
+        public bool ReadOnly { get; set; }
         /// <summary>
         /// ak je to varchar alebo niečo také tak jeho dĺžka
         /// </summary>
@@ -73,6 +74,7 @@ namespace VerejneOsvetlenieData.Data
             DisplayName = string.Empty;
             SpecialFormat = null;
             IsBitmapImage = false;
+            ReadOnly = false;
         }
 
         public static SqlClassAttribute ExtractSqlClassAttribute(PropertyInfo paPropertyInfo)

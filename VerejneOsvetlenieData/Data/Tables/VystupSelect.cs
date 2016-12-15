@@ -17,7 +17,7 @@ namespace VerejneOsvetlenieData.Data.Tables
         public List<string> Columns { get; private set; }
         public string ErrorMessage { get; private set; }
         public ProcedureParameter[] ParametrePreVystup => null;
-        public List<string> KlucoveStlpce { get; set; }
+        public string KlucovyStlpec { get; set; }
 
 
         public IEnumerable<List<object>> Rows

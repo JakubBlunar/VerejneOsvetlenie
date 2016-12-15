@@ -123,7 +123,7 @@ namespace VerejneOsvetlenie.Views
             var box = new TextBox
             {
                 FontSize = 20,
-                IsReadOnly = !paPropertyInfo.CanWrite,
+                IsReadOnly = !paPropertyInfo.CanWrite || paAttribut?.ReadOnly == true,
                 Margin = new Thickness(5, 5, 0, 5),
                 MaxLength = (paAttribut?.Length ?? 0) != 0 ? paAttribut.Length : 50
             };

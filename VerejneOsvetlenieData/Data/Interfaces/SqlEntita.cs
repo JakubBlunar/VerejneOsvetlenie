@@ -84,7 +84,7 @@ namespace VerejneOsvetlenieData.Data.Interfaces
 
             var select = $"select distinct {stlpce} from {atribut.TableName}";// a0 {string.Join(" ", tabulky.Select(t => $"join {t} a{++poradieAlias} on(a0.{atribut.TableKey} = a{poradieTab}.{kluce[poradieTab]})"))}";
             var vystup = new VystupSelect(select);
-            vystup.KlucoveStlpce = new List<string>() { atribut.TableKey };
+            vystup.KlucovyStlpec = atribut.TableKey;
             return vystup;
         }
 

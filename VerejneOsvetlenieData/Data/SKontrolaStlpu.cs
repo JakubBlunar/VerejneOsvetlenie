@@ -13,7 +13,7 @@ namespace VerejneOsvetlenieData.Data
     [SqlClass(TableName = "", DisplayName = "Kontrola stlpu", TableKey = "ID_SLUZBY")]
     public class SKontrolaStlpu:SqlEntita
     {
-        [SqlClass(ColumnName = "CISLO", DisplayName = "Cislo stlpu")]
+        [SqlClass(ColumnName = "CISLO", DisplayName = "Cislo stlpu", ReadOnly = true)]
         public int Cislo { get; set; }
 
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]
@@ -50,7 +50,7 @@ namespace VerejneOsvetlenieData.Data
         public override bool SelectPodlaId(object paIdEntity)
         {
 
-            string s = "select cislo, id_sluzby, datum, nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where id_sluzby = "+ paIdEntity;
+            var s = "select cislo, id_sluzby, datum, nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where id_sluzby = "+ paIdEntity;
             var select = new VystupSelect(s,
                 "cislo", "id_sluzby", "datum", "popis", "trvanie", "stav");
             select.SpustiVystup();
@@ -65,7 +65,7 @@ namespace VerejneOsvetlenieData.Data
                     Datum = enumerator.Current[2].ToString();
                     Popis = enumerator.Current[3].ToString();
                     Trvanie = int.Parse(enumerator.Current[4].ToString());
-                    Stav = enumerator.Current[3].ToString();
+                    Stav = enumerator.Current[5].ToString();
                     return true;
                 }
             }
@@ -74,9 +74,10 @@ namespace VerejneOsvetlenieData.Data
 
         public override IVystup GetSelectOnTableData()
         {
-            string s = "select cislo, id_sluzby, datum, nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby)";
+            var s = "select cislo, id_sluzby, datum, nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby)";
             var select = new VystupSelect(s,
                 "cislo","id_sluzby","datum","popis","trvanie","stav" );
+            select.KlucovyStlpec = "ID_SLUZBY";
             return select;
 
         }
