@@ -78,16 +78,23 @@ namespace VerejneOsvetlenie.Views
             }
         }
 
-        private void GenerujPodlaSqlEntity()
+        private void GenerujPodlaSqlEntity(SqlEntita paRefencia = null)
         {
-            var model = ModelAkoEntita;
+            var model = paRefencia ?? ModelAkoEntita;
             FormularTitulok.Text = DajAtributTabulky(model).ElementName;
             var props = model.GetType().GetProperties();
             foreach (var propertyInfo in props)
             {
                 var atribut = this.DajAtributStlpca(propertyInfo);
-                if(atribut.ShowElement == false)
+                if (atribut.ShowElement == false)
                     continue;
+                if (atribut.IsReference)
+                {
+                    var property = propertyInfo.GetValue(model) as SqlEntita;// ?? Activator.CreateInstance(propertyInfo.PropertyType) as SqlEntita;
+                    //if(property == null)
+                    //    continue;
+                    GenerujPodlaSqlEntity(property);
+                }
                 DajNovyRiadok();
                 var label = DajLabel(propertyInfo, atribut);
                 UIElement inputBoxOrImage = null;
