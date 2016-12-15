@@ -112,6 +112,12 @@ namespace VerejneOsvetlenie.ViewModels
                 new ProcedureParameter("pocet", "number", 10)
             )));
 
+            Vystupy.Add(new PomenovanyVystup("Výpis servisných informácií na konkrétnej ulici pre každý stĺp.",
+                new VystupProcedura("xml_servisy_stlpov", false, new[] { "Riadok" },
+                new ProcedureParameter("pa_id_ulice", "number", 1)
+            )));
+
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

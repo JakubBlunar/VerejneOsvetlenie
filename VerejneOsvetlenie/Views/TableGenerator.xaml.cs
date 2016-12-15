@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 using Db;
 using VerejneOsvetlenieData.Data;
 using VerejneOsvetlenieData.Data.Tables;
@@ -71,7 +74,23 @@ namespace VerejneOsvetlenie.Views
 
         private void ModelOnVystupSpracovany(object sender, EventArgs eventArgs)
         {
-            GenerujTabulku();
+            if (_aktualnyVystup.Rows.ElementAt(0)[0].ToString().Contains("<?xml"))
+            {
+                PocetRiadkov.Text = 1+"";
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(_aktualnyVystup.Rows.ElementAt(0)[0].ToString());
+                using (XmlTextWriter writer = new XmlTextWriter("temp", null))
+                {
+                    writer.Formatting = Formatting.Indented;
+                    doc.Save(writer);
+                }
+                Process.Start("temp");
+              
+            }
+            else
+            { 
+                GenerujTabulku();
+            }    
         }
 
         private void GenerujTabulku()
@@ -87,8 +106,8 @@ namespace VerejneOsvetlenie.Views
             }
             DataGrid.ItemsSource = _aktualnyVystup.Rows;
             while (DataGrid.Columns.Count - _aktualnyVystup.Columns.Count > 0)
-                DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);
-            PocetRiadkov.Text = _aktualnyVystup.Rows.Count().ToString();
+                DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);          
+            PocetRiadkov.Text = _aktualnyVystup.Rows.Count().ToString();   
         }
 
         protected virtual void OnUserKlikolNaElement(Dictionary<string, object> e)
