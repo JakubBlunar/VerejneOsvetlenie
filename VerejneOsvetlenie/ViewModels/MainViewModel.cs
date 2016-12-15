@@ -102,13 +102,13 @@ namespace VerejneOsvetlenie.ViewModels
                 new ProcedureParameter("PA_POC_ROKOV_DOZADU", "number", 1), new ProcedureParameter("PA_POC_MENENI", "number", 2))));
            
 
-            DateTime datumOd = DateTime.ParseExact("24.05.1994 13:26", "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture);
+            DateTime datumOd = DateTime.ParseExact("01.01.2000 13:26", "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture);
             DateTime datumDo = DateTime.Now;
 
             Vystupy.Add(new PomenovanyVystup("Výpis prvých desať technikov, podľa počtu servisných zásahov za definované obdobie.",
                 new VystupProcedura("najlepsi_technici", false, new[] { "Rodné číslo", "Počet zásahov", "Dense Rank" },
-                new ProcedureParameter("datum_od", "varchar2", datumOd.ToString("dd.MM.yyyy")),
-                new ProcedureParameter("datum_do", "varchar2", datumDo.ToString("dd.MM.yyyy")),
+                new ProcedureParameter("datum_od", "date", datumOd.ToString("dd.MM.yyyy")),
+                new ProcedureParameter("datum_do", "date", datumDo.ToString("dd.MM.yyyy")),
                 new ProcedureParameter("pocet", "number", 10)
             )));
 
@@ -117,6 +117,39 @@ namespace VerejneOsvetlenie.ViewModels
                 new ProcedureParameter("pa_id_ulice", "number", 1)
             )));
 
+            Vystupy.Add(new PomenovanyVystup("Výpis ulíc, na ktorých sú viac ako 2 stĺpy vedľa seba, ktoré nesvietia.",
+               new VystupProcedura("nesvietiace_lampy_v_rade", false, new[] { "Id_Ulice", "Názov ulice", "Mesto"} )));
+
+            Vystupy.Add(new PomenovanyVystup("Opravy stlpov od do s granularitou",
+             new VystupProcedura("OPRAVY_STLPOV", true, new[] { "Dátum", "Počet"},
+              new ProcedureParameter("pa_granularity", "varchar2", "year"),
+              new ProcedureParameter("paOd", "date", datumOd.ToString("dd.MM.yyyy")),
+               new ProcedureParameter("paDo", "date", datumDo.ToString("dd.MM.yyyy"))   
+             )));
+
+            Vystupy.Add(new PomenovanyVystup("Opravy stlpov zadaneho typu od do s granularitou",
+             new VystupProcedura("OPRAVY_STLPOV_TYPU", true , new[] { "Dátum", "Počet" },
+                new ProcedureParameter("pa_typ", "char", 'C'),
+                new ProcedureParameter("pa_granularity", "varchar2", "year"),
+                new ProcedureParameter("paOd", "date", datumOd.ToString("dd.MM.yyyy")),
+               new ProcedureParameter("paDo", "date", datumDo.ToString("dd.MM.yyyy"))
+             )));
+
+            Vystupy.Add(new PomenovanyVystup("Opravy stlpov zadanej ulice od do s granularitou",
+            new VystupProcedura("OPRAVY_STLPOV_ULICE", true, new[] { "Dátum", "Počet" },
+               new ProcedureParameter("pa_id_ulice", "number", 1),
+               new ProcedureParameter("pa_granularity", "varchar2", "year"),
+               new ProcedureParameter("paOd", "date", datumOd.ToString("dd.MM.yyyy")),
+              new ProcedureParameter("paDo", "date", datumDo.ToString("dd.MM.yyyy"))
+            )));
+
+            Vystupy.Add(new PomenovanyVystup("Opravy stlpov zadaného veku, od do s granularitou",
+            new VystupProcedura("OPRAVY_STLPOV_VEKU", true, new[] { "Dátum", "Počet" },
+               new ProcedureParameter("pa_vek", "number", 1),
+               new ProcedureParameter("pa_granularity", "varchar2", "year"),
+               new ProcedureParameter("paOd", "date", datumOd.ToString("dd.MM.yyyy")),
+              new ProcedureParameter("paDo", "date", datumDo.ToString("dd.MM.yyyy"))
+            )));
 
         }
 

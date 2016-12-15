@@ -128,7 +128,7 @@ namespace VerejneOsvetlenie.Views
             OnUserKlikolNaElement(row);
             var stlpec =
                 DataGrid.Columns.FirstOrDefault(
-                    c => c.Header.ToString().ToLower() == _aktualnyVystup.KlucovyStlpec.ToLower());
+                    c => c.Header.ToString().ToLower() == _aktualnyVystup.KlucovyStlpec?.ToLower());
             if (stlpec == null)
                 return;
             var id = row.Values.ElementAt(DataGrid.Columns.IndexOf(stlpec));
