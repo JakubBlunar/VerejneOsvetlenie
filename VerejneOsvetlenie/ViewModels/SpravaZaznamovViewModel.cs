@@ -32,7 +32,9 @@ namespace VerejneOsvetlenie.ViewModels
                 new ZaznamInfo() { NazovZaznamu = "technici",  TypZaznamu = typeof(STechnik)},
                 new ZaznamInfo() { NazovZaznamu = "typy lamp",  TypZaznamu = typeof(SLampa)},
                 new ZaznamInfo() { NazovZaznamu = "servis",  TypZaznamu = typeof(SServis)},
-                new ZaznamInfo() { NazovZaznamu = "kontrola",  TypZaznamu = typeof(SKontrola)}
+                new ZaznamInfo() { NazovZaznamu = "kontrola",  TypZaznamu = typeof(SKontrola)},
+                new ZaznamInfo() { NazovZaznamu = "stlpy",  TypZaznamu = typeof(SStlp)},
+                new ZaznamInfo() { NazovZaznamu = "info o stlpoch",  TypZaznamu = typeof(SInfo)},
             };
         }
 
