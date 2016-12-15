@@ -25,6 +25,7 @@ namespace VerejneOsvetlenie.Views
         {
             InitializeComponent();
             Tabulka.UserKlikolNaElementMamId += Tabulka_UserKlikolNaElementMamId;
+            Tabulka.FilterButton.Visibility = Visibility.Hidden;
         }
 
         private void Tabulka_UserKlikolNaElementMamId(object sender, object e)
