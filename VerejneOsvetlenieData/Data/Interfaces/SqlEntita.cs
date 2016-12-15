@@ -73,7 +73,9 @@ namespace VerejneOsvetlenieData.Data.Interfaces
                 && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == false)
                 .Select(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.ColumnName));
             var select = $"select distinct {stlpce} from {atribut.TableName}";
-            return new VystupSelect(select);
+            var vystup = new VystupSelect(select);
+            vystup.KlucovyStlpec = atribut.TableKey;
+            return vystup;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

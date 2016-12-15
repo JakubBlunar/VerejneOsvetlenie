@@ -28,6 +28,7 @@ namespace VerejneOsvetlenie.Views
         public PomenovanyVystup Model => DataContext as PomenovanyVystup;
         private IVystup _aktualnyVystup;
         public event EventHandler<Dictionary<string, object>> UserKlikolNaElement;
+        public event EventHandler<object> UserKlikolNaElementMamId;
 
         public TableGenerator()
         {
@@ -106,6 +107,13 @@ namespace VerejneOsvetlenie.Views
                 row.Add(DataGrid.Columns[i].Header.ToString(), values[i]);
             }
             OnUserKlikolNaElement(row);
+            var stlpec =
+                DataGrid.Columns.FirstOrDefault(
+                    c => c.Header.ToString().ToLower() == _aktualnyVystup.KlucovyStlpec.ToLower());
+            if (stlpec == null)
+                return;
+            var id = row.Values.ElementAt(DataGrid.Columns.IndexOf(stlpec));
+            OnUserKlikolNaElementMamId(id);
         }
 
         private TextBox DajInputBox(ProcedureParameter paParameter, SqlClassAttribute paAttribut = null)
@@ -143,6 +151,11 @@ namespace VerejneOsvetlenie.Views
         private void SpustiFilter(object sender, RoutedEventArgs e)
         {
             _aktualnyVystup.SpustiVystup();
+        }
+
+        protected virtual void OnUserKlikolNaElementMamId(object e)
+        {
+            UserKlikolNaElementMamId?.Invoke(this, e);
         }
     }
 }
