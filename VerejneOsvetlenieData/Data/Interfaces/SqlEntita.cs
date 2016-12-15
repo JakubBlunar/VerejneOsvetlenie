@@ -68,7 +68,7 @@ namespace VerejneOsvetlenieData.Data.Interfaces
             return entita;
         }
 
-        public IVystup GetSelectOnTableData()
+        public virtual IVystup GetSelectOnTableData()
         {
             var atribut = SqlClassAttribute.ExtractSqlClassAttribute(this);
             //var pocetReferencii = 0;

@@ -1656,8 +1656,15 @@ namespace Db
             OracleCommand command = ActiveConnection.CreateCommand();
             string sql = select;
             command.CommandText = sql;
-
-            var reader = command.ExecuteReader();
+            OracleDataReader reader = null;
+            try
+            {
+                reader = command.ExecuteReader();
+            }
+            catch (Exception)
+            {
+                // ignored
+            }
 
             var table = new Dictionary<string, object>();
             for (var i = 0; i < reader.FieldCount; i++)

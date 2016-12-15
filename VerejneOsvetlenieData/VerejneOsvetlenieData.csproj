@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Interfaces\ISluzba.cs" />
     <Compile Include="Data\Interfaces\SqlEntita.cs" />
     <Compile Include="Data\SInfo.cs" />
     <Compile Include="Data\SKontrola.cs" />
