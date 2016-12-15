@@ -70,16 +70,25 @@ namespace VerejneOsvetlenie.ViewModels
 
             Vystupy = new ObservableCollection<PomenovanyVystup>
             {
-                new PomenovanyVystup("Testovací výstup 1", new VystupSelect("select * from s_technik", "rodné číslo", "meno", "priezvisko")),
-                new PomenovanyVystup("Testovací výstup 2", new VystupProcedura("reklamacia_technika", false, new [] {"rodné číslo", "meno", "priezvisko", "trvanie"})),
+                /*new PomenovanyVystup("Testovací výstup 1", new VystupSelect("select * from s_technik", "rodné číslo", "meno", "priezvisko")),  
                 new PomenovanyVystup("Testovací výstup s parametrami", 
                 new VystupProcedura("vypis_chybnych_ulic", 
                 false, 
                 new [] {"id_ulice", "názov", "počet", "poradie"}, 
                 new ProcedureParameter("pocet", "number", 500),
                 new ProcedureParameter("pa_odkedy", "date", DateTime.Now.AddYears(-10).ToString("yyyy-MM-dd")),
-                new ProcedureParameter("pa_dokedy", "date", DateTime.Now.ToString("yyyy-MM-dd"))))
+                new ProcedureParameter("pa_dokedy", "date", DateTime.Now.ToString("yyyy-MM-dd"))))*/
             };
+
+            DateTime datumOd = DateTime.ParseExact("01.01.2000 13:26", "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture);
+            DateTime datumDo = DateTime.Now;
+
+            Vystupy.Add(new PomenovanyVystup("Výpis prvých desať technikov, podľa počtu servisných zásahov za definované obdobie.",
+                new VystupProcedura("najlepsi_technici", false, new[] { "Rodné číslo", "Počet zásahov", "Dense Rank" },
+                new ProcedureParameter("datum_od", "date", datumOd.ToString("dd.MM.yyyy")),
+                new ProcedureParameter("datum_do", "date", datumDo.ToString("dd.MM.yyyy")),
+                new ProcedureParameter("pocet", "number", 10)
+            )));
 
             var vystup4 = ResourceVystupy.vystup_4.Replace("\r\n", " ").Replace(";", "");
             Vystupy.Add(new PomenovanyVystup("Výpis ulíc, na ktorých je viac ako 15% nesvietiacich lámp.",
@@ -101,17 +110,6 @@ namespace VerejneOsvetlenie.ViewModels
                 new VystupProcedura("menene_znacky_na_stlpe", false, new[] {"Číslo Stĺpu"}, 
                 new ProcedureParameter("PA_POC_ROKOV_DOZADU", "number", 1), new ProcedureParameter("PA_POC_MENENI", "number", 2))));
            
-
-            DateTime datumOd = DateTime.ParseExact("01.01.2000 13:26", "dd.MM.yyyy HH:mm", CultureInfo.InvariantCulture);
-            DateTime datumDo = DateTime.Now;
-
-            Vystupy.Add(new PomenovanyVystup("Výpis prvých desať technikov, podľa počtu servisných zásahov za definované obdobie.",
-                new VystupProcedura("najlepsi_technici", false, new[] { "Rodné číslo", "Počet zásahov", "Dense Rank" },
-                new ProcedureParameter("datum_od", "date", datumOd.ToString("dd.MM.yyyy")),
-                new ProcedureParameter("datum_do", "date", datumDo.ToString("dd.MM.yyyy")),
-                new ProcedureParameter("pocet", "number", 10)
-            )));
-
             Vystupy.Add(new PomenovanyVystup("Výpis servisných informácií na konkrétnej ulici pre každý stĺp.",
                 new VystupProcedura("xml_servisy_stlpov", false, new[] { "Riadok" },
                 new ProcedureParameter("pa_id_ulice", "number", 1)
@@ -150,6 +148,19 @@ namespace VerejneOsvetlenie.ViewModels
                new ProcedureParameter("paOd", "date", datumOd.ToString("dd.MM.yyyy")),
               new ProcedureParameter("paDo", "date", datumDo.ToString("dd.MM.yyyy"))
             )));
+
+            Vystupy.Add(new PomenovanyVystup("Výpis osoby, ktorá opravila stĺp, ale do týždňa ho bolo treba opraviť opäť.", 
+                new VystupProcedura("reklamacia_technika", false, new[] { "rodné číslo", "meno", "priezvisko" })));
+
+
+            Vystupy.Add(new PomenovanyVystup("Výpis ulíc, kde bol najčastejšie potrebný servisný zásah.",
+                new VystupProcedura("vypis_chybnych_ulic", false, new[] { "Id Ulice", "Názov", "Počet" , "Dense Rank" },
+                new ProcedureParameter("pa_pocet", "number", 10),
+                new ProcedureParameter("datum_od", "date", datumOd.ToString("dd.MM.yyyy")),
+                new ProcedureParameter("datum_do", "date", datumDo.ToString("dd.MM.yyyy"))
+                
+            )));
+
 
         }
 
