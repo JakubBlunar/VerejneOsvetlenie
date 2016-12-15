@@ -106,8 +106,8 @@ namespace VerejneOsvetlenie.ViewModels
             DateTime datumDo = DateTime.Now;
 
             Vystupy.Add(new PomenovanyVystup("Výpis prvých desať technikov, podľa počtu servisných zásahov za definované obdobie.",
-                new VystupProcedura("najlepsi_technici", false, new[] { "Rodné číslo", "Počet zásahov" },
-                new ProcedureParameter("datum_od", "varchar2", datumOd.ToString("dd.MM.yyyy") ),
+                new VystupProcedura("najlepsi_technici", false, new[] { "Rodné číslo", "Počet zásahov", "Dense Rank" },
+                new ProcedureParameter("datum_od", "varchar2", datumOd.ToString("dd.MM.yyyy")),
                 new ProcedureParameter("datum_do", "varchar2", datumDo.ToString("dd.MM.yyyy")),
                 new ProcedureParameter("pocet", "number", 10)
             )));
