@@ -29,7 +29,9 @@ namespace VerejneOsvetlenie.ViewModels
             ZaznamyNaSpravu = new ObservableCollection<ZaznamInfo>
             {
                 new ZaznamInfo() { NazovZaznamu = "technici",  TypZaznamu = typeof(STechnik)},
-                new ZaznamInfo() { NazovZaznamu = "lampy",  TypZaznamu = typeof(SLampa)}
+                new ZaznamInfo() { NazovZaznamu = "typy lamp",  TypZaznamu = typeof(SLampa)},
+                new ZaznamInfo() { NazovZaznamu = "servis",  TypZaznamu = typeof(SServis)},
+                new ZaznamInfo() { NazovZaznamu = "kontrola",  TypZaznamu = typeof(SKontrola)}
             };
         }
 
