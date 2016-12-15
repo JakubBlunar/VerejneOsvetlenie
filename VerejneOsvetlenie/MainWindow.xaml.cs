@@ -29,10 +29,6 @@ namespace VerejneOsvetlenie
         {
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
-
-            SServis servis = new SServis();
-            servis.SelectPodlaId(138);
-            servis.Insert();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
