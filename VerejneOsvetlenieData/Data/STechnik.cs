@@ -7,7 +7,7 @@ namespace VerejneOsvetlenieData.Data
     [SqlClass(TableName = "S_TECHNIK", DisplayName = "Technik", TableKey = "RODNE_CISLO")]
     public class STechnik : SqlEntita
     {
-        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = "Rodné èíslo")]
+        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = "Rodné èíslo", Length = 10)]
         public string RodneCislo { get; set; }
 
         [SqlClass(ColumnName = "MENO", DisplayName = "Meno")]

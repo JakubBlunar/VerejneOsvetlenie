@@ -12,8 +12,8 @@ namespace Db
             if (rodneCislo.Length != 10)
                 return false;
 
-            try { int.Parse(rodneCislo); }
-            catch (FormatException) { return false; }
+            //try { int.Parse(rodneCislo); }
+            //catch (FormatException) { return false; }
 
             string date = 
                   rodneCislo.Substring(4, 2) + "."

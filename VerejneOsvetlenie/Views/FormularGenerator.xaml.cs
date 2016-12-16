@@ -29,6 +29,7 @@ namespace VerejneOsvetlenie.Views
     {
         public SqlEntita ModelAkoEntita => Model as SqlEntita;
         public object Model => this.DataContext;
+        public StavyFormulara AktualnyStav { get; private set; }
 
         public FormularGenerator()
         {
@@ -46,12 +47,19 @@ namespace VerejneOsvetlenie.Views
         {
             Formular.Children.Clear();
             Formular.RowDefinitions.Clear();
+            AktualnyStav = StavyFormulara.Init;
+            HlavnyGrid.IsEnabled = false;
+            NastavTlacidla(true, false, true);
         }
 
         public void GenerujFormular()
         {
             if (Model == null)
+            {
+                if (ModelAkoEntita == null)
+                    NastavTlacidla(false, false, false);
                 return;
+            }
             if (ModelAkoEntita != null)
                 GenerujPodlaSqlEntity();
             //else
@@ -99,7 +107,7 @@ namespace VerejneOsvetlenie.Views
                 var label = DajLabel(propertyInfo, atribut);
                 UIElement inputBoxOrImage = null;
                 if (atribut?.IsBitmapImage == false)
-                    inputBoxOrImage = DajInputBox(propertyInfo, atribut);
+                    inputBoxOrImage = DajInputBox(propertyInfo, model, atribut);
                 else
                 {
                     inputBoxOrImage = new Image();
@@ -118,19 +126,22 @@ namespace VerejneOsvetlenie.Views
             }
         }
 
-        private TextBox DajInputBox(PropertyInfo paPropertyInfo, SqlClassAttribute paAttribut = null)
+        private TextBox DajInputBox(PropertyInfo paPropertyInfo, SqlEntita paEntita = null, SqlClassAttribute paAttribut = null)
         {
             var box = new TextBox
             {
                 FontSize = 20,
                 IsReadOnly = !paPropertyInfo.CanWrite || paAttribut?.ReadOnly == true,
                 Margin = new Thickness(5, 5, 0, 5),
+                MaxWidth = 200,
+                MaxLines = 10,
+                TextWrapping = TextWrapping.Wrap,
                 MaxLength = (paAttribut?.Length ?? 0) != 0 ? paAttribut.Length : 50
             };
             box.SetBinding(TextBox.TextProperty, new Binding()
             {
                 Path = new PropertyPath(paPropertyInfo.Name),
-                Source = DataContext,
+                Source = paEntita ?? DataContext,
                 Mode = paPropertyInfo.CanWrite ? BindingMode.TwoWay : BindingMode.OneWay,
                 ConverterCulture = CultureInfo.CurrentCulture,
                 StringFormat = paAttribut?.SpecialFormat
@@ -175,5 +186,46 @@ namespace VerejneOsvetlenie.Views
                 Height = GridLength.Auto
             };
         }
+
+        private void Upravit_Click(object sender, RoutedEventArgs e)
+        {
+            HlavnyGrid.IsEnabled = true;
+            AktualnyStav = StavyFormulara.Update;
+            NastavTlacidla(false, true, true);
+        }
+
+        private void Ulozit_Click(object sender, RoutedEventArgs e)
+        {
+            HlavnyGrid.IsEnabled = false;
+            if (AktualnyStav == StavyFormulara.Update)
+                ModelAkoEntita.Update();
+            else if (AktualnyStav == StavyFormulara.Insert)
+                ModelAkoEntita.Insert();
+
+            AktualnyStav = StavyFormulara.Init;
+            NastavTlacidla(true, false, true);
+        }
+
+        private void NastavTlacidla(bool paUprav, bool paUloz, bool paNovy)
+        {
+            Novy.Visibility = paNovy ? Visibility.Visible : Visibility.Collapsed;
+            Upravit.Visibility = paUprav ? Visibility.Visible : Visibility.Collapsed;
+            Ulozit.Visibility = paUloz ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private void Novy_Click(object sender, RoutedEventArgs e)
+        {
+            var novaEntita = Activator.CreateInstance(ModelAkoEntita.GetType()) as SqlEntita;
+            Reset();
+            AktualnyStav = StavyFormulara.Insert;
+            NastavTlacidla(false, true, true);
+            GenerujPodlaSqlEntity(novaEntita);
+            HlavnyGrid.IsEnabled = true;
+        }
+    }
+
+    public enum StavyFormulara
+    {
+        Init, Update, Insert
     }
 }

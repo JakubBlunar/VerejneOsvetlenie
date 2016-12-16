@@ -76,7 +76,7 @@ namespace VerejneOsvetlenie.Views
         {
             if (_aktualnyVystup.Rows.Any() && _aktualnyVystup.Rows.ElementAt(0)[0].ToString().Contains("<?xml"))
             {
-                PocetRiadkov.Text = 1+"";
+                PocetRiadkov.Text = 1 + "";
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(_aktualnyVystup.Rows.ElementAt(0)[0].ToString());
                 using (XmlTextWriter writer = new XmlTextWriter("temp", null))
@@ -85,12 +85,12 @@ namespace VerejneOsvetlenie.Views
                     doc.Save(writer);
                 }
                 Process.Start("temp");
-              
+
             }
             else
-            { 
+            {
                 GenerujTabulku();
-            }    
+            }
         }
 
         private void GenerujTabulku()
@@ -106,8 +106,29 @@ namespace VerejneOsvetlenie.Views
             }
             DataGrid.ItemsSource = _aktualnyVystup.Rows;
             while (DataGrid.Columns.Count - _aktualnyVystup.Columns.Count > 0)
-                DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);          
-            PocetRiadkov.Text = _aktualnyVystup.Rows.Count().ToString();   
+                DataGrid.Columns.RemoveAt(DataGrid.Columns.Count - 1);
+            PocetRiadkov.Text = _aktualnyVystup.Rows.Count().ToString();
+
+            var scrollBar = FindVisualChild<ScrollViewer>(DataGrid);
+            if (scrollBar != null)
+                scrollBar.IsDeferredScrollingEnabled = true;
+        }
+
+        private childItem FindVisualChild<childItem>(DependencyObject obj) where childItem : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(obj, i);
+                if (child != null && child is childItem)
+                    return (childItem)child;
+                else
+                {
+                    childItem childOfChild = FindVisualChild<childItem>(child);
+                    if (childOfChild != null)
+                        return childOfChild;
+                }
+            }
+            return null;
         }
 
         protected virtual void OnUserKlikolNaElement(Dictionary<string, object> e)

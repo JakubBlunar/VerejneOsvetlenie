@@ -98,6 +98,7 @@ namespace Db
 
             const string anonymousBlock = "begin dbms_output.get_lines(:1, :2); end;";
             const int numToFetch = 10;
+            var results = new LinkedList<List<object>>();
             using (OracleCommand cmd = Databaza.ActiveConnection.CreateCommand())
             {
 
@@ -121,7 +122,7 @@ namespace Db
                 catch
                 {
                     vysledok?.NastavChybu("Chyba pri vykonavani procdury");
-                    yield break;
+                    //yield break;
                 }
 
                 if (vysledok != null)
@@ -152,7 +153,6 @@ namespace Db
                 cmd.ExecuteNonQuery();
 
                 var numLinesFetched = ((OracleDecimal)pNumlines.Value).ToInt32();
-
                 while (numLinesFetched > 0)
                 {
                     for (var i = 0; i < numLinesFetched; i++)
@@ -160,7 +160,9 @@ namespace Db
                         var oracleStrings = pLines.Value as OracleString[];
                         var a = string.Empty;
                         if (oracleStrings != null)
-                            yield return oracleStrings[i].ToString().Split(';').Cast<object>().ToList();
+                        {
+                            results.AddLast(oracleStrings[i].ToString().Split(';').Cast<object>().ToList());
+                        }
                     }
                     cmd.ExecuteNonQuery();
 
@@ -170,6 +172,7 @@ namespace Db
                 pNumlines.Dispose();
                 pLines.Dispose();
             }
+            return results;
         }
 
 
@@ -1653,6 +1656,7 @@ namespace Db
 
         public IEnumerable<Dictionary<string, object>> SpecialSelect(string select)
         {
+
             OracleCommand command = ActiveConnection.CreateCommand();
             string sql = select;
             command.CommandText = sql;
@@ -1660,26 +1664,36 @@ namespace Db
             try
             {
                 reader = command.ExecuteReader();
+                //Console.WriteLine("selectujem ");
+
             }
             catch (Exception e)
             {
+                //yield break;
+
                 // ignored
             }
-
-            var table = new Dictionary<string, object>();
-            for (var i = 0; i < reader.FieldCount; i++)
+            finally
             {
-                table.Add(reader.GetName(i), null);
+
             }
+            var result = new LinkedList<Dictionary<string, object>>();
             while (reader.Read())
             {
+                var table = new Dictionary<string, object>();
+                for (var i = 0; i < reader.FieldCount; i++)
+                {
+                    table.Add(reader.GetName(i), null);
+                }
                 for (var i = 0; i < reader.FieldCount; i++)
                 {
                     table[reader.GetName(i)] = null;
                     table[reader.GetName(i)] = reader[reader.GetName(i)];
                 }
-                yield return table;
+                result.AddLast(table);
+                //yield return table;
             }
+            return result;//new[] {new Dictionary<string, object>() { {"a", 1} }};
         }
 
         public List<string> GetTechnici()

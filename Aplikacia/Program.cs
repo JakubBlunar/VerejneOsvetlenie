@@ -74,32 +74,40 @@ namespace Aplikacia
                     
             }*/
 
-            StringBuilder b = db.Test();
-            Console.WriteLine(b.ToString());
-            Console.WriteLine("Done");
+            //StringBuilder b = db.Test();
+            //Console.WriteLine(b.ToString());
+            //Console.WriteLine("Done");
 
-            var vysledok = new Vysledok();
-            var resultProcedurWithoutResult = db.RunProcedureWithOutput("TEST_KOD", null, new ProcedureParameter("parameter1", "integer", 1));
-            foreach (var row in resultProcedurWithoutResult)
-            {
-                Console.WriteLine(row[0]);
-            }
+            //var vysledok = new Vysledok();
+            //var resultProcedurWithoutResult = db.RunProcedureWithOutput("TEST_KOD", null, new ProcedureParameter("parameter1", "integer", 1));
+            //foreach (var row in resultProcedurWithoutResult)
+            //{
+            //    Console.WriteLine(row[0]);
+            //}
 
-            vysledok = new Vysledok();
-            var resultProcedureSuccess = db.RunProcedureWithOutput("TEST_KOD", vysledok, new ProcedureParameter("parameter1", "integer", 0));
-            foreach (var row in resultProcedureSuccess)
-            {
-                Console.WriteLine(row[0]);
-            }
-            Console.WriteLine($"vysledok je chyba:{vysledok.JeChyba}, sprava: {vysledok.Popis}");
+            //vysledok = new Vysledok();
+            //var resultProcedureSuccess = db.RunProcedureWithOutput("TEST_KOD", vysledok, new ProcedureParameter("parameter1", "integer", 0));
+            //foreach (var row in resultProcedureSuccess)
+            //{
+            //    Console.WriteLine(row[0]);
+            //}
+            //Console.WriteLine($"vysledok je chyba:{vysledok.JeChyba}, sprava: {vysledok.Popis}");
 
-            vysledok = new Vysledok();
-            var resultProcedureError = db.RunProcedureWithOutput("TEST_KOD", vysledok, new ProcedureParameter("parameter1", "integer", 1));
-            foreach (var row in resultProcedureError)
+            //vysledok = new Vysledok();
+            //var resultProcedureError = db.RunProcedureWithOutput("TEST_KOD", vysledok, new ProcedureParameter("parameter1", "integer", 1));
+            //foreach (var row in resultProcedureError)
+            //{
+            //    Console.WriteLine(row[0]);
+            //}
+            //Console.WriteLine($"vysledok je chyba:{vysledok.JeChyba}, sprava: {vysledok.Popis}");
+
+            string s = "select cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, cena from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_servis using (id_sluzby)  order by id_sluzby desc";
+
+
+            foreach (var rows in db.SpecialSelect(s))
             {
-                Console.WriteLine(row[0]);
+                var a  = string.Join(", ", rows.Values);
             }
-            Console.WriteLine($"vysledok je chyba:{vysledok.JeChyba}, sprava: {vysledok.Popis}");
 
             Console.WriteLine("Done");
             Console.ReadLine();

@@ -11,7 +11,7 @@ namespace VerejneOsvetlenieData.Data
 {
     [ImplementPropertyChanged]
     [SqlClass(TableName = "", DisplayName = "Servis lampy", TableKey = "ID_SLUZBY")]
-    public class SServisLampy:SqlEntita
+    public class SServisLampy : SqlEntita
     {
 
         [SqlClass(ColumnName = "ID_LAMPY", DisplayName = "Id Lampy", ReadOnly = true)]
