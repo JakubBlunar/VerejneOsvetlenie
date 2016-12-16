@@ -101,12 +101,19 @@ namespace Aplikacia
             //}
             //Console.WriteLine($"vysledok je chyba:{vysledok.JeChyba}, sprava: {vysledok.Popis}");
 
-            string s = "select cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, cena from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_servis using (id_sluzby)  order by id_sluzby desc";
+            //string s = "select cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, cena from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_servis using (id_sluzby)  order by id_sluzby desc";
 
 
-            foreach (var rows in db.SpecialSelect(s))
+            //foreach (var rows in db.SpecialSelect(s))
+            //{
+            //    var a  = string.Join(", ", rows.Values);
+            //}
+
+            var result = db.SpecialSelect("select * from s_stlp");
+
+            foreach (var row in result)
             {
-                var a  = string.Join(", ", rows.Values);
+                Console.WriteLine(String.Join(", ", row));
             }
 
             Console.WriteLine("Done");

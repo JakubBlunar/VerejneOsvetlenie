@@ -154,7 +154,7 @@ namespace VerejneOsvetlenie.ViewModels
 
 
             Vystupy.Add(new PomenovanyVystup("Výpis ulíc, kde bol najčastejšie potrebný servisný zásah.",
-                new VystupProcedura("vypis_chybnych_ulic", false, new[] { "Id Ulice", "Názov", "Počet" , "Dense Rank" },
+                new VystupProcedura("vypis_chybnych_ulic", false, new[] { "Id Ulice", "Názov", "Počet" , "Poradie" },
                 new ProcedureParameter("pa_pocet", "number", 10),
                 new ProcedureParameter("datum_od", "date", datumOd.ToString("dd.MM.yyyy")),
                 new ProcedureParameter("datum_do", "date", datumDo.ToString("dd.MM.yyyy"))

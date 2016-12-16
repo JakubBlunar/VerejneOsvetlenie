@@ -2,7 +2,7 @@
 using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
 
-namespace VerejneOsvetlenieData.Data
+namespace VerejneOsvetlenieData.Data.Legacy
 {
     [ImplementPropertyChanged]
     [SqlClass(TableName = "S_OBSLUHA_LAMPY", DisplayName = "obsluha lampy", TableKey = "ID_SLUZBY")]

@@ -59,6 +59,8 @@ namespace VerejneOsvetlenieData.Data
         public bool IsBitmapImage { get; set; }
 
         public bool IsReference { get; set; }
+
+        public bool IgnoreEntity { get; set; }
         
         /// <summary>
         /// Názov pre label
@@ -75,6 +77,7 @@ namespace VerejneOsvetlenieData.Data
             SpecialFormat = null;
             IsBitmapImage = false;
             ReadOnly = false;
+            IgnoreEntity = false;
         }
 
         public static SqlClassAttribute ExtractSqlClassAttribute(PropertyInfo paPropertyInfo)

@@ -30,6 +30,7 @@ namespace VerejneOsvetlenie.Views
         public SqlEntita ModelAkoEntita => Model as SqlEntita;
         public object Model => this.DataContext;
         public StavyFormulara AktualnyStav { get; private set; }
+        private SqlEntita _aktualnaEntita;
 
         public FormularGenerator()
         {
@@ -88,7 +89,10 @@ namespace VerejneOsvetlenie.Views
 
         private void GenerujPodlaSqlEntity(SqlEntita paRefencia = null)
         {
-            var model = paRefencia ?? ModelAkoEntita;
+            var model = _aktualnaEntita = paRefencia ?? ModelAkoEntita;
+            var atr = SqlClassAttribute.ExtractSqlClassAttribute(model);
+            if (!atr.IgnoreEntity)
+                return;
             FormularTitulok.Text = DajAtributTabulky(model).ElementName;
             var props = model.GetType().GetProperties();
             foreach (var propertyInfo in props)
@@ -113,7 +117,7 @@ namespace VerejneOsvetlenie.Views
                     inputBoxOrImage = new Image();
                     var img = new BitmapImage
                     {
-                        StreamSource = (FileStream)propertyInfo.GetValue(Model)
+                        StreamSource = (MemoryStream)propertyInfo.GetValue(Model)
                     };
                     ((Image)inputBoxOrImage).Source = img;
                 }
@@ -198,9 +202,9 @@ namespace VerejneOsvetlenie.Views
         {
             HlavnyGrid.IsEnabled = false;
             if (AktualnyStav == StavyFormulara.Update)
-                ModelAkoEntita.Update();
+                _aktualnaEntita.Update();
             else if (AktualnyStav == StavyFormulara.Insert)
-                ModelAkoEntita.Insert();
+                _aktualnaEntita.Insert();
 
             AktualnyStav = StavyFormulara.Init;
             NastavTlacidla(true, false, true);

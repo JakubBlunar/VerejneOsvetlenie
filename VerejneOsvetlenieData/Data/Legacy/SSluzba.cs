@@ -1,8 +1,7 @@
 using PropertyChanged;
-using System;
 using VerejneOsvetlenieData.Data.Interfaces;
 
-namespace VerejneOsvetlenieData.Data
+namespace VerejneOsvetlenieData.Data.Legacy
 {
     [ImplementPropertyChanged]
     [SqlClass(TableName = "S_SLUZBA", DisplayName = "", TableKey = "ID_SLUZBY")]
