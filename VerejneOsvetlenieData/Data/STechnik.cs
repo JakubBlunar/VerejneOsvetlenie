@@ -10,10 +10,10 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = "Rodné èíslo", Length = 10)]
         public string RodneCislo { get; set; }
 
-        [SqlClass(ColumnName = "MENO", DisplayName = "Meno")]
+        [SqlClass(ColumnName = "MENO", DisplayName = "Meno", Length = 30)]
         public string Meno { get; set; }
 
-        [SqlClass(ColumnName = "PRIEZVISKO", DisplayName = "Priezvisko")]
+        [SqlClass(ColumnName = "PRIEZVISKO", DisplayName = "Priezvisko", Length = 30)]
         public string Priezvisko { get; set; }
 
         public override bool Update()

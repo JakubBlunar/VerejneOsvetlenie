@@ -19,40 +19,44 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]
         public int IdSluzby { get; set; }
 
+        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = null, Length = 10)]
+        public string RodneCislo { get; set; }
+
         [SqlClass(ColumnName = "DATUM", DisplayName = "Dátum")]
         public string Datum { get; set; }
 
-
-        [SqlClass(ColumnName = "POPIS", DisplayName = "Popis")]
+        [SqlClass(ColumnName = "POPIS", DisplayName = "Popis", Length = 500)]
         public string Popis { get; set; }
 
         [SqlClass(ColumnName = "TRVANIE", DisplayName = "Trvanie")]
         public int Trvanie { get; set; }
 
         [SqlClass(ColumnName = "STAV", DisplayName = "Stav")]
-        public string Stav { get; set; }
+        public char Stav { get; set; }
 
         public override bool Update()
         {
-            throw new NotImplementedException();
+            return !Databaza.UpdateKontrolyStlpu(IdSluzby, RodneCislo, Cislo, Popis, Stav,
+                    Trvanie, DateTime.Parse(Datum)).JeChyba;
         }
 
         public override bool Insert()
         {
-            throw new NotImplementedException();
+            return !Databaza.VlozKontroluStlpu(RodneCislo, Cislo, Popis, Stav,
+                    Trvanie, DateTime.Parse(Datum)).JeChyba;
         }
 
         public override bool Drop()
         {
-            throw new NotImplementedException();
+            return !Databaza.ZmazSluzbu(IdSluzby).JeChyba;
         }
 
         public override bool SelectPodlaId(object paIdEntity)
         {
 
-            var s = "select cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy hh24:mi'), nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where id_sluzby = " + paIdEntity;
+            var s = "select cislo, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy hh24:mi'), nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where id_sluzby = " + paIdEntity;
             var select = new VystupSelect(s,
-                "cislo", "id_sluzby", "datum", "popis", "trvanie", "stav");
+                "cislo", "rodne_cislo", "id_sluzby", "datum", "popis", "trvanie", "stav");
             select.SpustiVystup();
 
 
@@ -65,7 +69,7 @@ namespace VerejneOsvetlenieData.Data
                     Datum = enumerator.Current[2].ToString();
                     Popis = enumerator.Current[3].ToString();
                     Trvanie = int.Parse(enumerator.Current[4].ToString());
-                    Stav = enumerator.Current[5].ToString();
+                    Stav = enumerator.Current[5].ToString().ToArray()[0];
                     return true;
                 }
             }

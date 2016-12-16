@@ -179,7 +179,6 @@ namespace Db
         /// <summary>
         /// test odchytavania dbms_output.put_line();
         /// </summary>
-
         public StringBuilder Test()
         {
             StringBuilder b = new StringBuilder();
@@ -245,7 +244,6 @@ namespace Db
 
             return b;
         }
-
 
         public DataTable GetAllInfo()
         {
@@ -1746,6 +1744,24 @@ namespace Db
             OracleCommand command = ActiveConnection.CreateCommand();
             command.CommandText = sql;
             command.ExecuteNonQuery();
+        }
+
+        public void UpdateStlp(int paCislo, int paIdUlice, int paVyska, int paPoradie, string paDatum, char paTyp)
+        {
+            var sql = $"UPDATE s_stlp SET "+
+                      $"id_ulice={paIdUlice},vyska={paVyska},poradie={paPoradie},datum_instalacie={paDatum}, typ={paTyp} "+
+                      $"WHERE cislo={paCislo}";
+            OracleCommand command = ActiveConnection.CreateCommand();
+            command.CommandText = sql;
+            command.ExecuteNonQuery();
+        }
+
+        public Vysledok DeleteStlp(int paCislo)
+        {
+            Vysledok v = new Vysledok();
+            RunProcedureWithOutput("DELETE_STLP", v, 
+                new ProcedureParameter("pa_cislo", "number", paCislo));
+            return v;
         }
 
         public void InsertLampaNaStlpe(int paIdLampy, int paCislo, int paIdTypu, char stav, string paDatIns, string paDatOdinst)

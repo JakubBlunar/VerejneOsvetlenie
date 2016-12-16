@@ -11,7 +11,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]
         public int IdSluzby { get; set; }
 
-        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = null)]
+        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = null, Length = 10)]
         public string RodneCislo { get; set; }
         [SqlClass(ColumnName = "RODNE_CISLO", IsReference = true)]
         public STechnik Technik { get; set; }
@@ -19,7 +19,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "DATUM", DisplayName = "Dátum")]
         public string Datum { get; set; }
 
-        [SqlClass(ColumnName = "POPIS", DisplayName = "Popis")]
+        [SqlClass(ColumnName = "POPIS", DisplayName = "Popis", Length = 500)]
         public string Popis { get; set; }
 
         [SqlClass(ColumnName = "TRVANIE", DisplayName = "Trvanie")]

@@ -50,7 +50,7 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Drop()
         {
-            throw new System.NotImplementedException();
+            return Databaza.ZmazSluzbu(IdSluzby).JeChyba;
         }
 
         public override bool SelectPodlaId(object paIdEntity)

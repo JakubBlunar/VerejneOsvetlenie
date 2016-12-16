@@ -16,14 +16,16 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "CISLO", DisplayName = "Číslo stlpu",ReadOnly = true)]
         public int Cislo { get; set; }
 
+        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = null, Length = 10)]
+        public string RodneCislo { get; set; }
+
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]
         public int IdSluzby { get; set; }
 
         [SqlClass(ColumnName = "DATUM", DisplayName = "Dátum")]
         public DateTime Datum { get; set; }
 
-
-        [SqlClass(ColumnName = "POPIS", DisplayName = "Popis")]
+        [SqlClass(ColumnName = "POPIS", DisplayName = "Popis", Length = 500)]
         public string Popis { get; set; }
 
         [SqlClass(ColumnName = "TRVANIE", DisplayName = "Trvanie")]
@@ -34,24 +36,24 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            throw new NotImplementedException();
+            return !Databaza.UpdateServisuStlpu(IdSluzby, RodneCislo, Cislo, Popis, Trvanie, Datum, Cena).JeChyba;
         }
 
         public override bool Insert()
         {
-            throw new NotImplementedException();
+            return !Databaza.VlozServisStlpu(RodneCislo, Cislo, Popis, Trvanie, Datum, Cena).JeChyba;
         }
 
         public override bool Drop()
         {
-            throw new NotImplementedException();
+            return !Databaza.ZmazSluzbu(IdSluzby).JeChyba;
         }
 
         public override bool SelectPodlaId(object paIdEntity)
         {
-            string s = "select cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy hh24:mi'), nvl(popis,''), trvanie, cena from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_servis using (id_sluzby) where id_sluzby = " + paIdEntity;
+            string s = "select cislo, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy hh24:mi'), nvl(popis,''), trvanie, cena from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_servis using (id_sluzby) where id_sluzby = " + paIdEntity;
             var select = new VystupSelect(s,
-                "cislo stlpu", "id_sluzby", "datum", "popis", "trvanie", "cena");
+                "cislo", "rodne_cislo", "id_sluzby", "datum", "popis", "trvanie", "cena");
             select.SpustiVystup();
 
             foreach (var row in select.Rows)

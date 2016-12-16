@@ -9,10 +9,10 @@ namespace VerejneOsvetlenieData.Data
     public class SStlp : SqlEntita
     {
         [SqlClass(ColumnName = "CISLO", DisplayName = null)]
-        public string Cislo { get; set; }
+        public int Cislo { get; set; }
 
         [SqlClass(ColumnName = "ID_ULICE", DisplayName = null)]
-        public string IdUlice { get; set; }
+        public int IdUlice { get; set; }
         [SqlClass(ColumnName = "ID_ULICE", IsReference = true)]
         public SUlica Ulica { get; set; }
 
@@ -26,24 +26,26 @@ namespace VerejneOsvetlenieData.Data
         public string DatumInstalacie { get; set; }
 
         [SqlClass(ColumnName = "TYP", DisplayName = "Typ")]
-        public string Typ { get; set; }
+        public char Typ { get; set; }
 
         //[SqlClass(ColumnName = "DOPLNKY")]
         //public string Doplnky { get; set; }
 
         public override bool Update()
         {
-            throw new System.NotImplementedException();
+            Databaza.UpdateStlp(Cislo, IdUlice, Vyska, Poradie, DatumInstalacie, Typ);
+            return true;
         }
 
         public override bool Insert()
         {
-            throw new System.NotImplementedException();
+            Databaza.InsertStlp(Cislo, IdUlice, Vyska, Poradie, DatumInstalacie, Typ);
+            return true;
         }
 
         public override bool Drop()
         {
-            throw new System.NotImplementedException();
+            return !Databaza.DeleteStlp(Cislo).JeChyba;
         }
 
         public override bool SelectPodlaId(object paIdEntity)
