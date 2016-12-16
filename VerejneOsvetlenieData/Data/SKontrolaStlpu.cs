@@ -60,19 +60,32 @@ namespace VerejneOsvetlenieData.Data
             select.SpustiVystup();
 
 
-            using (var enumerator = select.Rows.GetEnumerator())
+            foreach (var row in select.Rows)
             {
-                if (enumerator.MoveNext())
-                {
-                    Cislo = int.Parse(enumerator.Current[0].ToString());
-                    IdSluzby = int.Parse(enumerator.Current[1].ToString());
-                    Datum = enumerator.Current[2].ToString();
-                    Popis = enumerator.Current[3].ToString();
-                    Trvanie = int.Parse(enumerator.Current[4].ToString());
-                    Stav = enumerator.Current[5].ToString().ToArray()[0];
-                    return true;
-                }
+                Cislo = int.Parse(row[0].ToString());
+                RodneCislo = row[1].ToString();
+                IdSluzby = int.Parse(row[2].ToString());
+                Datum = row[3].ToString();
+                Popis = row[4].ToString();
+                Trvanie = int.Parse(row[5].ToString());
+                Stav = row[6].ToString()[0];//.ToArray()[0];
+                return true;
             }
+
+            //using (var enumerator = select.Rows.GetEnumerator())
+            //{
+            //    if (enumerator.MoveNext())
+            //    {
+            //        Cislo = int.Parse(enumerator.Current[0].ToString());
+            //        RodneCislo = 
+            //        IdSluzby = int.Parse(enumerator.Current[1].ToString());
+            //        Datum = enumerator.Current[2].ToString();
+            //        Popis = enumerator.Current[3].ToString();
+            //        Trvanie = int.Parse(enumerator.Current[4].ToString());
+            //        Stav = enumerator.Current[5].ToString().ToArray()[0];
+            //        return true;
+            //    }
+            //}
             return false;
         }
 

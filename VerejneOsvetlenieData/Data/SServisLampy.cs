@@ -64,10 +64,11 @@ namespace VerejneOsvetlenieData.Data
             {
                 IdLampy = int.Parse(row[0].ToString());
                 IdSluzby = int.Parse(row[1].ToString());
-                Datum = DateTime.Parse(row[2].ToString());
-                Popis = row[3].ToString();
-                Trvanie = int.Parse(row[4].ToString());
-                Cena = int.Parse(row[5].ToString());
+                RodneCislo = row[2].ToString();
+                Datum = DateTime.Parse(row[3].ToString());
+                Popis = row[4].ToString();
+                Trvanie = int.Parse(row[5].ToString());
+                Cena = int.Parse(row[6].ToString());
                 return true;
             }
             return false;

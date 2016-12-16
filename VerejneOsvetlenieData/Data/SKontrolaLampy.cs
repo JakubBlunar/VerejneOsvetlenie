@@ -64,12 +64,13 @@ namespace VerejneOsvetlenieData.Data
             foreach (var row in select.Rows)
             {
                 IdLampy = int.Parse(row[0].ToString());
-                IdSluzby = int.Parse(row[1].ToString());
-                Datum = DateTime.Parse(row[2].ToString());
-                Popis = row[3].ToString();
-                Trvanie = int.Parse(row[4].ToString());
-                Stav = row[5].ToString().ToCharArray()[0];
-                Svietivost = int.Parse(row[6].ToString());
+                RodneCislo = row[1].ToString();
+                IdSluzby = int.Parse(row[2].ToString());
+                Datum = DateTime.Parse(row[3].ToString());
+                Popis = row[4].ToString();
+                Trvanie = int.Parse(row[5].ToString());
+                Stav = row[6].ToString()[0];//.ToCharArray()[0];
+                Svietivost = int.Parse(row[7].ToString());
                 return true;
             }
             return false;

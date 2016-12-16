@@ -99,8 +99,8 @@ namespace VerejneOsvetlenie.Views
                 if (atribut.IsReference)
                 {
                     var property = propertyInfo.GetValue(model) as SqlEntita;// ?? Activator.CreateInstance(propertyInfo.PropertyType) as SqlEntita;
-                    //if(property == null)
-                    //    continue;
+                    if (property == null)
+                        continue;
                     GenerujPodlaSqlEntity(property);
                 }
                 DajNovyRiadok();
