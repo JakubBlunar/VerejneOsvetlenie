@@ -12,6 +12,5 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Gr
     </Grid>
 </UserControl>
