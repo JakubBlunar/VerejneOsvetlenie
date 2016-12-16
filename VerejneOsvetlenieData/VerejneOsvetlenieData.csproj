@@ -48,7 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\Doplnok.cs" />
+    <Compile Include="Data\SStlpCely.cs" />
+    <Compile Include="Data\TDoplnok.cs" />
     <Compile Include="Data\Interfaces\SqlEntita.cs" />
     <Compile Include="Data\SInfo.cs" />
     <Compile Include="Data\Legacy\SKontrola.cs" />
@@ -64,7 +65,6 @@
     <Compile Include="Data\SServisStlpu.cs" />
     <Compile Include="Data\Legacy\SSluzba.cs" />
     <Compile Include="Data\SStlp.cs" />
-    <Compile Include="Data\SStlpCely.cs" />
     <Compile Include="Data\STechnik.cs" />
     <Compile Include="Data\SUlica.cs" />
     <Compile Include="Data\Tables\IVystup.cs" />

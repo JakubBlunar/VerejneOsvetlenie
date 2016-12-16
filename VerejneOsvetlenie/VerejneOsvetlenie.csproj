@@ -75,6 +75,9 @@
     <Compile Include="Views\SpravaZaznamovWindow.xaml.cs">
       <DependentUpon>SpravaZaznamovWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\StlpFormular.xaml.cs">
+      <DependentUpon>StlpFormular.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\TableGenerator.xaml.cs">
       <DependentUpon>TableGenerator.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\SpravaZaznamovWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\StlpFormular.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

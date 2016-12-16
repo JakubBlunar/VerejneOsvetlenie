@@ -91,7 +91,7 @@ namespace VerejneOsvetlenie.Views
         {
             var model = _aktualnaEntita = paRefencia ?? ModelAkoEntita;
             var atr = SqlClassAttribute.ExtractSqlClassAttribute(model);
-            if (!atr.IgnoreEntity)
+            if (atr.IgnoreEntity)
                 return;
             FormularTitulok.Text = DajAtributTabulky(model).ElementName;
             var props = model.GetType().GetProperties();
