@@ -5,20 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VerejneOsvetlenie.Views"
         xmlns:viewModels="clr-namespace:VerejneOsvetlenie.ViewModels"
+        xmlns:converters="clr-namespace:VerejneOsvetlenie.Converters"
         mc:Ignorable="d"
         Title="SpravaZaznamovWindow"
         Height="auto"
         Width="auto">
-    
+
     <Window.DataContext>
         <viewModels:SpravaZaznamovViewModel />
     </Window.DataContext>
-    
+
+    <Window.Resources>
+        <converters:FormularVisibilityConverter x:Key="FormularVisibilityConverter" />
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="300"
+            <ColumnDefinition MaxWidth="400"
                               MinWidth="300" />
         </Grid.ColumnDefinitions>
         <Grid Row="0"
@@ -33,7 +38,7 @@
                       SelectionChanged="VybranyNovyTypZaznamov">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding NazovZaznamu}"/>
+                        <TextBlock Text="{Binding NazovZaznamu}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
@@ -59,7 +64,11 @@
             <TextBlock Text="Editácia"
                        Grid.Row="0"></TextBlock>
             <local:FormularGenerator Grid.Row="1"
-                                     DataContext="{Binding AktualnaEntita}"/>
+                                     Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}}"
+                                     DataContext="{Binding AktualnaEntita}" />
+            <local:StlpFormular Grid.Row="1"
+                                Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}, ConverterParameter=a}"
+                                DataContext="{Binding AktualnaEntita}" />
         </Grid>
     </Grid>
 </Window>

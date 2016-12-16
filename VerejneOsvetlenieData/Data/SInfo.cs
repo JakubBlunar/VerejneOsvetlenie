@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.IO;
 using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
@@ -13,28 +14,30 @@ namespace VerejneOsvetlenieData.Data
 
         [SqlClass(ColumnName = "CISLO", DisplayName = null)]
         public int Cislo { get; set; }
-        [SqlClass(ColumnName = "CISLO", IsReference = true)]
-        public SStlp Stlp { get; set; }
+        //[SqlClass(ColumnName = "CISLO", IsReference = true)]
+        //public SStlp Stlp { get; set; }
 
         [SqlClass(ColumnName = "DATA", DisplayName = "obrázok", IsBitmapImage = true)]
-        public MemoryStream Data { get; set; }
+        public byte[] Data { get; set; }
 
         [SqlClass(ColumnName = "TYP")]
         public char Typ { get; set; }
 
-        ~SInfo()
-        {
-            Data?.Dispose();
-        }
+        public Image Obrazok { get; private set; }
+
+        //~SInformacie()
+        //{
+        //    Data?.Dispose();
+        //}
 
         public override bool Update()
         {
-            return !Databaza.UpdateInfoStlpu(Id, Cislo, Typ, Data.ToArray()).JeChyba;
+            return !Databaza.UpdateInfoStlpu(Id, Cislo, Typ, Data).JeChyba;
         }
 
         public override bool Insert()
         {
-            return !Databaza.VlozInfoStlpu(Cislo, Typ, Data.ToArray()).JeChyba;
+            return !Databaza.VlozInfoStlpu(Cislo, Typ, Data).JeChyba;
         }
 
         public override bool Drop()
@@ -42,12 +45,24 @@ namespace VerejneOsvetlenieData.Data
             return !Databaza.ZmazInfoOStlpe(Id).JeChyba;
         }
 
-        public override bool SelectPodlaId(object paIdEntity)
+        public void NastavObrazok()
         {
-            Stlp = new SStlp();
-            bool b1 = base.SelectPodlaId(paIdEntity);
-            bool b2 = Stlp.SelectPodlaId(Cislo);
-            return b1 && b2;
+            if (Data != null)
+                Obrazok = ByteArrayToImage(Data);
+        }
+
+        public static Image ByteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
+        }
+
+        public static byte[] ImageToByteArray(Image imageIn)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            return ms.ToArray();
         }
     }
 }

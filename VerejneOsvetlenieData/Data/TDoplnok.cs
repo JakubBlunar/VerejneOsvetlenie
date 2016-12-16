@@ -20,10 +20,10 @@ namespace VerejneOsvetlenieData.Data
         public string Popis { get; set; }
 
         [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "dátum inštalácie", SpecialFormat = "d")]
-        public DateTime DatumInstalacie { get; set; }
+        public string DatumInstalacie { get; set; }
 
         [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "dátum demontáže", SpecialFormat = "d")]
-        public DateTime DatumDemontaze { get; set; }
+        public string DatumDemontaze { get; set; }
         
 
         public override bool Update()

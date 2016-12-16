@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VerejneOsvetlenieData.Data;
 
 namespace VerejneOsvetlenie.Views
 {
@@ -20,9 +21,24 @@ namespace VerejneOsvetlenie.Views
     /// </summary>
     public partial class StlpFormular : UserControl
     {
+        public SStlpCely _aktualnyStlp { get; private set; }
         public StlpFormular()
         {
             InitializeComponent();
+            this.DataContextChanged += StlpFormular_DataContextChanged;
+        }
+
+        private void StlpFormular_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(DataContext is SStlp))
+                return;
+            _aktualnyStlp = new SStlpCely((SStlp) DataContext);
+            _aktualnyStlp.SelectPodlaId(null);
+
+            Stlp.DataContext = _aktualnyStlp.SStlp;
+            Doplnky.ItemsSource = _aktualnyStlp.Doplnky;
+
+
         }
     }
 }
