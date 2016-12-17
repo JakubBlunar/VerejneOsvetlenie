@@ -43,8 +43,10 @@ namespace VerejneOsvetlenie.Views
             Model.Cislo = CisloStlpu;
             Upravit.Visibility = Update ? Visibility.Visible : Visibility.Collapsed;
             Vlozit.Visibility = !Update ? Visibility.Visible : Visibility.Collapsed;
-
-            Obrazok.Source = GetImageStream(new MemoryStream(Model.Data));
+            if (Model.Data != null)
+            {
+                Obrazok.Source = GetImageStream(new MemoryStream(Model.Data));
+            }
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)

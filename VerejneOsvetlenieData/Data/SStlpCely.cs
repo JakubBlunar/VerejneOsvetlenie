@@ -34,7 +34,7 @@ namespace VerejneOsvetlenieData.Data
         {
             //SStlp.SelectPodlaId(paIdEntity);
             var select =
-                $"select sd.ID, sd.TYP_DOPLNKU, sd.POPIS, to_char(sd.DATUM_INSTALACIE, 'DD.MM. YYYY') as DATUM_INSTALACIE, to_char(sd.DATUM_DEMONTAZE, 'DD.MM.YYYY') as DATUM_DEMONTAZE from s_stlp s, table(s.doplnky) sd where s.cislo = {SStlp.Cislo}";
+                $"select sd.ID, sd.TYP_DOPLNKU, sd.POPIS, to_char(sd.DATUM_INSTALACIE, 'DD.MM.YYYY') as DATUM_INSTALACIE, to_char(sd.DATUM_DEMONTAZE, 'DD.MM.YYYY') as DATUM_DEMONTAZE from s_stlp s, table(s.doplnky) sd where s.cislo = {SStlp.Cislo}";
             var rows = Databaza.SpecialSelect(select);
             foreach (var row in rows)
             {
@@ -58,10 +58,21 @@ namespace VerejneOsvetlenieData.Data
                 var info = new SInfo
                 {
                     Id = int.Parse(informacia["ID"].ToString()),
-                    Cislo = int.Parse(informacia["CISLO"].ToString()),
+                    Cislo = int.Parse(informacia["CISLO"].ToString()),                  
                     Data = (byte[]) informacia["DATA"],
                     Typ = informacia["TYP"].ToString()[0]
                 };
+
+                try
+                {
+                    DateTime d = DateTime.Parse(informacia["DATUM"].ToString());
+                    info.Datum = d.ToString("dd.MM.yyyy");
+                }
+                catch
+                {
+                    info.Datum = "";
+                }
+
                 //info.NastavObrazok();
                 SInformacie.AddLast(info);
             }

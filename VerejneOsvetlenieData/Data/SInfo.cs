@@ -42,33 +42,42 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            DateTime datum;
-            try
+            DateTime? datum;
+            if (!string.IsNullOrWhiteSpace(Datum))
             {
-                datum = DateTime.Parse(Datum);
+                try
+                {
+                    datum = DateTime.Parse(Datum);
+                }
+                catch
+                {
+                    ErrorMessage = "Nespravny formát datumu.";
+                    return false;
+                }
             }
-            catch
-            {
-                ErrorMessage = "Nespravny formát datumu.";
-                return false;
-            }
+            else datum = null;
+
             return useDbMethod(Databaza.UpdateInfoStlpu(Id, Cislo, Typ,datum, Data));
         }
 
         public override bool Insert()
         {
-            DateTime datum;
-            try
+            DateTime? datum;
+            if (!string.IsNullOrWhiteSpace(Datum))
             {
-                datum = DateTime.Parse(Datum);
+                try
+                {
+                    datum = DateTime.Parse(Datum);
+                }
+                catch
+                {
+                    ErrorMessage = "Nespravny formát datumu.";
+                    return false;
+                }
             }
-            catch
-            {
-                ErrorMessage = "Nespravny formát datumu.";
-                return false;
-            }
+            else datum = null;
 
-            return useDbMethod(Databaza.VlozInfoStlpu(Cislo, Typ,datum, Data));
+            return useDbMethod(Databaza.VlozInfoStlpu(Cislo, Typ, datum, Data));
         }
 
         public override bool Drop()
