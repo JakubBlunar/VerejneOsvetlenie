@@ -53,6 +53,7 @@ namespace VerejneOsvetlenie.Views
             }
 
             NovyObrazok.CisloStlpu = _aktualnyStlp.SStlp.Cislo;
+            NovyObrazok.Zmazat.Visibility = Visibility.Collapsed;
             NovyObrazok.Upravit.Visibility = Visibility.Collapsed;
             foreach (var sInfo in _aktualnyStlp.SInformacie)
             {
