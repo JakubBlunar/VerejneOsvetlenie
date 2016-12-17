@@ -1183,7 +1183,7 @@ namespace Db
             return vysledok;
         }
 
-        public Vysledok UpdateInfoStlpu(int idZaznamu, int idStlpu, char typ, byte[] data)
+        public Vysledok UpdateInfoStlpu(int idZaznamu, int idStlpu, char typ, DateTime datum, byte[] data)
         {
             var vysledok = new Vysledok();
 
@@ -1194,6 +1194,8 @@ namespace Db
                 vysledok.PridajChybu("Zaporne id stlpu.");
             if (!"IQ".Contains(typ + ""))
                 vysledok.PridajChybu("nespravne zadany typ infa o stlpe. (I,Q)");
+            if (datum > DateTime.Now)
+                vysledok.PridajChybu("Datum je väčši ako dnešný.");
             if (vysledok.JeChyba)
                 return vysledok;
             #endregion
@@ -1204,7 +1206,7 @@ namespace Db
 
                 cmd.Parameters.Add("pa_id_info", "number").Value = idZaznamu;
                 cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
-
+                cmd.Parameters.Add("pa_datum","date").Value = datum;
                 OracleParameter blobParameter = new OracleParameter();
                 blobParameter.OracleDbType = OracleDbType.Blob;
                 blobParameter.ParameterName = "pa_data";
@@ -1242,7 +1244,7 @@ namespace Db
             return vysledok;
         }
 
-        public Vysledok VlozInfoStlpu(int idStlpu, char typ, byte[] data)
+        public Vysledok VlozInfoStlpu(int idStlpu, char typ, DateTime datum, byte[] data)
         {
             var vysledok = new Vysledok();
 
@@ -1251,6 +1253,8 @@ namespace Db
                 vysledok.PridajChybu("Zaporne id stlpu.");
             if (!"IQ".Contains(typ + ""))
                 vysledok.PridajChybu("nespravne zadany typ infa o stlpe. (I,Q)");
+            if (datum > DateTime.Now)
+                vysledok.PridajChybu("Datum je väčši ako dnešný.");
             if (vysledok.JeChyba)
                 return vysledok;
             #endregion
@@ -1268,6 +1272,7 @@ namespace Db
                 blobParameter.Size = data.Length;
                 cmd.Parameters.Add(blobParameter);
                 cmd.Parameters.Add("pa_typ", "char").Value = typ;
+                cmd.Parameters.Add("pa_datum", "date").Value = datum;
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;

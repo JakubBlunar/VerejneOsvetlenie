@@ -1,4 +1,6 @@
+using System;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
@@ -24,6 +26,9 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "TYP")]
         public char Typ { get; set; }
 
+        [SqlClass(ColumnName = "DATUM")]
+        public string Datum { get; set; }
+
         public object Obrazok { get; set; }
 
         //public MemoryStream Stream => Data != null ? new MemoryStream(Data) : new MemoryStream();
@@ -37,12 +42,33 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return useDbMethod(Databaza.UpdateInfoStlpu(Id, Cislo, Typ, Data));
+            DateTime datum;
+            try
+            {
+                datum = DateTime.Parse(Datum);
+            }
+            catch
+            {
+                ErrorMessage = "Nespravny formát datumu.";
+                return false;
+            }
+            return useDbMethod(Databaza.UpdateInfoStlpu(Id, Cislo, Typ,datum, Data));
         }
 
         public override bool Insert()
         {
-            return useDbMethod(Databaza.VlozInfoStlpu(Cislo, Typ, Data));
+            DateTime datum;
+            try
+            {
+                datum = DateTime.Parse(Datum);
+            }
+            catch
+            {
+                ErrorMessage = "Nespravny formát datumu.";
+                return false;
+            }
+
+            return useDbMethod(Databaza.VlozInfoStlpu(Cislo, Typ,datum, Data));
         }
 
         public override bool Drop()

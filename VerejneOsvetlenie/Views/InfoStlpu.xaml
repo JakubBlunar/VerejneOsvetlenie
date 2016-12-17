@@ -16,19 +16,32 @@
                Margin="5" />
         <Button Margin="5" Click="ButtonBase_OnClick">Prehľadávať</Button>
         <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0"
+            <TextBlock Grid.Column="0" Grid.Row="0"
                        Text="typ"
                        Margin="5,0" />
-            <TextBox Grid.Column="1"
+            <TextBox Grid.Column="1" Grid.Row="0"
                      Margin="5,0"
                      MaxLength="1"
                      FontSize="19"
                      FontWeight="ExtraLight"
                      Text="{Binding Typ}" />
+            <TextBlock Grid.Column="0" Grid.Row="1"
+                       Text="Datum"
+                       Margin="5,0" />
+            <TextBox Grid.Column="1" Grid.Row="1"
+                     Margin="5,0"
+                     MaxLength="1"
+                     FontSize="19"
+                     FontWeight="ExtraLight"
+                     Text="{Binding Datum}" />
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>
