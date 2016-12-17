@@ -219,9 +219,11 @@ namespace VerejneOsvetlenie.Views
                 result = _aktualnaEntita.Insert();
 
             GenerujSpravu(result, _aktualnaEntita.ErrorMessage);
-
-            AktualnyStav = StavyFormulara.Init;
-            NastavTlacidla(Update, false, Insert);
+            if (result)
+            {
+                AktualnyStav = StavyFormulara.Init;
+                NastavTlacidla(Update, false, Insert);
+            }
         }
 
         private void NastavTlacidla(bool paUprav, bool paUloz, bool paNovy)

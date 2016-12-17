@@ -55,6 +55,7 @@ namespace VerejneOsvetlenie.Views
             Stlp.DataContext = _aktualnyStlp.SStlp;
             Udaje.Children.Clear();
             Obrazky.Children.Clear();
+            Lampy.Children.Clear();
             foreach (var doplnok in _aktualnyStlp.Doplnky)
             {
                 Udaje.Children.Add(new FormularGenerator() { Insert = false, DataContext = doplnok, Margin = new Thickness(0, 5, 0, 5) });

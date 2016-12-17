@@ -80,10 +80,10 @@ namespace VerejneOsvetlenieData.Data
                     Cislo = int.Parse(lampaNaStlpe["CISLO"].ToString()),
                     IdTypu = int.Parse(lampaNaStlpe["ID_TYPU"].ToString()),
                     Stav = lampaNaStlpe["STAV"].ToString()[0],
-                    DatumInstalacie = DateTime.Parse(lampaNaStlpe["DATUM_INSTALACIE"].ToString()).ToString("DD.MM.YYYY"),
+                    DatumInstalacie = DateTime.Parse(lampaNaStlpe["DATUM_INSTALACIE"].ToString()).ToString("dd.MM.yyyy"),
                 };
                 DateTime dod;
-                lampa.DatumDemontaze = DateTime.TryParse(lampaNaStlpe["DATUM_DEMONTAZE"].ToString(), out dod) ? dod.ToString("DD.MM.YYYY") : string.Empty;
+                lampa.DatumDemontaze = DateTime.TryParse(lampaNaStlpe["DATUM_DEMONTAZE"].ToString(), out dod) ? dod.ToString("dd.MM.yyyy") : string.Empty;
                 SLampyNaStlpe.AddLast(lampa);
             }
 
