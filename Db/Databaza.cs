@@ -602,7 +602,7 @@ namespace Db
                         vysledok.NastavChybu("Lampu nemožno zmazať, referencia zo strany služby.");
                         break;
                     case "B":
-                        vysledok.NastavChybu("Ulica s takým id neexistuje.");
+                        vysledok.NastavChybu("Lampa s takým id neexistuje.");
                         break;                   
                     case "X":
                         vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
@@ -2047,10 +2047,55 @@ namespace Db
 
         public Vysledok DeleteStlp(int paCislo)
         {
-            Vysledok v = new Vysledok();
-            RunProcedureWithOutput("DELETE_STLP", v, 
-                new ProcedureParameter("pa_cislo", "number", paCislo));
-            return v;
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (paCislo < 0)
+                vysledok.PridajChybu("Zaporne cislo stlpu.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            using (var cmd = new OracleCommand("DELETE_STLP", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_cislo", "number").Value = paCislo;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
+                    return vysledok;
+                }
+
+
+                switch (cmd.Parameters["vysledok"].Value.ToString())
+                {
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Stlp nexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Stlp ma referenciu na služby.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Stlp ma na sebe lampu");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
+                }
+            }
+
+            return vysledok;
         }
 
         public void InsertLampaNaStlpe(int paIdLampy, int paCislo, int paIdTypu, char stav, string paDatIns, string paDatOdinst)
