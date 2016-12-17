@@ -100,7 +100,7 @@ namespace VerejneOsvetlenie.ViewModels
 
             var vystupD4 = ResourceVystupy.vystup_D2.Replace("\r\n", " ").Replace(";", "");
             Vystupy.Add(new PomenovanyVystup("Výpis typu lampy, ktorá sa najviac kazí.",
-                new VystupSelect(vystupD4, "Id Typu", "Svietivosť")));
+                new VystupSelect(vystupD4, "Id Typu", "Svietivosť", "Typ")));
 
             var vystupD5 = ResourceVystupy.vystup_D5.Replace("\r\n", " ").Replace(";", "");
             Vystupy.Add(new PomenovanyVystup("Výpis stĺpov, ktorých všetky fotografie sú staršie ako rok.",
