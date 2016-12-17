@@ -1183,7 +1183,7 @@ namespace Db
             return vysledok;
         }
 
-        public Vysledok UpdateInfoStlpu(int idZaznamu, int idStlpu, char typ, DateTime datum, byte[] data)
+        public Vysledok UpdateInfoStlpu(int idZaznamu, int idStlpu, char typ, DateTime? datum, byte[] data)
         {
             var vysledok = new Vysledok();
 
@@ -1200,13 +1200,15 @@ namespace Db
                 return vysledok;
             #endregion
 
+         
+
             using (var cmd = new OracleCommand("update_info_stlpu", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add("pa_id_info", "number").Value = idZaznamu;
                 cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
-                cmd.Parameters.Add("pa_datum","date").Value = datum;
+                
                 OracleParameter blobParameter = new OracleParameter();
                 blobParameter.OracleDbType = OracleDbType.Blob;
                 blobParameter.ParameterName = "pa_data";
@@ -1214,6 +1216,7 @@ namespace Db
                 blobParameter.Size = data.Length;
                 cmd.Parameters.Add(blobParameter);
                 cmd.Parameters.Add("pa_typ", "char").Value = typ;
+                cmd.Parameters.Add("pa_datum", "date").Value = datum?.ToString("dd.MM.yyyy");
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
@@ -1244,7 +1247,7 @@ namespace Db
             return vysledok;
         }
 
-        public Vysledok VlozInfoStlpu(int idStlpu, char typ, DateTime datum, byte[] data)
+        public Vysledok VlozInfoStlpu(int idStlpu, char typ, DateTime? datum, byte[] data)
         {
             var vysledok = new Vysledok();
 
@@ -1272,7 +1275,7 @@ namespace Db
                 blobParameter.Size = data.Length;
                 cmd.Parameters.Add(blobParameter);
                 cmd.Parameters.Add("pa_typ", "char").Value = typ;
-                cmd.Parameters.Add("pa_datum", "date").Value = datum;
+                cmd.Parameters.Add("pa_datum", "date").Value = datum?.ToString("dd.MM.yyyy");
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
