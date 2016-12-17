@@ -31,11 +31,15 @@ namespace VerejneOsvetlenie.Views
         public object Model => this.DataContext;
         public StavyFormulara AktualnyStav { get; private set; }
         private SqlEntita _aktualnaEntita;
+        public bool Insert { get; set; }
+        public bool Update { get; set; }
 
         public FormularGenerator()
         {
             InitializeComponent();
             this.DataContextChanged += FormularGenerator_DataContextChanged;
+            Insert = true;
+            Update = true;
         }
 
         private void FormularGenerator_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -50,7 +54,7 @@ namespace VerejneOsvetlenie.Views
             Formular.RowDefinitions.Clear();
             AktualnyStav = StavyFormulara.Init;
             HlavnyGrid.IsEnabled = false;
-            NastavTlacidla(true, false, true);
+            NastavTlacidla(Update, false, Insert);
         }
 
         public void GenerujFormular()
@@ -196,7 +200,7 @@ namespace VerejneOsvetlenie.Views
         {
             HlavnyGrid.IsEnabled = true;
             AktualnyStav = StavyFormulara.Update;
-            NastavTlacidla(false, true, true);
+            NastavTlacidla(false, true, Insert);
         }
 
         private void Ulozit_Click(object sender, RoutedEventArgs e)
@@ -211,7 +215,7 @@ namespace VerejneOsvetlenie.Views
             GenerujSpravu(result, _aktualnaEntita.ErrorMessage);
 
             AktualnyStav = StavyFormulara.Init;
-            NastavTlacidla(true, false, true);
+            NastavTlacidla(Update, false, Insert);
         }
 
         private void NastavTlacidla(bool paUprav, bool paUloz, bool paNovy)
@@ -226,7 +230,7 @@ namespace VerejneOsvetlenie.Views
             var novaEntita = Activator.CreateInstance(ModelAkoEntita.GetType()) as SqlEntita;
             Reset();
             AktualnyStav = StavyFormulara.Insert;
-            NastavTlacidla(false, true, true);
+            NastavTlacidla(false, true, Insert);
             GenerujPodlaSqlEntity(novaEntita);
             HlavnyGrid.IsEnabled = true;
         }

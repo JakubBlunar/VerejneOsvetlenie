@@ -45,7 +45,7 @@ namespace VerejneOsvetlenie.Views
             Udaje.Children.Clear();
             foreach (var stlp in _aktualnaUlica.Stlpy)
             {
-                Udaje.Children.Add(new FormularGenerator() { DataContext = stlp, Margin = new Thickness(0, 5, 0, 5) });
+                Udaje.Children.Add(new FormularGenerator() { Insert = false, DataContext = stlp, Margin = new Thickness(0, 5, 0, 5)});
             }
         }
 
