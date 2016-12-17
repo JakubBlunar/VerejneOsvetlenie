@@ -260,7 +260,7 @@ namespace Db
         }
 
         public Vysledok UpdateStlp(
-          int idStlpu, int idUlice, int vyska, int? poradie = null, char? typ = null
+          int idStlpu, int idUlice, int vyska, DateTime datum, int? poradie = null, char? typ = null
           )
         {
 
@@ -273,13 +273,11 @@ namespace Db
                 vysledok.PridajChybu("Zaporne id ulice");
             if (vyska < 0)
                 vysledok.PridajChybu("Zaporna vyska");
-            if (poradie != null && poradie < 0)
-                vysledok.PridajChybu("Poradie je null");
             if (vysledok.JeChyba)
                 return vysledok;
             #endregion
 
-            string dInstalacie = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+            string dInstalacie = datum.ToString("dd.MM.yyyy HH:mm");
 
             using (var cmd = new OracleCommand("update_stlp", ActiveConnection))
             {
@@ -318,7 +316,7 @@ namespace Db
         }
 
         public Vysledok InsertStlp(
-          int idUlice, int vyska, int? poradie = null, char? typ =null     
+          int idUlice, int vyska,DateTime datum, int? poradie = null, char? typ =null     
           )
         {
 
@@ -329,13 +327,11 @@ namespace Db
                 vysledok.PridajChybu("Zaporne id ulice");
             if (vyska < 0)
                 vysledok.PridajChybu("Zaporna vyska");
-            if (poradie != null && poradie < 0)    
-                vysledok.PridajChybu("Poradie je null");
             if (vysledok.JeChyba)
                 return vysledok;
             #endregion
 
-            string dInstalacie = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+            string dInstalacie = datum.ToString("dd.MM.yyyy HH:mm");
 
             using (var cmd = new OracleCommand("insert_stlp", ActiveConnection))
             {
@@ -1850,7 +1846,7 @@ namespace Db
             command.CommandText = sql;
             command.ExecuteNonQuery();
         }
-
+        /*
         public void InsertStlp(int paCislo, int paIdUlice, int paVyska, int paPoradie, string paDatum, char paTyp)
         {
             var sql = $"INSERT INTO s_stlp (cislo, id_ulice, vyska, poradie, datum_instalacie, typ) VALUES " +
@@ -1860,7 +1856,8 @@ namespace Db
             command.CommandText = sql;
             command.ExecuteNonQuery();
         }
-
+        */
+        /*
         public void UpdateStlp(int paCislo, int paIdUlice, int paVyska, int paPoradie, string paDatum, char paTyp)
         {
             var sql = $"UPDATE s_stlp SET "+
@@ -1869,7 +1866,7 @@ namespace Db
             OracleCommand command = ActiveConnection.CreateCommand();
             command.CommandText = sql;
             command.ExecuteNonQuery();
-        }
+        }*/
 
         public Vysledok DeleteStlp(int paCislo)
         {
