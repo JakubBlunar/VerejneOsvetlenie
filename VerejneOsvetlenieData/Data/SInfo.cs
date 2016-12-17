@@ -49,22 +49,16 @@ namespace VerejneOsvetlenieData.Data
             return !Databaza.ZmazInfoOStlpe(Id).JeChyba;
         }
 
-        //public void NastavObrazok()
-        //{
-        //    if (Data != null)
-        //        Obrazok = ByteArrayToImage(Data);
-        //}
-
         public Image ByteArrayToImage(byte[] byteArrayIn)
         {
-            MemoryStream ms = new MemoryStream(byteArrayIn);
-            Image returnImage = Image.FromStream(ms);
+            var ms = new MemoryStream(byteArrayIn);
+            var returnImage = Image.FromStream(ms);
             return returnImage;
         }
 
         public byte[] ImageToByteArray(Bitmap imageIn)
         {
-            MemoryStream ms = new MemoryStream();
+            var ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             return ms.ToArray();
         }

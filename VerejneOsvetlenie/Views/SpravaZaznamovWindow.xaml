@@ -68,8 +68,10 @@
                 <Grid>
                     <local:FormularGenerator Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}}"
                                              DataContext="{Binding AktualnaEntita}" />
-                    <local:StlpFormular Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}, ConverterParameter=a}"
+                    <local:StlpFormular Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}, ConverterParameter=stlp}"
                                         DataContext="{Binding AktualnaEntita}" />
+                    <local:UlicaFormular Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}, ConverterParameter=ulica}"
+                                         DataContext="{Binding AktualnaEntita}" />
                 </Grid>
             </ScrollViewer>
         </Grid>
