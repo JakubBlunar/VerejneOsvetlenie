@@ -1,4 +1,4 @@
-select id_typu, svietivost from s_lampa_na_stlpe
+select id_typu, svietivost, typ from s_lampa_na_stlpe
 join s_lampa using(id_typu)
 where id_lampy = (
   select id_lampy from s_obsluha_lampy
