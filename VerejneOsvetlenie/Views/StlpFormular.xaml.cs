@@ -43,6 +43,7 @@ namespace VerejneOsvetlenie.Views
             _aktualnyStlp = new SStlpCely(Model);
             _aktualnyStlp.SelectPodlaId(null);
 
+            Stlp.Insert = false;
             Stlp.DataContext = _aktualnyStlp.SStlp;
             Udaje.Children.Clear();
             Obrazky.Children.Clear();

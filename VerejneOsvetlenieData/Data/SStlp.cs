@@ -11,7 +11,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "CISLO", DisplayName = null)]
         public int Cislo { get; set; }
 
-        [SqlClass(ColumnName = "ID_ULICE", DisplayName = "Id ulice")]
+        [SqlClass(ColumnName = "ID_ULICE", DisplayName = null)]
         public int IdUlice { get; set; }
 
         [SqlClass(ColumnName = "VYSKA", DisplayName = "Výška")]
