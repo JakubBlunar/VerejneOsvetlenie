@@ -73,6 +73,9 @@
     <Compile Include="Views\FormularGenerator.xaml.cs">
       <DependentUpon>FormularGenerator.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InfoStlpu.xaml.cs">
+      <DependentUpon>InfoStlpu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SpravaZaznamovWindow.xaml.cs">
       <DependentUpon>SpravaZaznamovWindow.xaml</DependentUpon>
     </Compile>
@@ -95,6 +98,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\FormularGenerator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InfoStlpu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

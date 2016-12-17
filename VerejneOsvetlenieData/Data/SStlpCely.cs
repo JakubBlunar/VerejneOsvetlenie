@@ -38,7 +38,7 @@ namespace VerejneOsvetlenieData.Data
             var rows = Databaza.SpecialSelect(select);
             foreach (var row in rows)
             {
-                var doplnok = new TDoplnok
+                var doplnok = new TDoplnok(SStlp.Cislo)
                 {
                     Id = int.Parse(row["ID"].ToString()),
                     Popis = row["POPIS"].ToString(),
@@ -61,7 +61,7 @@ namespace VerejneOsvetlenieData.Data
                     Data = (byte[]) informacia["DATA"],
                     Typ = informacia["TYP"].ToString()[0]
                 };
-                info.NastavObrazok();
+                //info.NastavObrazok();
                 SInformacie.AddLast(info);
             }
 

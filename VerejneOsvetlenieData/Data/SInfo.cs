@@ -23,7 +23,11 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "TYP")]
         public char Typ { get; set; }
 
-        public Image Obrazok { get; private set; }
+        public object Obrazok { get; set; }
+
+        //public MemoryStream Stream => Data != null ? new MemoryStream(Data) : new MemoryStream();
+
+        //public Image Obrazok { get; private set; }
 
         //~SInformacie()
         //{
@@ -45,20 +49,20 @@ namespace VerejneOsvetlenieData.Data
             return !Databaza.ZmazInfoOStlpe(Id).JeChyba;
         }
 
-        public void NastavObrazok()
-        {
-            if (Data != null)
-                Obrazok = ByteArrayToImage(Data);
-        }
+        //public void NastavObrazok()
+        //{
+        //    if (Data != null)
+        //        Obrazok = ByteArrayToImage(Data);
+        //}
 
-        public static Image ByteArrayToImage(byte[] byteArrayIn)
+        public Image ByteArrayToImage(byte[] byteArrayIn)
         {
             MemoryStream ms = new MemoryStream(byteArrayIn);
             Image returnImage = Image.FromStream(ms);
             return returnImage;
         }
 
-        public static byte[] ImageToByteArray(Image imageIn)
+        public byte[] ImageToByteArray(Bitmap imageIn)
         {
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);

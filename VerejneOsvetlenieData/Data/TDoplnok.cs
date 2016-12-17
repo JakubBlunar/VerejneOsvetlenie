@@ -19,21 +19,32 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "POPIS", Length = 500)]
         public string Popis { get; set; }
 
+        [SqlClass(ColumnName = "CISLO", DisplayName = null)]
+        public int Cislo { get; set; }
+
         [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "dátum inštalácie", SpecialFormat = "d")]
         public string DatumInstalacie { get; set; }
 
         [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "dátum demontáže", SpecialFormat = "d")]
         public string DatumDemontaze { get; set; }
-        
+
+        public TDoplnok(int paCisloStlpu)
+        {
+            Cislo = paCisloStlpu;
+        }
 
         public override bool Update()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(DatumDemontaze))
+                return !Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)).JeChyba;
+            return !Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)).JeChyba;
         }
 
         public override bool Insert()
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(DatumDemontaze))
+                return !Databaza.VlozDoplnokStlpu(Cislo,TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)).JeChyba;
+            return !Databaza.VlozDoplnokStlpu(Cislo, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)).JeChyba;
         }
 
         public override bool Drop()

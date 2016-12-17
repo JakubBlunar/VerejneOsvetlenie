@@ -30,8 +30,9 @@ namespace VerejneOsvetlenie.Views
 
         private void Tabulka_UserKlikolNaElementMamId(object sender, object e)
         {
-            Model.AktualnaEntita = Model.AktualnyTypZaznamu.DajInstanciu();
-            Model.AktualnaEntita.SelectPodlaId(e);
+            var entita = Model.AktualnyTypZaznamu.DajInstanciu();
+            entita.SelectPodlaId(e);
+            Model.AktualnaEntita = entita;
         }
 
         private void VybranyNovyTypZaznamov(object sender, SelectionChangedEventArgs e)

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using VerejneOsvetlenieData.Data;
+using Image = System.Windows.Controls.Image;
 
 namespace VerejneOsvetlenie.Views
 {
@@ -21,6 +25,7 @@ namespace VerejneOsvetlenie.Views
     /// </summary>
     public partial class StlpFormular : UserControl
     {
+        public SStlp Model => DataContext as SStlp;
         public SStlpCely _aktualnyStlp { get; private set; }
         public StlpFormular()
         {
@@ -30,15 +35,51 @@ namespace VerejneOsvetlenie.Views
 
         private void StlpFormular_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(DataContext is SStlp))
+            if (Model == null)
+            {
+                _aktualnyStlp = null;
                 return;
-            _aktualnyStlp = new SStlpCely((SStlp) DataContext);
+            }
+            _aktualnyStlp = new SStlpCely(Model);
             _aktualnyStlp.SelectPodlaId(null);
 
             Stlp.DataContext = _aktualnyStlp.SStlp;
-            Doplnky.ItemsSource = _aktualnyStlp.Doplnky;
+            Udaje.Children.Clear();
+            Obrazky.Children.Clear();
+            foreach (var doplnok in _aktualnyStlp.Doplnky)
+            {
+                Udaje.Children.Add(new FormularGenerator() { DataContext = doplnok, Margin = new Thickness(0, 5, 0, 5) });
+            }
+
+            NovyObrazok.Upravit.Visibility = Visibility.Collapsed;
+            foreach (var sInfo in _aktualnyStlp.SInformacie)
+            {
+                //var obrazok = new Image();
+                //obrazok.Source = GetImageStream(new MemoryStream(sInfo.Data));
+                //Obrazky.Children.Add(obrazok);
+                Obrazky.Children.Add(new InfoStlpu()
+                {
+                    Update = true,
+                    DataContext = sInfo
+                });
+            }
+            //Obrazky.ItemsSource = _aktualnyStlp.SInformacie;
+            //Doplnky.ItemsSource = _aktualnyStlp.Doplnky;
 
 
         }
+
+        public static BitmapImage GetImageStream(MemoryStream paStream)
+        {
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.StreamSource = paStream;
+            bi.EndInit();
+            return bi;
+        }
+
+        [DllImport("gdi32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        internal static extern bool DeleteObject(IntPtr value);
     }
 }

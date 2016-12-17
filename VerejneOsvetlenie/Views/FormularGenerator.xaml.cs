@@ -137,7 +137,7 @@ namespace VerejneOsvetlenie.Views
                 FontSize = 20,
                 IsReadOnly = !paPropertyInfo.CanWrite || paAttribut?.ReadOnly == true,
                 Margin = new Thickness(5, 5, 0, 5),
-                MaxWidth = 200,
+                MaxWidth = 180,
                 MaxLines = 10,
                 TextWrapping = TextWrapping.Wrap,
                 MaxLength = (paAttribut?.Length ?? 0) != 0 ? paAttribut.Length : 50

@@ -7,33 +7,39 @@
              mc:Ignorable="d"
              d:DesignHeight="800"
              d:DesignWidth="300">
-    <ScrollViewer VerticalScrollBarVisibility="Hidden">
-        <Grid Margin="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="auto" />
-            </Grid.RowDefinitions>
-            <local:FormularGenerator x:Name="Stlp"
-                                     Grid.Row="0" />
+    <StackPanel Margin="5">
+        <local:FormularGenerator x:Name="Stlp"
+                                 Margin="0,10" />
 
-            <ListView x:Name="Doplnky"
-                      Grid.Row="1">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <local:FormularGenerator />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"></StackPanel>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-            </ListView>
+        <TextBlock Style="{StaticResource Nadpisy}"
+                   Margin="0,15,0,10">Doplnky</TextBlock>
+        <Rectangle Height="1"
+                   Stroke="Black"
+                   StrokeThickness="2"
+                   HorizontalAlignment="Stretch"/>
+        <StackPanel x:Name="Udaje">
 
-            <Grid Grid.Row="2">
+        </StackPanel>
+        
+        <TextBlock Style="{StaticResource Nadpisy}"
+                   Margin="0,15,0,10">Pridať obrázok</TextBlock>
+        <Rectangle Height="1"
+                   Stroke="Black"
+                   StrokeThickness="2"
+                   HorizontalAlignment="Stretch" />
 
-            </Grid>
-        </Grid>
-    </ScrollViewer>
+        
+        <local:InfoStlpu x:Name="NovyObrazok"
+                         Margin="0,5"/>
+
+        <TextBlock Style="{StaticResource Nadpisy}"
+                   Margin="0,15,0,10">Obrázky</TextBlock>
+        <Rectangle Height="1"
+                   Stroke="Black"
+                   StrokeThickness="2"
+                   HorizontalAlignment="Stretch" />
+        <StackPanel x:Name="Obrazky">
+
+        </StackPanel>
+    </StackPanel>
 </UserControl>
