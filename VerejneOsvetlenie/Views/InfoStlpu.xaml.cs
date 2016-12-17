@@ -117,6 +117,7 @@ namespace VerejneOsvetlenie.Views
                     Vlozit.Visibility = Visibility.Collapsed;
                     Zmazat.Visibility = Visibility.Collapsed;
                     Upravit.Visibility = Visibility.Collapsed;
+                    Prehladavat.Visibility = Visibility.Collapsed;
                     HlavnyStackPanel.Background = new SolidColorBrush(Colors.LightSalmon);
                 }
             }

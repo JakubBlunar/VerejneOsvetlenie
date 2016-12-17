@@ -39,7 +39,7 @@ namespace VerejneOsvetlenie
         private void OtvorSpravuZaznamov(object sender, RoutedEventArgs e)
         {
             var okno = new SpravaZaznamovWindow();
-            okno.Show();
+            okno.ShowDialog();
         }
     }
 }

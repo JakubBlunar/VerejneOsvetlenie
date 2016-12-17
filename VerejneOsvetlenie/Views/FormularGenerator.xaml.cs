@@ -31,6 +31,7 @@ namespace VerejneOsvetlenie.Views
         public object Model => this.DataContext;
         public StavyFormulara AktualnyStav { get; private set; }
         private SqlEntita _aktualnaEntita;
+        public Action<SqlEntita> ActionWithNewElement { get; set; }
         public bool Insert { get; set; }
         public bool Update { get; set; }
         public bool Delete { get; set; }
@@ -233,8 +234,7 @@ namespace VerejneOsvetlenie.Views
         private void Novy_Click(object sender, RoutedEventArgs e)
         {
             var novaEntita = Activator.CreateInstance(ModelAkoEntita.GetType()) as SqlEntita;
-            if (novaEntita is TDoplnok)
-                ((TDoplnok)novaEntita).Cislo = ((TDoplnok)ModelAkoEntita).Cislo;
+            ActionWithNewElement?.Invoke(novaEntita);
             Reset();
             AktualnyStav = StavyFormulara.Insert;
             NastavTlacidla(false, true, Insert);

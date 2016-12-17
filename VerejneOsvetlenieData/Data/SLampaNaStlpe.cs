@@ -13,15 +13,15 @@ namespace VerejneOsvetlenieData.Data
 
         [SqlClass(ColumnName = "CISLO", DisplayName = null)]
         public int Cislo { get; set; }
-        [SqlClass(ColumnName = "CISLO", IsReference = true)]
-        public SStlp Stlp { get; set; }
+        //[SqlClass(ColumnName = "CISLO", IsReference = true)]
+        //public SStlp Stlp { get; set; }
 
         [SqlClass(ColumnName = "ID_TYPU", DisplayName = null)]
         public int IdTypu { get; set; }
         [SqlClass(ColumnName = "ID_TYPU", IsReference = true)]
         public SLampa Lampa { get; set; }
 
-        [SqlClass(ColumnName = "STAV", DisplayName = "Stav")]
+        [SqlClass(ColumnName = "STAV", DisplayName = "Stav", Length = 1)]
         public char Stav { get; set; }
 
         [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "Dátum inštalácie")]
@@ -55,11 +55,12 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool SelectPodlaId(object paIdEntity)
         {
-            Stlp = new SStlp();
-            Lampa = new SLampa();
-            return base.SelectPodlaId(paIdEntity)
-                && Stlp.SelectPodlaId(Cislo)
-                && Lampa.SelectPodlaId(IdTypu);
+            //Stlp = new SStlp();
+            //Lampa = new SLampa();
+            //return base.SelectPodlaId(paIdEntity)
+            //    && Stlp.SelectPodlaId(Cislo)
+            //    && Lampa.SelectPodlaId(IdTypu);
+            return false;
         }
     }
 }

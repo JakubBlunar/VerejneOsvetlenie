@@ -17,7 +17,7 @@ namespace VerejneOsvetlenie.Converters
             if (!string.IsNullOrEmpty(parameter?.ToString()))
                 return value is SStlp && parameter.ToString() == "stlp" || value is SUlica && parameter.ToString() == "ulica" || value is STechnik && parameter.ToString() == "technik" ? Visibility.Visible : Visibility.Collapsed;
             else
-                return value is SStlp || value is SUlica ? Visibility.Collapsed : Visibility.Visible;
+                return value is SStlp || value is SUlica || value is STechnik ? Visibility.Collapsed : Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

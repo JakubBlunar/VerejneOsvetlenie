@@ -14,7 +14,7 @@
     <StackPanel x:Name="HlavnyStackPanel">
         <Image x:Name="Obrazok"
                Margin="5" />
-        <Button Margin="5" Click="ButtonBase_OnClick">Prehľadávať</Button>
+        <Button Margin="5" x:Name="Prehladavat" Click="ButtonBase_OnClick">Prehľadávať</Button>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"></RowDefinition>

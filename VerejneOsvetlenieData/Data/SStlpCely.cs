@@ -22,12 +22,15 @@ namespace VerejneOsvetlenieData.Data
 
         public LinkedList<SInfo> SInformacie { get; set; }
 
+        public LinkedList<SLampaNaStlpe> SLampyNaStlpe { get; set; }
+
         public SStlpCely(SStlp paSStlp)
         {
             Doplnky = new LinkedList<TDoplnok>();
             Databaza = new Databaza();
             SStlp = paSStlp;
             SInformacie = new LinkedList<SInfo>();
+            SLampyNaStlpe = new LinkedList<SLampaNaStlpe>();
         }
 
         public bool SelectPodlaId(object paIdEntity)
@@ -58,23 +61,30 @@ namespace VerejneOsvetlenieData.Data
                 var info = new SInfo
                 {
                     Id = int.Parse(informacia["ID"].ToString()),
-                    Cislo = int.Parse(informacia["CISLO"].ToString()),                  
-                    Data = (byte[]) informacia["DATA"],
+                    Cislo = int.Parse(informacia["CISLO"].ToString()),
+                    Data = (byte[])informacia["DATA"],
                     Typ = informacia["TYP"].ToString()[0]
                 };
-
-                try
-                {
-                    DateTime d = DateTime.Parse(informacia["DATUM"].ToString());
-                    info.Datum = d.ToString("dd.MM.yyyy");
-                }
-                catch
-                {
-                    info.Datum = "";
-                }
-
-                //info.NastavObrazok();
+                DateTime d;
+                info.Datum = DateTime.TryParse(informacia["DATUM"].ToString(), out d) ? d.ToString("dd.MM.yyyy") : string.Empty;
                 SInformacie.AddLast(info);
+            }
+
+            var selectLampy = $"select * from s_lampa_na_stlpe where cislo = {SStlp.Cislo}";
+            var lampy = Databaza.SpecialSelect(selectLampy);
+            foreach (var lampaNaStlpe in lampy)
+            {
+                var lampa = new SLampaNaStlpe()
+                {
+                    IdLampy = int.Parse(lampaNaStlpe["ID_LAMPY"].ToString()),
+                    Cislo = int.Parse(lampaNaStlpe["CISLO"].ToString()),
+                    IdTypu = int.Parse(lampaNaStlpe["ID_TYPU"].ToString()),
+                    Stav = lampaNaStlpe["STAV"].ToString()[0],
+                    DatumInstalacie = DateTime.Parse(lampaNaStlpe["DATUM_INSTALACIE"].ToString()).ToString("DD.MM.YYYY"),
+                };
+                DateTime dod;
+                lampa.DatumDemontaze = DateTime.TryParse(lampaNaStlpe["DATUM_DEMONTAZE"].ToString(), out dod) ? dod.ToString("DD.MM.YYYY") : string.Empty;
+                SLampyNaStlpe.AddLast(lampa);
             }
 
             return true;

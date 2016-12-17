@@ -15,16 +15,6 @@
         <viewModels:MainViewModel />
     </Window.DataContext>
 
-    <!--<Grid>
-        -->
-    <!--<StackPanel Visibility="Collapsed">
-            <views:FormularGenerator DataContext="{Binding Technik}" />
-            <views:FormularGenerator DataContext="{Binding Stlp}" />
-        </StackPanel>
-        <views:TableGenerator HorizontalAlignment="Stretch" VerticalAlignment="Stretch"></views:TableGenerator>-->
-    <!--
-        <views:TableGenerator DataContext="{Binding SelectTest}"></views:TableGenerator>
-    </Grid>-->
     <Grid Margin="5">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -44,7 +34,7 @@
                     VerticalAlignment="Center"
                     Padding="5"
                     Margin="0,2"
-                    Click="OtvorSpravuZaznamov">Správa</Button>
+                    Click="OtvorSpravuZaznamov">Správa záznamov</Button>
         </Grid>
         <Grid Row="1">
             <views:TableGenerator DataContext="{Binding ElementName=OznacenyVystup, Path=SelectedItem}" />

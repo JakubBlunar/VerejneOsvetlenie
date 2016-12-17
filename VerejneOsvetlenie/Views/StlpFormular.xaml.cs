@@ -46,6 +46,11 @@ namespace VerejneOsvetlenie.Views
             NovyDoplnok.Update = false;
             NovyDoplnok.Delete = false;
             NovyDoplnok.DataContext = new TDoplnok() { Cislo = _aktualnyStlp.SStlp.Cislo };
+            NovyDoplnok.ActionWithNewElement = entita =>
+            {
+                ((TDoplnok) entita).Cislo = _aktualnyStlp.SStlp.Cislo;
+            };
+
             Stlp.Insert = false;
             Stlp.DataContext = _aktualnyStlp.SStlp;
             Udaje.Children.Clear();
@@ -65,6 +70,19 @@ namespace VerejneOsvetlenie.Views
                     Update = true,
                     DataContext = sInfo
                 });
+            }
+
+            NovaLampa.Delete = false;
+            NovaLampa.Update = false;
+            NovaLampa.DataContext = new SLampaNaStlpe() { Cislo = _aktualnyStlp.SStlp.Cislo };
+            NovaLampa.ActionWithNewElement = entita =>
+            {
+                ((SLampaNaStlpe) entita).Cislo = _aktualnyStlp.SStlp.Cislo;
+            };
+
+            foreach (var lampaNaStlpe in _aktualnyStlp.SLampyNaStlpe)
+            {
+                Lampy.Children.Add(new FormularGenerator() { Insert = false, DataContext = lampaNaStlpe, Margin = new Thickness(0, 5, 0, 5) });
             }
         }
     }
