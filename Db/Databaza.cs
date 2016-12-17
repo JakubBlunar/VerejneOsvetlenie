@@ -2237,7 +2237,7 @@ namespace Db
                 return vysledok;
             #endregion
 
-            using (var cmd = new OracleCommand("DELETE_STLP", ActiveConnection))
+            using (var cmd = new OracleCommand("delete_doplnok_stlpu", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("pa_id_stlpu", "number").Value = cislo;
