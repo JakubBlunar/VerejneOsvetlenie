@@ -259,6 +259,121 @@ namespace Db
 
         }
 
+        public Vysledok UpdateStlp(
+          int idStlpu, int idUlice, int vyska, int? poradie = null, char? typ = null
+          )
+        {
+
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (idUlice < 0)
+                vysledok.PridajChybu("Zaporne id stlpu");
+            if (idUlice < 0)
+                vysledok.PridajChybu("Zaporne id ulice");
+            if (vyska < 0)
+                vysledok.PridajChybu("Zaporna vyska");
+            if (poradie != null && poradie < 0)
+                vysledok.PridajChybu("Poradie je null");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            string dInstalacie = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+
+            using (var cmd = new OracleCommand("update_stlp", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_id_ulice", "number").Value = idUlice;
+                cmd.Parameters.Add("pa_vyska", "number").Value = vyska;
+                cmd.Parameters.Add("pa_poradie", "number").Value = poradie;
+                cmd.Parameters.Add("pa_typ", "char").Value = typ;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dInstalacie;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+        public Vysledok InsertStlp(
+          int idUlice, int vyska, int? poradie = null, char? typ =null     
+          )
+        {
+
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (idUlice < 0)
+                vysledok.PridajChybu("Zaporne id ulice");
+            if (vyska < 0)
+                vysledok.PridajChybu("Zaporna vyska");
+            if (poradie != null && poradie < 0)    
+                vysledok.PridajChybu("Poradie je null");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            string dInstalacie = DateTime.Now.ToString("dd.MM.yyyy HH:mm");
+
+            using (var cmd = new OracleCommand("insert_stlp", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_id_ulice", "number").Value = idUlice;
+                cmd.Parameters.Add("pa_vyska", "number").Value = vyska;
+                cmd.Parameters.Add("pa_poradie", "number").Value = poradie;
+                cmd.Parameters.Add("pa_typ", "char").Value = typ;
+                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dInstalacie;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    return vysledok;
+                }
+
+                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                {
+                    vysledok.Popis = "Success";
+                }
+                else
+                {
+                    vysledok.NastavChybu("Daco sa nepodarilo");
+                }
+            }
+
+            return vysledok;
+
+        }
+
+
         public Vysledok UpdateDoplnokStlpu(int idStlpu, int idDoplnku,
             char typDoplnku, string popisDoplnku,
             DateTime datumInstalacie, DateTime? datumDemontaze = null
