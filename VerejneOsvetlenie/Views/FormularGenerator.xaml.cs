@@ -40,6 +40,7 @@ namespace VerejneOsvetlenie.Views
             this.DataContextChanged += FormularGenerator_DataContextChanged;
             Insert = true;
             Update = true;
+            Zmazat.Visibility = Visibility.Collapsed;
         }
 
         private void FormularGenerator_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -50,6 +51,7 @@ namespace VerejneOsvetlenie.Views
 
         private void Reset()
         {
+            HlavnyGrid.Background = new SolidColorBrush(Colors.Transparent);
             Formular.Children.Clear();
             Formular.RowDefinitions.Clear();
             AktualnyStav = StavyFormulara.Init;
@@ -95,6 +97,7 @@ namespace VerejneOsvetlenie.Views
         {
             var model = _aktualnaEntita = paRefencia ?? ModelAkoEntita;
             var atr = SqlClassAttribute.ExtractSqlClassAttribute(model);
+            Zmazat.Visibility = model.DeleteEnabled == true ? Visibility.Visible : Visibility.Collapsed;
             if (atr.IgnoreEntity)
                 return;
             FormularTitulok.Text = ModelAkoEntita != null ? DajAtributTabulky(ModelAkoEntita).ElementName : string.Empty;
@@ -243,10 +246,26 @@ namespace VerejneOsvetlenie.Views
             MessageBox.Show(paNoveOkno ?? SpravaZaznamovWindow.AktualneOkno, sprava,
             "Upozornenie", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+
+        private void Zmazat_Click(object sender, RoutedEventArgs e)
+        {
+            var odpoved = MessageBox.Show(SpravaZaznamovWindow.AktualneOkno, "Ste si istý že chcete zmazať túto položku?",
+            "Upozornenie", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (odpoved == MessageBoxResult.OK)
+            {
+                var result = _aktualnaEntita.Drop();
+                GenerujSpravu(result, _aktualnaEntita.ErrorMessage);
+                if (result)
+                {
+                    NastavTlacidla(false, false, false);
+                    HlavnyGrid.Background = new SolidColorBrush(Colors.LightSalmon);
+                }
+            }
+        }
     }
 
     public enum StavyFormulara
     {
-        Init, Update, Insert
+        Init, Update, Insert, Delete
     }
 }

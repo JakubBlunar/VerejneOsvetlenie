@@ -35,6 +35,10 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "CENA", DisplayName = "Cena")]
         public int Cena { get; set; }
 
+        public SServisLampy()
+        {
+            DeleteEnabled = true;
+        }
 
         public override bool Update()
         {

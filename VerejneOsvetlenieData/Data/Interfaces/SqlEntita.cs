@@ -17,10 +17,13 @@ namespace VerejneOsvetlenieData.Data.Interfaces
 
         [SqlClass(DisplayName = null)]
         public string ErrorMessage { get; protected set; }
+        [SqlClass(DisplayName = null)]
+        public bool DeleteEnabled { get; set; }
 
         protected SqlEntita()
         {
             Databaza = new Databaza();
+            DeleteEnabled = false;
         }
 
         /// <summary>

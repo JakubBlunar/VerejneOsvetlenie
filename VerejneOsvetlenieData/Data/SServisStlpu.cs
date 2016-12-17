@@ -34,6 +34,11 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "Cena", DisplayName = "Stav")]
         public int Cena { get; set; }
 
+        public SServisStlpu()
+        {
+            DeleteEnabled = true;
+        }
+
         public override bool Update()
         {
             return useDbMethod(Databaza.UpdateServisuStlpu(IdSluzby, RodneCislo, Cislo, Popis, Trvanie, Datum, Cena));

@@ -43,16 +43,20 @@ namespace VerejneOsvetlenie.Views
             _aktualnyStlp = new SStlpCely(Model);
             _aktualnyStlp.SelectPodlaId(null);
 
+            NovyDoplnok.Update = false;
+            NovyDoplnok.HlavnyGrid.IsEnabled = true;
+            NovyDoplnok.DataContext = new TDoplnok() { Cislo = _aktualnyStlp.SStlp.Cislo };
             Stlp.Insert = false;
             Stlp.DataContext = _aktualnyStlp.SStlp;
             Udaje.Children.Clear();
             Obrazky.Children.Clear();
             foreach (var doplnok in _aktualnyStlp.Doplnky)
             {
-                Udaje.Children.Add(new FormularGenerator() { DataContext = doplnok, Margin = new Thickness(0, 5, 0, 5) });
+                Udaje.Children.Add(new FormularGenerator() { Insert = false, DataContext = doplnok, Margin = new Thickness(0, 5, 0, 5) });
             }
 
             NovyObrazok.CisloStlpu = _aktualnyStlp.SStlp.Cislo;
+            NovyObrazok.Zmazat.Visibility = Visibility.Collapsed;
             NovyObrazok.Upravit.Visibility = Visibility.Collapsed;
             foreach (var sInfo in _aktualnyStlp.SInformacie)
             {

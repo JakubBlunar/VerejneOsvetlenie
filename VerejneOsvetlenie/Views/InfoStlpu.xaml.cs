@@ -43,8 +43,10 @@ namespace VerejneOsvetlenie.Views
             Model.Cislo = CisloStlpu;
             Upravit.Visibility = Update ? Visibility.Visible : Visibility.Collapsed;
             Vlozit.Visibility = !Update ? Visibility.Visible : Visibility.Collapsed;
-
-            Obrazok.Source = GetImageStream(new MemoryStream(Model.Data));
+            if (Model.Data != null)
+            {
+                Obrazok.Source = GetImageStream(new MemoryStream(Model.Data));
+            }
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -98,6 +100,25 @@ namespace VerejneOsvetlenie.Views
             {
                 DataContext = null;
                 DataContext = new SInfo();
+                Obrazok.Source = null;
+            }
+        }
+
+        private void Zmazat_Click(object sender, RoutedEventArgs e)
+        {
+            var odpoved = MessageBox.Show(SpravaZaznamovWindow.AktualneOkno, "Ste si istý že chcete zmazať túto položku?",
+            "Upozornenie", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+            if (odpoved == MessageBoxResult.OK)
+            {
+                var result = Model.Drop();
+                FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
+                if (result)
+                {
+                    Vlozit.Visibility = Visibility.Collapsed;
+                    Zmazat.Visibility = Visibility.Collapsed;
+                    Upravit.Visibility = Visibility.Collapsed;
+                    HlavnyStackPanel.Background = new SolidColorBrush(Colors.LightSalmon);
+                }
             }
         }
     }

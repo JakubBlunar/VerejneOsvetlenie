@@ -602,7 +602,7 @@ namespace Db
                         vysledok.NastavChybu("Lampu nemožno zmazať, referencia zo strany služby.");
                         break;
                     case "B":
-                        vysledok.NastavChybu("Ulica s takým id neexistuje.");
+                        vysledok.NastavChybu("Lampa s takým id neexistuje.");
                         break;                   
                     case "X":
                         vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
@@ -1183,7 +1183,7 @@ namespace Db
             return vysledok;
         }
 
-        public Vysledok UpdateInfoStlpu(int idZaznamu, int idStlpu, char typ, DateTime datum, byte[] data)
+        public Vysledok UpdateInfoStlpu(int idZaznamu, int idStlpu, char typ, DateTime? datum, byte[] data)
         {
             var vysledok = new Vysledok();
 
@@ -1200,13 +1200,15 @@ namespace Db
                 return vysledok;
             #endregion
 
+         
+
             using (var cmd = new OracleCommand("update_info_stlpu", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.Parameters.Add("pa_id_info", "number").Value = idZaznamu;
                 cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
-                cmd.Parameters.Add("pa_datum","date").Value = datum;
+                
                 OracleParameter blobParameter = new OracleParameter();
                 blobParameter.OracleDbType = OracleDbType.Blob;
                 blobParameter.ParameterName = "pa_data";
@@ -1214,6 +1216,7 @@ namespace Db
                 blobParameter.Size = data.Length;
                 cmd.Parameters.Add(blobParameter);
                 cmd.Parameters.Add("pa_typ", "char").Value = typ;
+                cmd.Parameters.Add("pa_datum", "date").Value = datum?.ToString("dd.MM.yyyy");
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
@@ -1244,7 +1247,7 @@ namespace Db
             return vysledok;
         }
 
-        public Vysledok VlozInfoStlpu(int idStlpu, char typ, DateTime datum, byte[] data)
+        public Vysledok VlozInfoStlpu(int idStlpu, char typ, DateTime? datum, byte[] data)
         {
             var vysledok = new Vysledok();
 
@@ -1272,7 +1275,7 @@ namespace Db
                 blobParameter.Size = data.Length;
                 cmd.Parameters.Add(blobParameter);
                 cmd.Parameters.Add("pa_typ", "char").Value = typ;
-                cmd.Parameters.Add("pa_datum", "date").Value = datum;
+                cmd.Parameters.Add("pa_datum", "date").Value = datum?.ToString("dd.MM.yyyy");
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
@@ -2044,10 +2047,55 @@ namespace Db
 
         public Vysledok DeleteStlp(int paCislo)
         {
-            Vysledok v = new Vysledok();
-            RunProcedureWithOutput("DELETE_STLP", v, 
-                new ProcedureParameter("pa_cislo", "number", paCislo));
-            return v;
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if (paCislo < 0)
+                vysledok.PridajChybu("Zaporne cislo stlpu.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            using (var cmd = new OracleCommand("DELETE_STLP", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("pa_cislo", "number").Value = paCislo;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
+                    return vysledok;
+                }
+
+
+                switch (cmd.Parameters["vysledok"].Value.ToString())
+                {
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Stlp nexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Stlp ma referenciu na služby.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Stlp ma na sebe lampu");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
+                }
+            }
+
+            return vysledok;
         }
 
         public void InsertLampaNaStlpe(int paIdLampy, int paCislo, int paIdTypu, char stav, string paDatIns, string paDatOdinst)
@@ -2175,5 +2223,60 @@ namespace Db
         }
 
         #endregion
+
+        public Vysledok ZmazDoplnokStlpu(int id, int cislo)
+        {
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if(id < 0)
+                vysledok.PridajChybu("Zaporne id doplnku.");
+            if (cislo < 0)
+                vysledok.PridajChybu("Zaporne cislo stlpu.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            using (var cmd = new OracleCommand("DELETE_STLP", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = cislo;
+                cmd.Parameters.Add("pa_id_doplnku", "number").Value = id;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
+                    return vysledok;
+                }
+
+
+                switch (cmd.Parameters["vysledok"].Value.ToString())
+                {
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Stlp nexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Stlp nema ziadne doplnky.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Doplnok s danym id nie je na stlpe.");
+                        break;
+                    case "D":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
+                }
+            }
+
+            return vysledok;
+        }
     }
 }

@@ -16,6 +16,11 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "SVIETIVOST", DisplayName = "Svietivosù")]
         public int Svietivost { get; set; }
 
+        public SLampa()
+        {
+            DeleteEnabled = true;
+        }
+
         public override bool Update()
         {
             return useDbMethod(Databaza.UpdateTypLampy(IdTypu,Svietivost,Typ));
