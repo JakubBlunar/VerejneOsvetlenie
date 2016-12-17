@@ -93,7 +93,7 @@ namespace VerejneOsvetlenie.Views
             var atr = SqlClassAttribute.ExtractSqlClassAttribute(model);
             if (atr.IgnoreEntity)
                 return;
-            FormularTitulok.Text = DajAtributTabulky(model).ElementName;
+            FormularTitulok.Text = ModelAkoEntita != null ? DajAtributTabulky(ModelAkoEntita).ElementName : string.Empty;
             var props = model.GetType().GetProperties();
             foreach (var propertyInfo in props)
             {
@@ -106,6 +106,7 @@ namespace VerejneOsvetlenie.Views
                     if (property == null)
                         continue;
                     GenerujPodlaSqlEntity(property);
+                    continue;
                 }
                 DajNovyRiadok();
                 var label = DajLabel(propertyInfo, atribut);
