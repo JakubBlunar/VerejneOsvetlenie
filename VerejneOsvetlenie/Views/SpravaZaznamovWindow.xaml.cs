@@ -20,10 +20,12 @@ namespace VerejneOsvetlenie.Views
     /// </summary>
     public partial class SpravaZaznamovWindow : Window
     {
+        public static SpravaZaznamovWindow AktualneOkno { get; private set; }
         public SpravaZaznamovViewModel Model => DataContext as SpravaZaznamovViewModel;
         public SpravaZaznamovWindow()
         {
             InitializeComponent();
+            AktualneOkno = this;
             Tabulka.UserKlikolNaElementMamId += Tabulka_UserKlikolNaElementMamId;
             Tabulka.FilterButton.Visibility = Visibility.Hidden;
         }

@@ -201,23 +201,14 @@ namespace VerejneOsvetlenie.Views
 
         private void Ulozit_Click(object sender, RoutedEventArgs e)
         {
-            var operacia = false;
+            var result = false;
             HlavnyGrid.IsEnabled = false;
             if (AktualnyStav == StavyFormulara.Update)
-                operacia = _aktualnaEntita.Update();
+                result = _aktualnaEntita.Update();
             else if (AktualnyStav == StavyFormulara.Insert)
-                operacia = _aktualnaEntita.Insert();
+                result = _aktualnaEntita.Insert();
 
-            //var sprava = operacia ? "Operácia prebehla úspešne po refreshnutí uvidíte zmeny." : "";
-            //var result = MessageBox.Show(this,  //, MessageBoxImage.Warning);
-            //if (result == MessageBoxResult.OK)
-            //{
-            //    // Yes code here
-            //}
-            //else
-            //{
-            //    // No code here
-            //}
+            GenerujSpravu(result, _aktualnaEntita.ErrorMessage);
 
             AktualnyStav = StavyFormulara.Init;
             NastavTlacidla(true, false, true);
@@ -238,6 +229,13 @@ namespace VerejneOsvetlenie.Views
             NastavTlacidla(false, true, true);
             GenerujPodlaSqlEntity(novaEntita);
             HlavnyGrid.IsEnabled = true;
+        }
+
+        public static void GenerujSpravu(bool paVysledokOperacie, string paErrorMessage, Window paNoveOkno = null)
+        {
+            var sprava = paVysledokOperacie ? "Operácia prebehla úspešne po obnovení záznamu uvidíte zmeny." : paErrorMessage;
+            MessageBox.Show( paNoveOkno ?? SpravaZaznamovWindow.AktualneOkno, sprava,
+            "Upozornenie", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }
 

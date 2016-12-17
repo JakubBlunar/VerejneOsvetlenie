@@ -79,12 +79,15 @@ namespace VerejneOsvetlenie.Views
 
         private void Upravit_Click(object sender, RoutedEventArgs e)
         {
-            Model.Update();
+            var result = Model.Update();
+
+            FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
         }
 
         private void Vlozit_Click(object sender, RoutedEventArgs e)
         {
-            Model.Insert();
+            var result = Model.Insert();
+            
             DataContext = null;
             DataContext = new SInfo();
         }

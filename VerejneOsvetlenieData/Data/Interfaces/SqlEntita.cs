@@ -14,6 +14,8 @@ namespace VerejneOsvetlenieData.Data.Interfaces
         public abstract bool Update();
         public abstract bool Insert();
         public abstract bool Drop();
+
+        [SqlClass(DisplayName = null)]
         public string ErrorMessage { get; protected set; }
 
         protected SqlEntita()

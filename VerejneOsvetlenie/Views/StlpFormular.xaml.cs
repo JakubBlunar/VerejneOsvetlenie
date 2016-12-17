@@ -54,32 +54,12 @@ namespace VerejneOsvetlenie.Views
             NovyObrazok.Upravit.Visibility = Visibility.Collapsed;
             foreach (var sInfo in _aktualnyStlp.SInformacie)
             {
-                //var obrazok = new Image();
-                //obrazok.Source = GetImageStream(new MemoryStream(sInfo.Data));
-                //Obrazky.Children.Add(obrazok);
                 Obrazky.Children.Add(new InfoStlpu()
                 {
                     Update = true,
                     DataContext = sInfo
                 });
             }
-            //Obrazky.ItemsSource = _aktualnyStlp.SInformacie;
-            //Doplnky.ItemsSource = _aktualnyStlp.Doplnky;
-
-
         }
-
-        public static BitmapImage GetImageStream(MemoryStream paStream)
-        {
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.StreamSource = paStream;
-            bi.EndInit();
-            return bi;
-        }
-
-        [DllImport("gdi32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool DeleteObject(IntPtr value);
     }
 }

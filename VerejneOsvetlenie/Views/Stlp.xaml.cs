@@ -36,20 +36,22 @@ namespace VerejneOsvetlenie.Views
             if (Model == null)
                 return;
 
-            Upravit.Visibility = Update ? Visibility.Visible : Visibility.Collapsed;
+            //Upravit.Visibility = Update ? Visibility.Visible : Visibility.Collapsed;
             Vlozit.Visibility = !Update ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void Upravit_Click(object sender, RoutedEventArgs e)
         {
-            Model.Update();
+            var result = Model.Update();
+            FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
         }
 
         private void Vlozit_Click(object sender, RoutedEventArgs e)
         {
-            Model.Insert();
+            var result = Model.Insert();
+            FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
             DataContext = null;
-            DataContext = new SInfo();
+            DataContext = new SStlp();
         }
     }
 }
