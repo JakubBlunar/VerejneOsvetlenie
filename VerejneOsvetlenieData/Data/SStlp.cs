@@ -39,6 +39,7 @@ namespace VerejneOsvetlenieData.Data
             }
             catch
             {
+                ErrorMessage = "Nespravny datum";
                 return false;
             }
             char? typ = Typ;
@@ -48,8 +49,7 @@ namespace VerejneOsvetlenieData.Data
             if (string.IsNullOrWhiteSpace(Poradie + "")) poradie = null;
             if (poradie != null && poradie < -1) poradie = null;
 
-            Databaza.UpdateStlp(Cislo, IdUlice, Vyska, datum, poradie, typ);
-            return true;
+            return useDbMethod(Databaza.UpdateStlp(Cislo, IdUlice, Vyska, datum, poradie, typ));
         }
 
         public override bool Insert()
@@ -62,6 +62,7 @@ namespace VerejneOsvetlenieData.Data
             }
             catch
             {
+                ErrorMessage = "Nespravny datum.";
                 return false;
             }
 
@@ -72,15 +73,12 @@ namespace VerejneOsvetlenieData.Data
             if (string.IsNullOrWhiteSpace(Poradie + "")) poradie = null;
             if (poradie != null && poradie < -1) poradie = null;
 
-
-
-            Databaza.InsertStlp(IdUlice, Vyska, datum, poradie, typ);
-            return true;
+            return useDbMethod(Databaza.InsertStlp(IdUlice, Vyska, datum, poradie, typ));
         }
 
         public override bool Drop()
         {
-            return !Databaza.DeleteStlp(Cislo).JeChyba;
+            return useDbMethod(Databaza.DeleteStlp(Cislo));
         }
 
    

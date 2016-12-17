@@ -36,19 +36,19 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return !Databaza.UpdateKontrolyStlpu(IdSluzby, RodneCislo, Cislo, Popis, Stav,
-                    Trvanie, DateTime.Parse(Datum)).JeChyba;
+            return useDbMethod(Databaza.UpdateKontrolyStlpu(IdSluzby, RodneCislo, Cislo, Popis, Stav,
+                    Trvanie, DateTime.Parse(Datum)));
         }
 
         public override bool Insert()
         {
-            return !Databaza.VlozKontroluStlpu(RodneCislo, Cislo, Popis, Stav,
-                    Trvanie, DateTime.Parse(Datum)).JeChyba;
+            return useDbMethod(Databaza.VlozKontroluStlpu(RodneCislo, Cislo, Popis, Stav,
+                    Trvanie, DateTime.Parse(Datum)));
         }
 
         public override bool Drop()
         {
-            return !Databaza.ZmazSluzbu(IdSluzby).JeChyba;
+            return useDbMethod(Databaza.ZmazSluzbu(IdSluzby));
         }
 
         public override bool SelectPodlaId(object paIdEntity)

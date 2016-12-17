@@ -18,17 +18,17 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return !Databaza.UpdateTechnik(RodneCislo, Meno, Priezvisko).JeChyba;
+            return useDbMethod(Databaza.UpdateTechnik(RodneCislo, Meno, Priezvisko));
         }
 
         public override bool Insert()
         {
-            return !Databaza.VlozTechnika(RodneCislo, Meno, Priezvisko).JeChyba;
+            return useDbMethod(Databaza.VlozTechnika(RodneCislo, Meno, Priezvisko));
         }
 
         public override bool Drop()
         {
-            return !Databaza.ZmazTechnika(RodneCislo).JeChyba;
+            return useDbMethod(Databaza.ZmazTechnika(RodneCislo));
         }
     }
 }

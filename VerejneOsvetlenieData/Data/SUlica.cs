@@ -19,17 +19,17 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return !Databaza.UpdateUlica(IdUlice, Nazov, Mesto).JeChyba;
+            return useDbMethod(Databaza.UpdateUlica(IdUlice, Nazov, Mesto));
         }
 
         public override bool Insert()
         {
-            return !Databaza.InsertUlica(Nazov, Mesto).JeChyba;
+            return useDbMethod(Databaza.InsertUlica(Nazov, Mesto));
         }
 
         public override bool Drop()
         {
-            return !Databaza.ZmazUlicu(IdUlice).JeChyba;
+            return useDbMethod(Databaza.ZmazUlicu(IdUlice));
         }
     }
 }

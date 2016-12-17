@@ -36,15 +36,15 @@ namespace VerejneOsvetlenieData.Data
         public override bool Update()
         {
             if (string.IsNullOrEmpty(DatumDemontaze))
-                return !Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)).JeChyba;
-            return !Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)).JeChyba;
+                return useDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)));
+            return useDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)));
         }
 
         public override bool Insert()
         {
             if (string.IsNullOrEmpty(DatumDemontaze))
-                return !Databaza.VlozDoplnokStlpu(Cislo,TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)).JeChyba;
-            return !Databaza.VlozDoplnokStlpu(Cislo, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)).JeChyba;
+                return useDbMethod(Databaza.VlozDoplnokStlpu(Cislo,TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)));
+            return useDbMethod(Databaza.VlozDoplnokStlpu(Cislo, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)));
         }
 
         public override bool Drop()

@@ -18,17 +18,17 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return !Databaza.UpdateTypLampy(IdTypu,Svietivost,Typ).JeChyba;
+            return useDbMethod(Databaza.UpdateTypLampy(IdTypu,Svietivost,Typ));
         }
 
         public override bool Insert()
         {
-            return !Databaza.InsertTypLampy(Typ, Svietivost).JeChyba;
+            return useDbMethod(Databaza.InsertTypLampy(Typ, Svietivost));
         }
 
         public override bool Drop()
         {
-            return !Databaza.ZmazTypLampy(IdTypu).JeChyba;
+            return useDbMethod(Databaza.ZmazTypLampy(IdTypu));
         }
     }
 }

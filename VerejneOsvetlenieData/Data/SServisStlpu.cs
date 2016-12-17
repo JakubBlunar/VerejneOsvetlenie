@@ -36,17 +36,17 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return !Databaza.UpdateServisuStlpu(IdSluzby, RodneCislo, Cislo, Popis, Trvanie, Datum, Cena).JeChyba;
+            return useDbMethod(Databaza.UpdateServisuStlpu(IdSluzby, RodneCislo, Cislo, Popis, Trvanie, Datum, Cena));
         }
 
         public override bool Insert()
         {
-            return !Databaza.VlozServisStlpu(RodneCislo, Cislo, Popis, Trvanie, Datum, Cena).JeChyba;
+            return useDbMethod(Databaza.VlozServisStlpu(RodneCislo, Cislo, Popis, Trvanie, Datum, Cena));
         }
 
         public override bool Drop()
         {
-            return !Databaza.ZmazSluzbu(IdSluzby).JeChyba;
+            return useDbMethod(Databaza.ZmazSluzbu(IdSluzby));
         }
 
         public override bool SelectPodlaId(object paIdEntity)

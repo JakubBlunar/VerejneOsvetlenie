@@ -2,6 +2,7 @@ using System.Drawing;
 using System.IO;
 using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
+using Db;
 
 namespace VerejneOsvetlenieData.Data
 {
@@ -36,17 +37,17 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return !Databaza.UpdateInfoStlpu(Id, Cislo, Typ, Data).JeChyba;
+            return useDbMethod(Databaza.UpdateInfoStlpu(Id, Cislo, Typ, Data));
         }
 
         public override bool Insert()
         {
-            return !Databaza.VlozInfoStlpu(Cislo, Typ, Data).JeChyba;
+            return useDbMethod(Databaza.VlozInfoStlpu(Cislo, Typ, Data));
         }
 
         public override bool Drop()
         {
-            return !Databaza.ZmazInfoOStlpe(Id).JeChyba;
+            return useDbMethod(Databaza.ZmazInfoOStlpe(Id));
         }
 
         public Image ByteArrayToImage(byte[] byteArrayIn)

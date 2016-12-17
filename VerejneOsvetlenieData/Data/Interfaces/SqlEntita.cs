@@ -157,5 +157,11 @@ namespace VerejneOsvetlenieData.Data.Interfaces
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        protected bool useDbMethod(Vysledok v)
+        {
+            ErrorMessage = v.Popis;
+            return !v.JeChyba;
+        }
     }
 }

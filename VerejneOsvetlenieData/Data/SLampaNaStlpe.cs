@@ -35,17 +35,17 @@ namespace VerejneOsvetlenieData.Data
             DateTime? demontaz = null;
             if (DatumDemontaze != "")
                 demontaz = DateTime.Parse(DatumDemontaze);
-            return !Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie),demontaz).JeChyba;
+            return useDbMethod(Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie),demontaz));
         }
 
         public override bool Insert()
         {
-            return !Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie)).JeChyba;
+            return useDbMethod(Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie)));
         }
 
         public override bool Drop()
         {
-            return !Databaza.ZmazLampuNaStlpe(IdLampy).JeChyba;
+            return useDbMethod(Databaza.ZmazLampuNaStlpe(IdLampy));
         }
 
         public override bool SelectPodlaId(object paIdEntity)
