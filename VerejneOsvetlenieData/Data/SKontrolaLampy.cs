@@ -16,7 +16,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "ID_LAMPY", DisplayName = "Id Lampy", ReadOnly = true)]
         public int IdLampy { get; set; }
 
-        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = null, Length = 10)]
+        [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = "Technik", Length = 10)]
         public string RodneCislo { get; set; }
 
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]
