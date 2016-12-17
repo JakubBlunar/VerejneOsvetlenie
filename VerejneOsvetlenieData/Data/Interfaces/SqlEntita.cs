@@ -77,80 +77,14 @@ namespace VerejneOsvetlenieData.Data.Interfaces
         public virtual IVystup GetSelectOnTableData()
         {
             var atribut = SqlClassAttribute.ExtractSqlClassAttribute(this);
-            //var pocetReferencii = 0;
-            //var stlpce = this.DajStlpce(out pocetReferencii);
-            //var tabulky = this.DajTabulky();
-            //var kluce = DajKluceSpojenia();
-            //var poradieTab = -1;
-            //var poradieAlias = 0;
             var stlpce = string.Join(", ", this.GetType().GetProperties()
                 .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
                             && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == false)
                 .Select(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.ColumnName));
 
             var select = $"select distinct {stlpce} from {atribut.TableName}";// a0 {string.Join(" ", tabulky.Select(t => $"join {t} a{++poradieAlias} on(a0.{atribut.TableKey} = a{poradieTab}.{kluce[poradieTab]})"))}";
-            var vystup = new VystupSelect(select);
-            vystup.KlucovyStlpec = atribut.TableKey;
+            var vystup = new VystupSelect(select) { KlucovyStlpec = atribut.TableKey };
             return vystup;
-        }
-
-        private string DajStlpce(out int paPocet)
-        {
-            var pocet = 0;
-            var stlpce = this.GetType().GetProperties()
-                .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
-                && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == false)
-                .Select(p => $"a0.{SqlClassAttribute.ExtractSqlClassAttribute(p)?.ColumnName}").ToList();
-
-            var refEntities = this.GetType().GetProperties()
-           .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
-           && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == true);
-            foreach (var propertyInfo in refEntities)
-            {
-                pocet++;
-                var refStlpce = propertyInfo.PropertyType.GetProperties()
-                .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
-                && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == false)
-                .Select(p => $"a{pocet}.{SqlClassAttribute.ExtractSqlClassAttribute(p)?.ColumnName}");
-                stlpce.AddRange(refStlpce);
-            }
-
-
-            paPocet = pocet;
-            return string.Join(", ", stlpce);
-        }
-
-        private List<string> DajTabulky()
-        {
-            var tabulky = new List<string>();
-            var refEntities = this.GetType().GetProperties()
-           .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
-           && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == true);
-            foreach (var propertyInfo in refEntities)
-            {
-                var atribut = SqlClassAttribute.ExtractSqlClassAttribute(propertyInfo.PropertyType);
-                tabulky.Add(atribut.TableName);
-
-                //.GetType().GetProperties()
-                //.Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
-                //&& SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == false)
-                //.Select(p => $"a{pocet}.{SqlClassAttribute.ExtractSqlClassAttribute(p)?.ColumnName}");
-            }
-            return tabulky;
-        }
-
-        private List<string> DajKluceSpojenia()
-        {
-            var kluce = new List<string>();
-            var refEntities = this.GetType().GetProperties()
-           .Where(p => SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsColumn == true
-           && SqlClassAttribute.ExtractSqlClassAttribute(p)?.IsReference == true);
-            foreach (var propertyInfo in refEntities)
-            {
-                var atribut = SqlClassAttribute.ExtractSqlClassAttribute(propertyInfo.PropertyType);
-                kluce.Add(atribut.TableKey);
-            }
-            return kluce;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -161,7 +95,7 @@ namespace VerejneOsvetlenieData.Data.Interfaces
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        protected bool useDbMethod(Vysledok v)
+        protected bool UseDbMethod(Vysledok v)
         {
             ErrorMessage = v.Popis;
             return !v.JeChyba;

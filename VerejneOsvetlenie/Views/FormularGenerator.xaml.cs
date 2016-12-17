@@ -33,6 +33,7 @@ namespace VerejneOsvetlenie.Views
         private SqlEntita _aktualnaEntita;
         public bool Insert { get; set; }
         public bool Update { get; set; }
+        public bool Delete { get; set; }
 
         public FormularGenerator()
         {
@@ -40,6 +41,7 @@ namespace VerejneOsvetlenie.Views
             this.DataContextChanged += FormularGenerator_DataContextChanged;
             Insert = true;
             Update = true;
+            Delete = true;
             Zmazat.Visibility = Visibility.Collapsed;
         }
 
@@ -97,7 +99,7 @@ namespace VerejneOsvetlenie.Views
         {
             var model = _aktualnaEntita = paRefencia ?? ModelAkoEntita;
             var atr = SqlClassAttribute.ExtractSqlClassAttribute(model);
-            Zmazat.Visibility = model.DeleteEnabled == true ? Visibility.Visible : Visibility.Collapsed;
+            Zmazat.Visibility = this.Delete && model.DeleteEnabled ? Visibility.Visible : Visibility.Collapsed;
             if (atr.IgnoreEntity)
                 return;
             FormularTitulok.Text = ModelAkoEntita != null ? DajAtributTabulky(ModelAkoEntita).ElementName : string.Empty;
@@ -258,6 +260,7 @@ namespace VerejneOsvetlenie.Views
                 if (result)
                 {
                     NastavTlacidla(false, false, false);
+                    Zmazat.Visibility = Visibility.Collapsed;
                     HlavnyGrid.Background = new SolidColorBrush(Colors.LightSalmon);
                 }
             }

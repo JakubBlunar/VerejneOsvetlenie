@@ -44,7 +44,7 @@ namespace VerejneOsvetlenie.Views
             _aktualnyStlp.SelectPodlaId(null);
 
             NovyDoplnok.Update = false;
-            NovyDoplnok.HlavnyGrid.IsEnabled = true;
+            NovyDoplnok.Delete = false;
             NovyDoplnok.DataContext = new TDoplnok() { Cislo = _aktualnyStlp.SStlp.Cislo };
             Stlp.Insert = false;
             Stlp.DataContext = _aktualnyStlp.SStlp;

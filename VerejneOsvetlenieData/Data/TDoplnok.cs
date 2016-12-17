@@ -31,25 +31,26 @@ namespace VerejneOsvetlenieData.Data
         public TDoplnok()
         {
             Cislo = -1;
+            DeleteEnabled = true;
         }
 
         public override bool Update()
         {
             if (string.IsNullOrEmpty(DatumDemontaze))
-                return useDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)));
-            return useDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)));
+                return UseDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)));
+            return UseDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)));
         }
 
         public override bool Insert()
         {
             if (string.IsNullOrEmpty(DatumDemontaze))
-                return useDbMethod(Databaza.VlozDoplnokStlpu(Cislo,TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)));
-            return useDbMethod(Databaza.VlozDoplnokStlpu(Cislo, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)));
+                return UseDbMethod(Databaza.VlozDoplnokStlpu(Cislo,TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)));
+            return UseDbMethod(Databaza.VlozDoplnokStlpu(Cislo, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)));
         }
 
         public override bool Drop()
         {
-            return useDbMethod(Databaza.ZmazDoplnokStlpu(Id, Cislo));
+            return UseDbMethod(Databaza.ZmazDoplnokStlpu(Id, Cislo));
         }
     }
 }

@@ -23,17 +23,17 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return useDbMethod(Databaza.UpdateTechnik(RodneCislo, Meno, Priezvisko));
+            return UseDbMethod(Databaza.UpdateTechnik(RodneCislo, Meno, Priezvisko));
         }
 
         public override bool Insert()
         {
-            return useDbMethod(Databaza.VlozTechnika(RodneCislo, Meno, Priezvisko));
+            return UseDbMethod(Databaza.VlozTechnika(RodneCislo, Meno, Priezvisko));
         }
 
         public override bool Drop()
         {
-            return useDbMethod(Databaza.ZmazTechnika(RodneCislo));
+            return UseDbMethod(Databaza.ZmazTechnika(RodneCislo));
         }
     }
 }

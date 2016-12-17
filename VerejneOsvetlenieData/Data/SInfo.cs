@@ -62,7 +62,7 @@ namespace VerejneOsvetlenieData.Data
             }
             else datum = null;
 
-            return useDbMethod(Databaza.UpdateInfoStlpu(Id, Cislo, Typ,datum, Data));
+            return UseDbMethod(Databaza.UpdateInfoStlpu(Id, Cislo, Typ,datum, Data));
         }
 
         public override bool Insert()
@@ -82,12 +82,12 @@ namespace VerejneOsvetlenieData.Data
             }
             else datum = null;
 
-            return useDbMethod(Databaza.VlozInfoStlpu(Cislo, Typ, datum, Data));
+            return UseDbMethod(Databaza.VlozInfoStlpu(Cislo, Typ, datum, Data));
         }
 
         public override bool Drop()
         {
-            return useDbMethod(Databaza.ZmazInfoOStlpe(Id));
+            return UseDbMethod(Databaza.ZmazInfoOStlpe(Id));
         }
 
         public Image ByteArrayToImage(byte[] byteArrayIn)

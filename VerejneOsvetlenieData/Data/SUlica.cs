@@ -24,17 +24,17 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return useDbMethod(Databaza.UpdateUlica(IdUlice, Nazov, Mesto));
+            return UseDbMethod(Databaza.UpdateUlica(IdUlice, Nazov, Mesto));
         }
 
         public override bool Insert()
         {
-            return useDbMethod(Databaza.InsertUlica(Nazov, Mesto));
+            return UseDbMethod(Databaza.InsertUlica(Nazov, Mesto));
         }
 
         public override bool Drop()
         {
-            return useDbMethod(Databaza.ZmazUlicu(IdUlice));
+            return UseDbMethod(Databaza.ZmazUlicu(IdUlice));
         }
     }
 }

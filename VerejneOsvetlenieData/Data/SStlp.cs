@@ -53,7 +53,7 @@ namespace VerejneOsvetlenieData.Data
             if (string.IsNullOrWhiteSpace(Poradie + "")) poradie = null;
             if (poradie != null && poradie < -1) poradie = null;
 
-            return useDbMethod(Databaza.UpdateStlp(Cislo, IdUlice, Vyska, datum, poradie, typ));
+            return UseDbMethod(Databaza.UpdateStlp(Cislo, IdUlice, Vyska, datum, poradie, typ));
         }
 
         public override bool Insert()
@@ -76,12 +76,12 @@ namespace VerejneOsvetlenieData.Data
             if (string.IsNullOrWhiteSpace(Poradie + "")) poradie = null;
             if (poradie != null && poradie < -1) poradie = null;
 
-            return useDbMethod(Databaza.InsertStlp(IdUlice, Vyska, datum, poradie, typ));
+            return UseDbMethod(Databaza.InsertStlp(IdUlice, Vyska, datum, poradie, typ));
         }
 
         public override bool Drop()
         {
-            return useDbMethod(Databaza.DeleteStlp(Cislo));
+            return UseDbMethod(Databaza.DeleteStlp(Cislo));
         }
 
    

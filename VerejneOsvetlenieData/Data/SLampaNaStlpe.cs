@@ -40,17 +40,17 @@ namespace VerejneOsvetlenieData.Data
             DateTime? demontaz = null;
             if (DatumDemontaze != "")
                 demontaz = DateTime.Parse(DatumDemontaze);
-            return useDbMethod(Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie),demontaz));
+            return UseDbMethod(Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie),demontaz));
         }
 
         public override bool Insert()
         {
-            return useDbMethod(Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie)));
+            return UseDbMethod(Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie)));
         }
 
         public override bool Drop()
         {
-            return useDbMethod(Databaza.ZmazLampuNaStlpe(IdLampy));
+            return UseDbMethod(Databaza.ZmazLampuNaStlpe(IdLampy));
         }
 
         public override bool SelectPodlaId(object paIdEntity)

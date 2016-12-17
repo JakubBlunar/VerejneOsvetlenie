@@ -42,19 +42,19 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Update()
         {
-            return useDbMethod(Databaza.UpdateServisuLampy(IdSluzby, RodneCislo, IdLampy, Popis,
+            return UseDbMethod(Databaza.UpdateServisuLampy(IdSluzby, RodneCislo, IdLampy, Popis,
                 Trvanie, Datum, Cena));
         }
 
         public override bool Insert()
         {
-            return useDbMethod(Databaza.VlozServisLampy(RodneCislo, IdLampy, Popis,
+            return UseDbMethod(Databaza.VlozServisLampy(RodneCislo, IdLampy, Popis,
                    Trvanie, Datum, Cena));
         }
 
         public override bool Drop()
         {
-            return useDbMethod(Databaza.ZmazSluzbu(IdSluzby));
+            return UseDbMethod(Databaza.ZmazSluzbu(IdSluzby));
         }
 
         public override bool SelectPodlaId(object paIdEntity)
