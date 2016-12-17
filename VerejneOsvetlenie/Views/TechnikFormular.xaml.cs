@@ -38,11 +38,12 @@ namespace VerejneOsvetlenie.Views
                 return;
             }
             _aktualnyTechnik = new STechnikCely(Model);
+            //Technik.DataContext = _aktualnyTechnik.Technik;
 
-            
-              
-            
-          
+
+
+
+
 
         }
     }

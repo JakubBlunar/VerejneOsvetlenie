@@ -72,7 +72,7 @@
                                         DataContext="{Binding AktualnaEntita}" />
                     <local:UlicaFormular Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}, ConverterParameter=ulica}"
                                          DataContext="{Binding AktualnaEntita}" />
-                    <local:TechnikFormular Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}, ConverterParameter=technik}"
+                    <local:TechniciFormular Visibility="{Binding Converter={StaticResource FormularVisibilityConverter}, ConverterParameter=technik}"
                                          DataContext="{Binding AktualnaEntita}" />
                 </Grid>
             </ScrollViewer>
