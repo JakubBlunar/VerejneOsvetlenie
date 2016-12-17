@@ -52,6 +52,7 @@ namespace VerejneOsvetlenie.Views
                 Udaje.Children.Add(new FormularGenerator() { DataContext = doplnok, Margin = new Thickness(0, 5, 0, 5) });
             }
 
+            NovyObrazok.CisloStlpu = _aktualnyStlp.SStlp.Cislo;
             NovyObrazok.Upravit.Visibility = Visibility.Collapsed;
             foreach (var sInfo in _aktualnyStlp.SInformacie)
             {

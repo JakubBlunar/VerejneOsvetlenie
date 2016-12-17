@@ -26,6 +26,8 @@ namespace VerejneOsvetlenie.Views
     {
         public SInfo Model => DataContext as SInfo;
         public bool Update { get; set; }
+        public int CisloStlpu { get; set; }
+
         public InfoStlpu()
         {
             InitializeComponent();
@@ -38,6 +40,7 @@ namespace VerejneOsvetlenie.Views
             if (Model == null)
                 return;
 
+            Model.Cislo = CisloStlpu;
             Upravit.Visibility = Update ? Visibility.Visible : Visibility.Collapsed;
             Vlozit.Visibility = !Update ? Visibility.Visible : Visibility.Collapsed;
 
@@ -79,6 +82,7 @@ namespace VerejneOsvetlenie.Views
 
         private void Upravit_Click(object sender, RoutedEventArgs e)
         {
+            Model.Cislo = CisloStlpu;
             var result = Model.Update();
 
             FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
@@ -86,6 +90,7 @@ namespace VerejneOsvetlenie.Views
 
         private void Vlozit_Click(object sender, RoutedEventArgs e)
         {
+            Model.Cislo = CisloStlpu;
             var result = Model.Insert();
 
             FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
