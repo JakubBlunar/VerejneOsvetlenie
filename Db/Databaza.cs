@@ -66,9 +66,9 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok?.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok?.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                 }
 
                 if (vysledok != null)
@@ -119,10 +119,9 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok?.NastavChybu("Chyba pri vykonavani procdury");
-                    //yield break;
+                    vysledok?.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                 }
 
                 if (vysledok != null)
@@ -277,7 +276,7 @@ namespace Db
                 return vysledok;
             #endregion
 
-            string dInstalacie = datum.ToString("dd.MM.yyyy HH:mm");
+            string dInstalacie = datum.ToString("dd.MM.yyyy");
 
             using (var cmd = new OracleCommand("update_stlp", ActiveConnection))
             {
@@ -287,7 +286,7 @@ namespace Db
                 cmd.Parameters.Add("pa_vyska", "number").Value = vyska;
                 cmd.Parameters.Add("pa_poradie", "number").Value = poradie;
                 cmd.Parameters.Add("pa_typ", "char").Value = typ;
-                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dInstalacie;
+                cmd.Parameters.Add("pa_datum_instalacie", "date").Value = dInstalacie;
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
@@ -295,20 +294,34 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch(Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu(e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Stĺp s číslom neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Ulica s id neexistuje.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Záporné poradie stĺpu.");
+                        break;
+                    case "D":
+                        vysledok.NastavChybu("Zadaj jeden zbak ako typ stĺpu.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
                 }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
-                }
+
             }
 
             return vysledok;
@@ -349,9 +362,9 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
@@ -413,19 +426,26 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Stĺp s číslom neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Doplnok neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -469,19 +489,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Stĺp s číslom neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -512,19 +536,26 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Také lampy sa ešte používajú.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Typ lampy s takým id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -555,19 +586,27 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Lampu nemožno zmazať, referencia zo strany služby.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Ulica s takým id neexistuje.");
+                        break;                   
+                    case "X":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -586,7 +625,7 @@ namespace Db
                 return vysledok;
             #endregion
 
-            using (var cmd = new OracleCommand("delete_sluzba", ActiveConnection))
+            using (var cmd = new OracleCommand("delete_technik", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -598,19 +637,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Texhnik referencovaný zo strany služby.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -641,19 +684,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Služba s id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -684,19 +731,26 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Ulica referencovaná zo strany stĺpa.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Ulica s id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -727,19 +781,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Info s id neexistuje.");
+                        break;                   
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -776,19 +834,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Technik s rovnakým rč už existuje.");
+                        break;                    
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -826,19 +888,22 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
-
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Ulica s id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -873,19 +938,20 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -917,19 +983,20 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -956,7 +1023,7 @@ namespace Db
 
             string dInstalacie = datumInstalacie.ToString("dd.MM.yyyy HH:mm");
 
-            using (var cmd = new OracleCommand("update_lampa_na_stlpe", ActiveConnection))
+            using (var cmd = new OracleCommand("vloz_lampa_na_stlpe", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
@@ -970,20 +1037,28 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Stlp s číslom neexistuje.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Taký typ lampy neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
-                }
+
             }
 
             return vysledok;
@@ -1028,19 +1103,29 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Lampa s id neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Stlp s číslom neexistuje.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Taký typ lampy neexistuje.");
+                        break;                   
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -1075,19 +1160,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Typ lampy s takým id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -1130,19 +1219,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Info s id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -1182,19 +1275,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Stĺp s číslom neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
 
@@ -1230,19 +1327,23 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Technik s rč neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
 
             }
@@ -1291,19 +1392,26 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Technik s rč neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Stlp s číslom neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
             return vysledok;
@@ -1351,19 +1459,29 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Služba s id neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Technik s rodným číslom neexistuje.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Stlp s číslom neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
             return vysledok;
@@ -1411,19 +1529,26 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Technik s rodným číslom neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Stlp s číslom neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
             return vysledok;
@@ -1471,19 +1596,29 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Služba s id neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Technik s rodným číslom neexistuje.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Stlp s číslom neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
             return vysledok;
@@ -1534,19 +1669,26 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Technik s rodným číslom neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Lampa s id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
             return vysledok;
@@ -1598,19 +1740,29 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Služba s id neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Technik s rodným číslom neexistuje.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Lampa s id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
             return vysledok;
@@ -1659,19 +1811,26 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Technik s rodným číslom neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Lampa s id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
             return vysledok;
@@ -1719,19 +1878,29 @@ namespace Db
                 {
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception e)
                 {
-                    vysledok.NastavChybu("Chyba pri vykonavani procdury");
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
                     return vysledok;
                 }
 
-                if (cmd.Parameters["vysledok"].Value.ToString().Equals("S"))
+                switch (cmd.Parameters["vysledok"].Value.ToString())
                 {
-                    vysledok.Popis = "Success";
-                }
-                else
-                {
-                    vysledok.NastavChybu("Daco sa nepodarilo");
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Služba s id neexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Technik s rodným číslom neexistuje.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Lampa s id neexistuje.");
+                        break;
+                    case "X":
+                        vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
+                        break;
                 }
             }
             return vysledok;
