@@ -42,6 +42,11 @@ namespace DataGenerator
 
             //var sg = new SvietivostGenerator();
             //sg.Generate(0);
+
+            /*
+            var dlg = new DoplnenieLampGenerator();
+            dlg.Generate(0);
+            */
         }
     }
 }

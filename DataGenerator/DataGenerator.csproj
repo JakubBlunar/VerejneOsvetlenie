@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\DataReader.cs" />
+    <Compile Include="Generators\DoplnenieLampGenerator.cs" />
     <Compile Include="Generators\DoplnokGenerator.cs" />
     <Compile Include="Generators\Generator.cs" />
     <Compile Include="Generators\LampaGenerator.cs" />
