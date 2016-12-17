@@ -256,13 +256,16 @@ namespace VerejneOsvetlenie.Views
                 var result = _aktualnaEntita.Drop();
                 GenerujSpravu(result, _aktualnaEntita.ErrorMessage);
                 if (result)
+                {
+                    NastavTlacidla(false, false, false);
                     HlavnyGrid.Background = new SolidColorBrush(Colors.LightSalmon);
+                }
             }
         }
     }
 
     public enum StavyFormulara
     {
-        Init, Update, Insert
+        Init, Update, Insert, Delete
     }
 }
