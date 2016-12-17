@@ -49,14 +49,14 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool SelectPodlaId(object paIdEntity)
         {
-            string s = "select id_lampy, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, stav, nvl(svietivost, 0) from s_obsluha_lampy join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where rod_cislo = " + Technik.RodneCislo;
+            string s = "select id_lampy, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, stav, nvl(svietivost, 0) from s_obsluha_lampy join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where rodne_cislo = " + paIdEntity + " order by datum";
             var select = new VystupSelect(s,
                 "id_lampy", "rodne_cislo", "id_sluzby", "datum", "popis", "trvanie", "stav", "svietivost");
             select.SpustiVystup();
 
             foreach (var row in select.Rows)
             {
-                KontrolyLamp.AddLast(new SKontrolaLampy()
+                KontrolyLamp.AddFirst(new SKontrolaLampy()
                 {
                     IdLampy = int.Parse(row[0].ToString()),
                     RodneCislo = row[1].ToString(),
@@ -69,13 +69,13 @@ namespace VerejneOsvetlenieData.Data
                 });
             }
 
-            s = "select cislo, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where rod_cislo = " + Technik.RodneCislo;
+            s = "select cislo, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where rodne_cislo = " + paIdEntity + " order by datum";
             select = new VystupSelect(s,
                 "cislo", "rodne_cislo", "id_sluzby", "datum", "popis", "trvanie", "stav");
             select.SpustiVystup();
             foreach (var row in select.Rows)
             {
-                KontrolyStlpov.AddLast(new SKontrolaStlpu()
+                KontrolyStlpov.AddFirst(new SKontrolaStlpu()
                 {
                     Cislo = int.Parse(row[0].ToString()),
                     RodneCislo = row[1].ToString(),
@@ -87,14 +87,14 @@ namespace VerejneOsvetlenieData.Data
                 });
             }
 
-            s = "select id_lampy, id_sluzby, rodne_cislo, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, cena from s_obsluha_lampy join s_sluzba using (id_sluzby) join s_servis using (id_sluzby) where rod_cislo = " + Technik.RodneCislo;
+            s = "select id_lampy, id_sluzby, rodne_cislo, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, cena from s_obsluha_lampy join s_sluzba using (id_sluzby) join s_servis using (id_sluzby) where rodne_cislo = " + paIdEntity + " order by datum";
             select = new VystupSelect(s,
                 "id_lampy", "id_sluzby", "rodne_cislo", "datum", "popis", "trvanie", "cena");
             select.SpustiVystup();
 
             foreach (var row in select.Rows)
             {
-                ServisLamp.AddLast(new SServisLampy()
+                ServisLamp.AddFirst(new SServisLampy()
                 {
                     IdLampy = int.Parse(row[0].ToString()),
                     IdSluzby = int.Parse(row[1].ToString()),
@@ -106,14 +106,14 @@ namespace VerejneOsvetlenieData.Data
                 });
             }
 
-            s = "select cislo, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy hh24:mi'), nvl(popis,''), trvanie, cena from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_servis using (id_sluzby) where rod_cislo = " + Technik.RodneCislo;
+            s = "select cislo, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy hh24:mi'), nvl(popis,''), trvanie, cena from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_servis using (id_sluzby) where rodne_cislo = " + paIdEntity + " order by datum";
             select = new VystupSelect(s,
                 "cislo", "rodne_cislo", "id_sluzby", "datum", "popis", "trvanie", "cena");
             select.SpustiVystup();
 
             foreach (var row in select.Rows)
             {
-                ServisStlpov.AddLast(new SServisStlpu()
+                ServisStlpov.AddFirst(new SServisStlpu()
                 {
                     Cislo = int.Parse(row[0].ToString()),
                     RodneCislo = row[1].ToString(),
