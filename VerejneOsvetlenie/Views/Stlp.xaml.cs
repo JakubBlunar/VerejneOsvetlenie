@@ -23,6 +23,8 @@ namespace VerejneOsvetlenie.Views
     {
         public SStlp Model => DataContext as SStlp;
         public bool Update { get; set; }
+        public int IdUlice { get; set; }
+
 
         public Stlp()
         {
@@ -35,23 +37,21 @@ namespace VerejneOsvetlenie.Views
         {
             if (Model == null)
                 return;
-
+            Model.IdUlice = IdUlice;
             //Upravit.Visibility = Update ? Visibility.Visible : Visibility.Collapsed;
             Vlozit.Visibility = !Update ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        private void Upravit_Click(object sender, RoutedEventArgs e)
-        {
-            var result = Model.Update();
-            FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
-        }
-
         private void Vlozit_Click(object sender, RoutedEventArgs e)
         {
+            Model.IdUlice = IdUlice;
             var result = Model.Insert();
             FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
-            DataContext = null;
-            DataContext = new SStlp();
+            if (result)
+            {
+                DataContext = null;
+                DataContext = new SStlp();
+            }
         }
     }
 }

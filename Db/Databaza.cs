@@ -331,7 +331,7 @@ namespace Db
                 return vysledok;
             #endregion
 
-            string dInstalacie = datum.ToString("dd.MM.yyyy HH:mm");
+            string dInstalacie = datum.ToString("dd.MM.yyyy");
 
             using (var cmd = new OracleCommand("insert_stlp", ActiveConnection))
             {
@@ -341,7 +341,7 @@ namespace Db
                 cmd.Parameters.Add("pa_vyska", "number").Value = vyska;
                 cmd.Parameters.Add("pa_poradie", "number").Value = poradie;
                 cmd.Parameters.Add("pa_typ", "char").Value = typ;
-                cmd.Parameters.Add("pa_datum_instalacie", "varchar2").Value = dInstalacie;
+                cmd.Parameters.Add("pa_datum_instalacie", "Date").Value = dInstalacie;
 
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;

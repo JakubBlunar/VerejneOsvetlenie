@@ -39,6 +39,7 @@ namespace VerejneOsvetlenie.Views
             }
             _aktualnaUlica = new SUlicaCela(Model);
             _aktualnaUlica.SelectPodlaId(null);
+            NovyStlp.IdUlice = _aktualnaUlica.SUlica.IdUlice;
 
             Ulica.DataContext = _aktualnaUlica.SUlica;
             Udaje.Children.Clear();
@@ -47,10 +48,6 @@ namespace VerejneOsvetlenie.Views
                 Udaje.Children.Add(new FormularGenerator() { DataContext = stlp, Margin = new Thickness(0, 5, 0, 5) });
             }
         }
-
-        [DllImport("gdi32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool DeleteObject(IntPtr value);
 
     }
 }

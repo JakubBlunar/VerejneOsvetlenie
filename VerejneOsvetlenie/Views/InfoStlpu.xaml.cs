@@ -87,9 +87,13 @@ namespace VerejneOsvetlenie.Views
         private void Vlozit_Click(object sender, RoutedEventArgs e)
         {
             var result = Model.Insert();
-            
-            DataContext = null;
-            DataContext = new SInfo();
+
+            FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
+            if (result)
+            {
+                DataContext = null;
+                DataContext = new SInfo();
+            }
         }
     }
 }

@@ -18,37 +18,18 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="číslo"
-                       Margin="5,0" />
-            <TextBox Grid.Column="1" Grid.Row="0"
-                     Margin="5,0"
-                     MaxLength="1"
-                     FontSize="19"
-                     FontWeight="ExtraLight"
-                     Text="{Binding Cislo}" />
-            <TextBlock Grid.Column="0" Grid.Row="1"
-                       Text="ID ulice"
-                       Margin="5,0" />
-            <TextBox Grid.Column="1" Grid.Row="1"
-                     Margin="5,0"
-                     MaxLength="1"
-                     FontSize="19"
-                     FontWeight="ExtraLight"
-                     Text="{Binding IdUlice}" />
             <TextBlock Grid.Column="0" Grid.Row="2"
                        Text="výška"
-                       Margin="5,0" />
+                       Margin="5" />
             <TextBox Grid.Column="1" Grid.Row="2"
-                     Margin="5,0"
-                     MaxLength="1"
+                     Margin="5"
                      FontSize="19"
                      FontWeight="ExtraLight"
                      Text="{Binding Vyska}" />
@@ -56,25 +37,23 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        Text="poradie"
                        Margin="5,0" />
             <TextBox Grid.Column="1" Grid.Row="3"
-                     Margin="5,0"
-                     MaxLength="1"
+                     Margin="5"
                      FontSize="19"
                      FontWeight="ExtraLight"
                      Text="{Binding Poradie}" />
             <TextBlock Grid.Column="0" Grid.Row="4"
                        Text="dátum inštalácie"
-                       Margin="5,0" />
+                       Margin="5" />
             <TextBox Grid.Column="1" Grid.Row="4"
-                     Margin="5,0"
-                     MaxLength="1"
+                     Margin="5"
                      FontSize="19"
                      FontWeight="ExtraLight"
                      Text="{Binding DatumInstalacie}" />
             <TextBlock Grid.Column="0" Grid.Row="5"
                        Text="typ"
-                       Margin="5,0" />
+                       Margin="5" />
             <TextBox Grid.Column="1" Grid.Row="5"
-                     Margin="5,0"
+                     Margin="5"
                      MaxLength="1"
                      FontSize="19"
                      FontWeight="ExtraLight"
@@ -92,12 +71,6 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     Content="vložiť"
                     Margin="5"
                     Click="Vlozit_Click" />
-
-            <Button Grid.Column="2"
-                    x:Name="Upravit"
-                    Content="upraviť"
-                    Margin="5"
-                    Click="Upravit_Click" />
         </Grid>
     </StackPanel>
 </UserControl>

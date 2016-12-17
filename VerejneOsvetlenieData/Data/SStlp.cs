@@ -34,8 +34,7 @@ namespace VerejneOsvetlenieData.Data
             DateTime datum;
             try
             {
-                datum = DateTime.ParseExact(DatumInstalacie, "dd.MM.yyyy",
-                     System.Globalization.CultureInfo.InvariantCulture);
+                datum = DateTime.Parse(DatumInstalacie);
             }
             catch
             {
@@ -57,8 +56,7 @@ namespace VerejneOsvetlenieData.Data
             DateTime datum;
             try
             {
-                datum = DateTime.ParseExact(DatumInstalacie, "dd.MM.yyyy",
-                    System.Globalization.CultureInfo.InvariantCulture);
+                datum = DateTime.Parse(DatumInstalacie);
             }
             catch
             {
