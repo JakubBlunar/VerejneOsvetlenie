@@ -32,6 +32,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Button x:Name="Upravit"
                     Grid.Column="0"
@@ -41,8 +42,13 @@
                     Grid.Column="1"
                     Margin="5,0"
                     Click="Ulozit_Click">uložiť</Button>
-            <Button x:Name="Novy"
+
+            <Button x:Name="Zmazat"
                     Grid.Column="2"
+                    Margin="5,0"
+                    Click="Zmazat_Click">zmazať</Button>
+            <Button x:Name="Novy"
+                    Grid.Column="3"
                     Margin="5,0"
                     Click="Novy_Click">nový</Button>
         </Grid>
