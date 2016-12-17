@@ -49,7 +49,7 @@ namespace VerejneOsvetlenieData.Data
 
         public override bool Drop()
         {
-            throw new NotImplementedException();
+            return useDbMethod(Databaza.ZmazDoplnokStlpu(Id, Cislo));
         }
     }
 }

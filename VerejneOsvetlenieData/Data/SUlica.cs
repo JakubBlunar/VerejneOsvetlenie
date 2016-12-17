@@ -17,6 +17,11 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "MESTO", DisplayName = "Mesto", Length = 30)]
         public string Mesto { get; set; }
 
+        public SUlica()
+        {
+            DeleteEnabled = true;
+        }
+
         public override bool Update()
         {
             return useDbMethod(Databaza.UpdateUlica(IdUlice, Nazov, Mesto));

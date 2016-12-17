@@ -40,6 +40,11 @@ namespace VerejneOsvetlenieData.Data
         //    Data?.Dispose();
         //}
 
+        public SInfo()
+        {
+            DeleteEnabled = true;
+        }
+
         public override bool Update()
         {
             DateTime? datum;

@@ -34,6 +34,11 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "STAV", DisplayName = "Stav")]
         public char Stav { get; set; }
 
+        public SKontrolaStlpu()
+        {
+            DeleteEnabled = true;
+        }
+
         public override bool Update()
         {
             return useDbMethod(Databaza.UpdateKontrolyStlpu(IdSluzby, RodneCislo, Cislo, Popis, Stav,

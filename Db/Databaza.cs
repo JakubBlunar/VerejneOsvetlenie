@@ -2223,5 +2223,60 @@ namespace Db
         }
 
         #endregion
+
+        public Vysledok ZmazDoplnokStlpu(int id, int cislo)
+        {
+            var vysledok = new Vysledok();
+
+            #region parameterCheck
+            if(id < 0)
+                vysledok.PridajChybu("Zaporne id doplnku.");
+            if (cislo < 0)
+                vysledok.PridajChybu("Zaporne cislo stlpu.");
+            if (vysledok.JeChyba)
+                return vysledok;
+            #endregion
+
+            using (var cmd = new OracleCommand("DELETE_STLP", ActiveConnection))
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_id_stlpu", "number").Value = cislo;
+                cmd.Parameters.Add("pa_id_doplnku", "number").Value = id;
+
+                cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
+                cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
+                try
+                {
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    vysledok.NastavChybu("Oops niečo sa nepodarilo. Pozri správu:\n" + e.Message);
+                    return vysledok;
+                }
+
+
+                switch (cmd.Parameters["vysledok"].Value.ToString())
+                {
+                    case "S":
+                        vysledok.Popis = "Success";
+                        break;
+                    case "A":
+                        vysledok.NastavChybu("Stlp nexistuje.");
+                        break;
+                    case "B":
+                        vysledok.NastavChybu("Stlp nema ziadne doplnky.");
+                        break;
+                    case "C":
+                        vysledok.NastavChybu("Doplnok s danym id nie je na stlpe.");
+                        break;
+                    case "D":
+                        vysledok.NastavChybu("nekontrolovaná chyba v procedúre.");
+                        break;
+                }
+            }
+
+            return vysledok;
+        }
     }
 }

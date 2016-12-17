@@ -16,6 +16,11 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "PRIEZVISKO", DisplayName = "Priezvisko", Length = 30)]
         public string Priezvisko { get; set; }
 
+        public STechnik()
+        {
+            DeleteEnabled = true;
+        }
+
         public override bool Update()
         {
             return useDbMethod(Databaza.UpdateTechnik(RodneCislo, Meno, Priezvisko));

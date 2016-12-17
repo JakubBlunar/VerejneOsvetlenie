@@ -29,6 +29,11 @@ namespace VerejneOsvetlenieData.Data
         //[SqlClass(ColumnName = "DOPLNKY")]
         //public string Doplnky { get; set; }
 
+        public SStlp()
+        {
+            DeleteEnabled = true;
+        }
+
         public override bool Update()
         {
             DateTime datum;

@@ -37,6 +37,11 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "SVIETIVOST", DisplayName = "Svietivost")]
         public int Svietivost { get; set; }
 
+        public SKontrolaLampy()
+        {
+            DeleteEnabled = true;
+        }
+
         public override bool Update()
         {
             return useDbMethod(Databaza.UpdateKontrolyLampy(IdSluzby, RodneCislo, IdLampy, Popis, Stav,
