@@ -228,6 +228,8 @@ namespace VerejneOsvetlenie.Views
         private void Novy_Click(object sender, RoutedEventArgs e)
         {
             var novaEntita = Activator.CreateInstance(ModelAkoEntita.GetType()) as SqlEntita;
+            if (novaEntita is TDoplnok)
+                ((TDoplnok)novaEntita).Cislo = ((TDoplnok)ModelAkoEntita).Cislo;
             Reset();
             AktualnyStav = StavyFormulara.Insert;
             NastavTlacidla(false, true, Insert);
@@ -238,7 +240,7 @@ namespace VerejneOsvetlenie.Views
         public static void GenerujSpravu(bool paVysledokOperacie, string paErrorMessage, Window paNoveOkno = null)
         {
             var sprava = paVysledokOperacie ? "Operácia prebehla úspešne po obnovení záznamu uvidíte zmeny." : paErrorMessage;
-            MessageBox.Show( paNoveOkno ?? SpravaZaznamovWindow.AktualneOkno, sprava,
+            MessageBox.Show(paNoveOkno ?? SpravaZaznamovWindow.AktualneOkno, sprava,
             "Upozornenie", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
     }

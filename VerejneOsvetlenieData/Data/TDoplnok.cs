@@ -28,9 +28,9 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "dátum demontáže", SpecialFormat = "d")]
         public string DatumDemontaze { get; set; }
 
-        public TDoplnok(int paCisloStlpu)
+        public TDoplnok()
         {
-            Cislo = paCisloStlpu;
+            Cislo = -1;
         }
 
         public override bool Update()

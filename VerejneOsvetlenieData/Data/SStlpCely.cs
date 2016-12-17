@@ -38,13 +38,14 @@ namespace VerejneOsvetlenieData.Data
             var rows = Databaza.SpecialSelect(select);
             foreach (var row in rows)
             {
-                var doplnok = new TDoplnok(SStlp.Cislo)
+                var doplnok = new TDoplnok
                 {
                     Id = int.Parse(row["ID"].ToString()),
                     Popis = row["POPIS"].ToString(),
                     DatumDemontaze = row["DATUM_DEMONTAZE"].ToString(),
                     DatumInstalacie = row["DATUM_INSTALACIE"].ToString(),
-                    TypDoplnku = row["TYP_DOPLNKU"].ToString()[0]
+                    TypDoplnku = row["TYP_DOPLNKU"].ToString()[0],
+                    Cislo = SStlp.Cislo
                 };
                 Doplnky.AddLast(doplnok);
             }
