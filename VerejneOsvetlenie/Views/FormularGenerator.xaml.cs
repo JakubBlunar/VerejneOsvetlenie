@@ -201,11 +201,23 @@ namespace VerejneOsvetlenie.Views
 
         private void Ulozit_Click(object sender, RoutedEventArgs e)
         {
+            var operacia = false;
             HlavnyGrid.IsEnabled = false;
             if (AktualnyStav == StavyFormulara.Update)
-                _aktualnaEntita.Update();
+                operacia = _aktualnaEntita.Update();
             else if (AktualnyStav == StavyFormulara.Insert)
-                _aktualnaEntita.Insert();
+                operacia = _aktualnaEntita.Insert();
+
+            //var sprava = operacia ? "Operácia prebehla úspešne po refreshnutí uvidíte zmeny." : "";
+            //var result = MessageBox.Show(this,  //, MessageBoxImage.Warning);
+            //if (result == MessageBoxResult.OK)
+            //{
+            //    // Yes code here
+            //}
+            //else
+            //{
+            //    // No code here
+            //}
 
             AktualnyStav = StavyFormulara.Init;
             NastavTlacidla(true, false, true);
