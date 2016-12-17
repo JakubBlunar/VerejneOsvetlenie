@@ -91,9 +91,6 @@
     <Compile Include="Views\TechniciFormular.xaml.cs">
       <DependentUpon>TechniciFormular.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TechnikFormular.xaml.cs">
-      <DependentUpon>TechnikFormular.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\UlicaFormular.xaml.cs">
       <DependentUpon>UlicaFormular.xaml</DependentUpon>
     </Compile>
@@ -134,10 +131,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TechniciFormular.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TechnikFormular.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
