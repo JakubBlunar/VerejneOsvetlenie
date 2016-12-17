@@ -76,6 +76,9 @@
     <Compile Include="Views\InfoStlpu.xaml.cs">
       <DependentUpon>InfoStlpu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Stlp.xaml.cs">
+      <DependentUpon>Stlp.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SpravaZaznamovWindow.xaml.cs">
       <DependentUpon>SpravaZaznamovWindow.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,9 @@
     </Compile>
     <Compile Include="Views\TableGenerator.xaml.cs">
       <DependentUpon>TableGenerator.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UlicaFormular.xaml.cs">
+      <DependentUpon>UlicaFormular.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -105,6 +111,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Stlp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SpravaZaznamovWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -114,6 +124,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\TableGenerator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UlicaFormular.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

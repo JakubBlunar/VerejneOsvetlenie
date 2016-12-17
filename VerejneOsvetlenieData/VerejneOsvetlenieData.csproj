@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\SStlpCely.cs" />
+    <Compile Include="Data\SUlicaCela.cs" />
     <Compile Include="Data\TDoplnok.cs" />
     <Compile Include="Data\Interfaces\SqlEntita.cs" />
     <Compile Include="Data\SInfo.cs" />
