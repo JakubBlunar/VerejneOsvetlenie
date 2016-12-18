@@ -30,6 +30,9 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "Dátum demontáže", IsDate = true)]
         public string DatumDemontaze { get; set; }
 
+        [SqlClass(DisplayName = "Svietivost", ReadOnly = true, IgnoreEntity = true)]
+        public int Svietivost { get; set; }
+
         public SLampaNaStlpe()
         {
             DeleteEnabled = true;

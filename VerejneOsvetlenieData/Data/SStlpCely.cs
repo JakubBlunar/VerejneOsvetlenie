@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Db;
 using PropertyChanged;
 using VerejneOsvetlenieData.Data.Interfaces;
+using VerejneOsvetlenieData.Data.Tables;
 
 namespace VerejneOsvetlenieData.Data
 {
@@ -84,6 +85,18 @@ namespace VerejneOsvetlenieData.Data
                 };
                 DateTime dod;
                 lampa.DatumDemontaze = DateTime.TryParse(lampaNaStlpe["DATUM_DEMONTAZE"].ToString(), out dod) ? dod.ToString("dd.MM.yyyy") : string.Empty;
+
+                if (lampa.Stav == 'S' && lampa.DatumDemontaze == String.Empty)
+                {
+                    var s = $"select svietivost_lampy({lampa.IdLampy})  from dual ";
+                    var svietSelect = new VystupSelect(s,"svietivost");
+
+                    svietSelect.SpustiVystup(); ;
+                    foreach (var row in svietSelect.Rows)
+                    {
+                        lampa.Svietivost = int.Parse(row[0].ToString());
+                    }
+                }
                 SLampyNaStlpe.AddLast(lampa);
             }
 
