@@ -1349,6 +1349,9 @@ namespace Db
                     case "A":
                         vysledok.NastavChybu("Technik s rč neexistuje.");
                         break;
+                    case "B":
+                        vysledok.NastavChybu("Rodne cislo musi mať 10 znakov.");
+                        break;
                     case "X":
                         vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
                         break;
@@ -1487,6 +1490,9 @@ namespace Db
                     case "C":
                         vysledok.NastavChybu("Stlp s číslom neexistuje.");
                         break;
+                    case "D":
+                        vysledok.NastavChybu("Rodne cislo musi mať 10 znakov.");
+                        break;
                     case "X":
                         vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
                         break;
@@ -1623,6 +1629,9 @@ namespace Db
                         break;
                     case "C":
                         vysledok.NastavChybu("Stlp s číslom neexistuje.");
+                        break;
+                    case "D":
+                        vysledok.NastavChybu("Rodne cislo musi mať 10 znakov.");
                         break;
                     case "X":
                         vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
@@ -1908,6 +1917,9 @@ namespace Db
                         break;
                     case "C":
                         vysledok.NastavChybu("Lampa s id neexistuje.");
+                        break;
+                    case "D":
+                        vysledok.NastavChybu("Rodne cislo musi mať 10 znakov.");
                         break;
                     case "X":
                         vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
