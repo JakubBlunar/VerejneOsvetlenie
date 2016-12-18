@@ -16,7 +16,7 @@ namespace VerejneOsvetlenieData.Data
         //[SqlClass(ColumnName = "CISLO", IsReference = true)]
         //public SStlp Stlp { get; set; }
 
-        [SqlClass(ColumnName = "ID_TYPU", DisplayName = "Id lampy", ReadOnly = true)]
+        [SqlClass(ColumnName = "ID_TYPU", DisplayName = "Id typu")]
         public int IdTypu { get; set; }
         [SqlClass(ColumnName = "ID_TYPU", IsReference = true)]
         public SLampa Lampa { get; set; }
