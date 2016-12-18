@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VerejneOsvetlenie.Views"
+             xmlns:components="clr-namespace:VerejneOsvetlenie.Components"
              mc:Ignorable="d" 
              d:DesignHeight="800"
              d:DesignWidth="300">
@@ -12,7 +13,7 @@
         <local:FormularGenerator x:Name="Ulica"
                                  Margin="0,10" />
 
-        <TextBlock Style="{StaticResource Nadpisy}"
+        <!--<TextBlock Style="{StaticResource Nadpisy}"
                    Margin="0,15,0,10">Stĺpy</TextBlock>
         <Rectangle Height="1"
                    Stroke="Black"
@@ -20,7 +21,10 @@
                    HorizontalAlignment="Stretch"/>
         <StackPanel x:Name="Udaje">
 
-        </StackPanel>
+        </StackPanel>-->
+
+        <components:AutoHideMenu x:Name="Udaje"
+                                 DataContext="Stĺpy"/>
 
         <TextBlock Style="{StaticResource Nadpisy}"
                    Margin="0,15,0,10">Pridať stĺp</TextBlock>

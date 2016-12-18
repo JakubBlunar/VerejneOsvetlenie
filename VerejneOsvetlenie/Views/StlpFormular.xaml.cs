@@ -85,6 +85,8 @@ namespace VerejneOsvetlenie.Views
             {
                 Lampy.Children.Add(new FormularGenerator() { Insert = false, DataContext = lampaNaStlpe, Margin = new Thickness(0, 5, 0, 5) });
             }
+
+            
         }
     }
 }

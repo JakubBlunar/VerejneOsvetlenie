@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="VerejneOsvetlenie.Components.AutoHideElement"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:VerejneOsvetlenie.Components"
+             xmlns:converters="clr-namespace:VerejneOsvetlenie.Converters"
+             mc:Ignorable="d"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             x:Name="Control">
+    <UserControl.Resources>
+        <Storyboard x:Key="HideAnimation">
+            <DoubleAnimation Duration="0:0:0.3"
+                             To="0"
+                             Storyboard.TargetProperty="MaxHeight"
+                             Storyboard.TargetName="StackPanel"
+                             d:IsOptimized="True" />
+        </Storyboard>
+        <Storyboard x:Key="ShowAnimation">
+            <DoubleAnimation Duration="0:0:0.3"
+                             To="10000"
+                             Storyboard.TargetProperty="MaxHeight"
+                             Storyboard.TargetName="StackPanel"
+                             d:IsOptimized="True" />
+        </Storyboard>
+
+        <Style TargetType="{x:Type Button}"
+               x:Key="MenuButton">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver"
+                         Value="True">
+                    <Setter Property="Background"
+                            Value="#FFC5C5C5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <converters:StringVisibilityConverter x:Key="StringVisibilityConverter" />
+
+    </UserControl.Resources>
+
+    <StackPanel>
+        <Grid>
+            <TextBlock Style="{StaticResource Nadpisy}"
+                       Text="{Binding}"
+                       Margin="0,15,0,10"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"/>
+            <Button x:Name="ShowHideButton"
+                    FontFamily="Segoe MDL2 Assets "
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Padding="5"
+                    FontSize="25"
+                    Margin="0,0,5,0"
+                    Background="Transparent"
+                    Content="&#xE8C4;"
+                    Click="ShowHideMenu"
+                    BorderThickness="0"
+                    Style="{StaticResource MenuButton}">
+            </Button>
+        </Grid>
+        <Rectangle Height="1"
+                   Stroke="Black"
+                   StrokeThickness="2"
+                   HorizontalAlignment="Stretch"
+                   Visibility="{Binding Converter={StaticResource StringVisibilityConverter}}" />
+
+        <StackPanel x:Name="StackPanel">
+            
+        </StackPanel>
+    </StackPanel>
+</UserControl>

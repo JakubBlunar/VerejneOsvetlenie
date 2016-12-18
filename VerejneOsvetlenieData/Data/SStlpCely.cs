@@ -70,7 +70,7 @@ namespace VerejneOsvetlenieData.Data
                 SInformacie.AddLast(info);
             }
 
-            var selectLampy = $"select * from s_lampa_na_stlpe where cislo = {SStlp.Cislo}";
+            var selectLampy = $"select * from s_lampa_na_stlpe where cislo = {SStlp.Cislo} order by datum_demontaze desc";
             var lampy = Databaza.SpecialSelect(selectLampy);
             foreach (var lampaNaStlpe in lampy)
             {

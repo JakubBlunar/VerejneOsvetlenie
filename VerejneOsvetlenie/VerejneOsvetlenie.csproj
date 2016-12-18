@@ -62,7 +62,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Components\AutoHideElement.xaml.cs">
+      <DependentUpon>AutoHideElement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\AutoHideMenu.xaml.cs">
+      <DependentUpon>AutoHideMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\FormularVisibilityConverter.cs" />
+    <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="ResourceVystupy.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +101,14 @@
     <Compile Include="Views\UlicaFormular.xaml.cs">
       <DependentUpon>UlicaFormular.xaml</DependentUpon>
     </Compile>
+    <Page Include="Components\AutoHideElement.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\AutoHideMenu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
