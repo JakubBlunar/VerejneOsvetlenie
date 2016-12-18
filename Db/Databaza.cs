@@ -1453,13 +1453,13 @@ namespace Db
             using (var cmd = new OracleCommand("update_kontroly_stlpu", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
                 cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
-                cmd.Parameters.Add("pa_id_stlpu", "number").Value = idStlpu;
+                cmd.Parameters.Add("pa_cislo", "number").Value = idStlpu;
                 cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
                 cmd.Parameters.Add("pa_stav", "char").Value = stav;
                 cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
                 cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
-                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
 
@@ -1733,6 +1733,7 @@ namespace Db
             using (var cmd = new OracleCommand("update_kontroly_lampy", ActiveConnection))
             {
                 cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
                 cmd.Parameters.Add("pa_rod_cislo", "char").Value = rodCislotechnika;
                 cmd.Parameters.Add("pa_id_lampy", "number").Value = idLampy;
                 cmd.Parameters.Add("pa_popis", "varchar2").Value = popis;
@@ -1740,7 +1741,6 @@ namespace Db
                 cmd.Parameters.Add("pa_trvanie", "number").Value = trvanie;
                 cmd.Parameters.Add("pa_datum", "varchar2").Value = datum;
                 cmd.Parameters.Add("pa_svietivost", "number").Value = svietivost;
-                cmd.Parameters.Add("pa_id_sluzby", "number").Value = idSluzby;
                 cmd.Parameters.Add("vysledok", OracleDbType.Char, 1);
                 cmd.Parameters["vysledok"].Direction = ParameterDirection.Output;
 
