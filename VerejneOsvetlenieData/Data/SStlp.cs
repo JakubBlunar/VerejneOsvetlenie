@@ -8,7 +8,7 @@ namespace VerejneOsvetlenieData.Data
     [SqlClass(TableName = "S_STLP", DisplayName = "Ståp", TableKey = "CISLO")]
     public class SStlp : SqlEntita
     {
-        [SqlClass(ColumnName = "CISLO", DisplayName = null)]
+        [SqlClass(ColumnName = "CISLO", DisplayName = "Èíslo ståpu", ReadOnly = true)]
         public int Cislo { get; set; }
 
         [SqlClass(ColumnName = "ID_ULICE", DisplayName = null)]
