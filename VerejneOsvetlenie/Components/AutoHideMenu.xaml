@@ -18,7 +18,7 @@
         </Storyboard>
         <Storyboard x:Key="ShowAnimation">
             <DoubleAnimation Duration="0:0:0.3"
-                             To="10000"
+                             To="1000000"
                              Storyboard.TargetProperty="MaxHeight"
                              Storyboard.TargetName="Container"
                              d:IsOptimized="True" />
