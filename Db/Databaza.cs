@@ -1768,6 +1768,9 @@ namespace Db
                     case "C":
                         vysledok.NastavChybu("Lampa s id neexistuje.");
                         break;
+                    case "D":
+                        vysledok.NastavChybu("Rodne cislo musi mať 10 znakov.");
+                        break;
                     case "X":
                         vysledok.NastavChybu("Nekontrolovaná chyba v procedúre.");
                         break;
