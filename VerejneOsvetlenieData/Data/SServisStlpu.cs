@@ -31,7 +31,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "TRVANIE", DisplayName = "Trvanie")]
         public int Trvanie { get; set; }
 
-        [SqlClass(ColumnName = "Cena", DisplayName = "Stav")]
+        [SqlClass(ColumnName = "Cena", DisplayName = "Cena")]
         public int Cena { get; set; }
 
         public SServisStlpu()
