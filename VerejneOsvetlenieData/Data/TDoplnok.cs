@@ -22,10 +22,10 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "CISLO", DisplayName = null)]
         public int Cislo { get; set; }
 
-        [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "dátum inštalácie", SpecialFormat = "d")]
-        public string DatumInstalacie { get; set; }
+        [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "dátum inštalácie", SpecialFormat = "d", IsDate = true)]
+        public DateTime DatumInstalacie { get; set; }
 
-        [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "dátum demontáže", SpecialFormat = "d")]
+        [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "dátum demontáže", SpecialFormat = "d", IsDate = true)]
         public string DatumDemontaze { get; set; }
 
         public TDoplnok()
@@ -37,15 +37,15 @@ namespace VerejneOsvetlenieData.Data
         public override bool Update()
         {
             if (string.IsNullOrEmpty(DatumDemontaze))
-                return UseDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)));
-            return UseDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)));
+                return UseDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DatumInstalacie));
+            return UseDbMethod(Databaza.UpdateDoplnokStlpu(Cislo, Id, TypDoplnku, Popis, DatumInstalacie, DateTime.Parse(DatumDemontaze)));
         }
 
         public override bool Insert()
         {
             if (string.IsNullOrEmpty(DatumDemontaze))
-                return UseDbMethod(Databaza.VlozDoplnokStlpu(Cislo,TypDoplnku, Popis, DateTime.Parse(DatumInstalacie)));
-            return UseDbMethod(Databaza.VlozDoplnokStlpu(Cislo, TypDoplnku, Popis, DateTime.Parse(DatumInstalacie), DateTime.Parse(DatumDemontaze)));
+                return UseDbMethod(Databaza.VlozDoplnokStlpu(Cislo,TypDoplnku, Popis, DatumInstalacie));
+            return UseDbMethod(Databaza.VlozDoplnokStlpu(Cislo, TypDoplnku, Popis, DatumInstalacie, DateTime.Parse(DatumDemontaze)));
         }
 
         public override bool Drop()

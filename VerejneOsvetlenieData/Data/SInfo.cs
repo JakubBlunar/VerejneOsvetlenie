@@ -26,7 +26,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "TYP")]
         public char Typ { get; set; }
 
-        [SqlClass(ColumnName = "DATUM")]
+        [SqlClass(ColumnName = "DATUM", IsDate = true)]
         public string Datum { get; set; }
 
         public object Obrazok { get; set; }

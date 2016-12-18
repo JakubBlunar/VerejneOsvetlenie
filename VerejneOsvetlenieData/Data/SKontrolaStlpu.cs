@@ -22,8 +22,8 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = "Technik", Length = 10)]
         public string RodneCislo { get; set; }
 
-        [SqlClass(ColumnName = "DATUM", DisplayName = "Dátum")]
-        public string Datum { get; set; }
+        [SqlClass(ColumnName = "DATUM", DisplayName = "Dátum", IsDate = true)]
+        public DateTime Datum { get; set; }
 
         [SqlClass(ColumnName = "POPIS", DisplayName = "Popis", Length = 500)]
         public string Popis { get; set; }
@@ -42,13 +42,13 @@ namespace VerejneOsvetlenieData.Data
         public override bool Update()
         {
             return UseDbMethod(Databaza.UpdateKontrolyStlpu(IdSluzby, RodneCislo, Cislo, Popis, Stav,
-                    Trvanie, DateTime.Parse(Datum)));
+                Trvanie, Datum)); //DateTime.Parse(Datum)));
         }
 
         public override bool Insert()
         {
             return UseDbMethod(Databaza.VlozKontroluStlpu(RodneCislo, Cislo, Popis, Stav,
-                    Trvanie, DateTime.Parse(Datum)));
+                Trvanie, Datum)); //DateTime.Parse(Datum)));
         }
 
         public override bool Drop()
@@ -59,7 +59,7 @@ namespace VerejneOsvetlenieData.Data
         public override bool SelectPodlaId(object paIdEntity)
         {
 
-            var s = "select cislo, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy hh24:mi'), nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where id_sluzby = " + paIdEntity;
+            var s = "select cislo, rodne_cislo, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, stav from s_obsluha_stlpu join s_sluzba using (id_sluzby) join s_kontrola using (id_sluzby) where id_sluzby = " + paIdEntity;
             var select = new VystupSelect(s,
                 "cislo", "rodne_cislo", "id_sluzby", "datum", "popis", "trvanie", "stav");
             select.SpustiVystup();
@@ -70,7 +70,7 @@ namespace VerejneOsvetlenieData.Data
                 Cislo = int.Parse(row[0].ToString());
                 RodneCislo = row[1].ToString();
                 IdSluzby = int.Parse(row[2].ToString());
-                Datum = row[3].ToString();
+                Datum = DateTime.Parse(row[3].ToString());
                 Popis = row[4].ToString();
                 Trvanie = int.Parse(row[5].ToString());
                 Stav = row[6].ToString()[0];//.ToArray()[0];

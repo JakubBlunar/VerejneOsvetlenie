@@ -80,14 +80,14 @@ namespace VerejneOsvetlenieData.Data
                     Cislo = int.Parse(row[0].ToString()),
                     RodneCislo = row[1].ToString(),
                     IdSluzby = int.Parse(row[2].ToString()),
-                    Datum = row[3].ToString(),
+                    Datum = DateTime.Parse(row[3].ToString()),
                     Popis = row[4].ToString(),
                     Trvanie = int.Parse(row[5].ToString()),
                     Stav = row[6].ToString()[0]
                 });
             }
 
-            s = "select id_lampy, id_sluzby, rodne_cislo, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, cena from s_obsluha_lampy join s_sluzba using (id_sluzby) join s_servis using (id_sluzby) where rodne_cislo = " + paIdEntity + " order by datum";
+            s = "select id_lampy, id_sluzby, rodne_cislo, to_char(datum, 'dd.MM.yyyy'), nvl(popis,''), trvanie, cena from s_obsluha_lampy join s_sluzba using (id_sluzby) join s_servis using (id_sluzby) where rodne_cislo = " + paIdEntity + " order by datum";
             select = new VystupSelect(s,
                 "id_lampy", "id_sluzby", "rodne_cislo", "datum", "popis", "trvanie", "cena");
             select.SpustiVystup();

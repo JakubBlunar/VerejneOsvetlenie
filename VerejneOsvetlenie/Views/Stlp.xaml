@@ -1,21 +1,28 @@
 ﻿<UserControl x:Class="VerejneOsvetlenie.Views.Stlp"
-xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VerejneOsvetlenie.Views"
              xmlns:data="clr-namespace:VerejneOsvetlenieData.Data;assembly=VerejneOsvetlenieData"
+             xmlns:converters="clr-namespace:VerejneOsvetlenie.Converters"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
+    <UserControl.Resources>
+
+        <converters:StringDateTimeConverter x:Key="StringDateTimeConverter" />
+
+    </UserControl.Resources>
+
     <UserControl.DataContext>
         <data:SStlp />
     </UserControl.DataContext>
     <StackPanel x:Name="HlavnyStackPanel">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -25,34 +32,44 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="2"
+            <TextBlock Grid.Column="0"
+                       Grid.Row="2"
                        Text="výška"
                        Margin="5" />
-            <TextBox Grid.Column="1" Grid.Row="2"
+            <TextBox Grid.Column="1"
+                     Grid.Row="2"
                      Margin="5"
                      FontSize="19"
                      FontWeight="ExtraLight"
                      Text="{Binding Vyska}" />
-            <TextBlock Grid.Column="0" Grid.Row="3"
+            <TextBlock Grid.Column="0"
+                       Grid.Row="3"
                        Text="poradie"
                        Margin="5,0" />
-            <TextBox Grid.Column="1" Grid.Row="3"
+            <TextBox Grid.Column="1"
+                     Grid.Row="3"
                      Margin="5"
                      FontSize="19"
                      FontWeight="ExtraLight"
                      Text="{Binding Poradie}" />
-            <TextBlock Grid.Column="0" Grid.Row="4"
+            <TextBlock Grid.Column="0"
+                       Grid.Row="4"
                        Text="dátum inštalácie"
                        Margin="5" />
-            <TextBox Grid.Column="1" Grid.Row="4"
-                     Margin="5"
-                     FontSize="19"
-                     FontWeight="ExtraLight"
-                     Text="{Binding DatumInstalacie}" />
-            <TextBlock Grid.Column="0" Grid.Row="5"
+            <DatePicker Grid.Column="1"
+                        Grid.Row="4"
+                        Margin="5"
+                        FontSize="19"
+                        FontWeight="ExtraLight"
+                        Text="vyberte dátum"
+                        SelectedDate="{Binding DatumInstalacie, Converter={StaticResource StringDateTimeConverter}, Mode=TwoWay}"
+                        SelectedDateFormat="Short" />
+            <TextBlock Grid.Column="0"
+                       Grid.Row="5"
                        Text="typ"
                        Margin="5" />
-            <TextBox Grid.Column="1" Grid.Row="5"
+            <TextBox Grid.Column="1"
+                     Grid.Row="5"
                      Margin="5"
                      MaxLength="1"
                      FontSize="19"
@@ -61,7 +78,7 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         </Grid>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>

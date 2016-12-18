@@ -23,7 +23,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "TYP", DisplayName = "Typ")]
         public char Typ { get; set; }
 
-        [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "Dátum inštalácie")]
+        [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "Dátum inštalácie", IsDate = true)]
         public string DatumInstalacie { get ; set; }
 
         //[SqlClass(ColumnName = "DOPLNKY")]

@@ -24,10 +24,10 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "STAV", DisplayName = "Stav", Length = 1)]
         public char Stav { get; set; }
 
-        [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "Dátum inštalácie")]
-        public string DatumInstalacie { get; set; }
+        [SqlClass(ColumnName = "DATUM_INSTALACIE", DisplayName = "Dátum inštalácie", IsDate = true)]
+        public DateTime DatumInstalacie { get; set; }
 
-        [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "Dátum demontáže")]
+        [SqlClass(ColumnName = "DATUM_DEMONTAZE", DisplayName = "Dátum demontáže", IsDate = true)]
         public string DatumDemontaze { get; set; }
 
         public SLampaNaStlpe()
@@ -40,12 +40,12 @@ namespace VerejneOsvetlenieData.Data
             DateTime? demontaz = null;
             if (DatumDemontaze != "")
                 demontaz = DateTime.Parse(DatumDemontaze);
-            return UseDbMethod(Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie),demontaz));
+            return UseDbMethod(Databaza.UpdateLampaNaStlpe(IdLampy, Cislo, IdTypu, Stav, DatumInstalacie,demontaz));
         }
 
         public override bool Insert()
         {
-            return UseDbMethod(Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DateTime.Parse(DatumInstalacie)));
+            return UseDbMethod(Databaza.InsertLampaNaStlpe(Cislo, IdTypu, Stav, DatumInstalacie));
         }
 
         public override bool Drop()

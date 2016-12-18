@@ -240,7 +240,6 @@ namespace VerejneOsvetlenie.Views
         private void Ulozit_Click(object sender, RoutedEventArgs e)
         {
             var result = false;
-            HlavnyGrid.IsEnabled = false;
             if (AktualnyStav == StavyFormulara.Update)
                 result = _aktualnaEntita.Update();
             else if (AktualnyStav == StavyFormulara.Insert)
@@ -249,6 +248,7 @@ namespace VerejneOsvetlenie.Views
             GenerujSpravu(result, _aktualnaEntita.ErrorMessage);
             if (result)
             {
+                HlavnyGrid.IsEnabled = false;
                 AktualnyStav = StavyFormulara.Init;
                 NastavTlacidla(Update, false, Insert);
             }

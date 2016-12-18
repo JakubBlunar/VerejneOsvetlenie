@@ -37,7 +37,7 @@ namespace VerejneOsvetlenieData.Data
         {
             //SStlp.SelectPodlaId(paIdEntity);
             var select =
-                $"select sd.ID, sd.TYP_DOPLNKU, sd.POPIS, to_char(sd.DATUM_INSTALACIE, 'DD.MM.YYYY') as DATUM_INSTALACIE, to_char(sd.DATUM_DEMONTAZE, 'DD.MM.YYYY') as DATUM_DEMONTAZE from s_stlp s, table(s.doplnky) sd where s.cislo = {SStlp.Cislo}";
+                $"select sd.ID, sd.TYP_DOPLNKU, sd.POPIS, to_char(sd.DATUM_INSTALACIE, 'dd.MM.yyyy') as DATUM_INSTALACIE, to_char(sd.DATUM_DEMONTAZE, 'DD.MM.YYYY') as DATUM_DEMONTAZE from s_stlp s, table(s.doplnky) sd where s.cislo = {SStlp.Cislo}";
             var rows = Databaza.SpecialSelect(select);
             foreach (var row in rows)
             {
@@ -46,7 +46,7 @@ namespace VerejneOsvetlenieData.Data
                     Id = int.Parse(row["ID"].ToString()),
                     Popis = row["POPIS"].ToString(),
                     DatumDemontaze = row["DATUM_DEMONTAZE"].ToString(),
-                    DatumInstalacie = row["DATUM_INSTALACIE"].ToString(),
+                    DatumInstalacie = DateTime.Parse(row["DATUM_INSTALACIE"].ToString()),//row["DATUM_INSTALACIE"].ToString(),
                     TypDoplnku = row["TYP_DOPLNKU"].ToString()[0],
                     Cislo = SStlp.Cislo
                 };
@@ -80,7 +80,7 @@ namespace VerejneOsvetlenieData.Data
                     Cislo = int.Parse(lampaNaStlpe["CISLO"].ToString()),
                     IdTypu = int.Parse(lampaNaStlpe["ID_TYPU"].ToString()),
                     Stav = lampaNaStlpe["STAV"].ToString()[0],
-                    DatumInstalacie = DateTime.Parse(lampaNaStlpe["DATUM_INSTALACIE"].ToString()).ToString("dd.MM.yyyy"),
+                    DatumInstalacie = DateTime.Parse(lampaNaStlpe["DATUM_INSTALACIE"].ToString())//.ToString("dd.MM.yyyy"),
                 };
                 DateTime dod;
                 lampa.DatumDemontaze = DateTime.TryParse(lampaNaStlpe["DATUM_DEMONTAZE"].ToString(), out dod) ? dod.ToString("dd.MM.yyyy") : string.Empty;
