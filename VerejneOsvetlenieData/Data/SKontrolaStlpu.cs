@@ -13,7 +13,7 @@ namespace VerejneOsvetlenieData.Data
     [SqlClass(TableName = "", DisplayName = "Kontrola stlpu", TableKey = "ID_SLUZBY")]
     public class SKontrolaStlpu:SqlEntita
     {
-        [SqlClass(ColumnName = "CISLO", DisplayName = "Cislo stlpu", ReadOnly = true)]
+        [SqlClass(ColumnName = "CISLO", DisplayName = "Číslo stĺpu", ReadOnly = true)]
         public int Cislo { get; set; }
 
         [SqlClass(ColumnName = "ID_SLUZBY", DisplayName = null)]

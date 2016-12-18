@@ -5,46 +5,69 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:VerejneOsvetlenie.Views"
              xmlns:data="clr-namespace:VerejneOsvetlenieData.Data;assembly=VerejneOsvetlenieData"
+             xmlns:converters="clr-namespace:VerejneOsvetlenie.Converters"
              mc:Ignorable="d"
              d:DesignHeight="300"
              d:DesignWidth="300">
+
+    <UserControl.Resources>
+
+        <converters:StringDateTimeConverter x:Key="StringDateTimeConverter" />
+
+    </UserControl.Resources>
+
     <UserControl.DataContext>
         <data:SInfo />
     </UserControl.DataContext>
-    <StackPanel x:Name="HlavnyStackPanel">
-        <Image x:Name="Obrazok"
-               Margin="5" />
-        <Button Margin="5" x:Name="Prehladavat" Click="ButtonBase_OnClick">Prehľadávať</Button>
+    <StackPanel>
+        <StackPanel x:Name="HlavnyStackPanel">
+            <Image x:Name="Obrazok"
+                   Margin="5" />
+            <Button Margin="5"
+                    x:Name="Prehladavat"
+                    Click="ButtonBase_OnClick">Prehľadávať</Button>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Grid.Row="0"
+                           Text="typ"
+                           Margin="5,0" />
+                <TextBox Grid.Column="1"
+                         Grid.Row="0"
+                         Margin="5"
+                         MaxLength="1"
+                         FontSize="19"
+                         FontWeight="ExtraLight"
+                         Text="{Binding Typ}" />
+                <TextBlock Grid.Column="0"
+                           Grid.Row="1"
+                           Text="Datum"
+                           Margin="5" />
+                <!--<TextBox Grid.Column="1"
+                         Grid.Row="1"
+                         Margin="5,0"
+                         FontSize="19"
+                         FontWeight="ExtraLight"
+                         Text="{Binding Datum}" />-->
+                <DatePicker Grid.Column="1"
+                            Grid.Row="1"
+                            Margin="5,0"
+                            FontSize="19"
+                            FontWeight="ExtraLight"
+                            SelectedDate="{Binding Datum, Converter={StaticResource StringDateTimeConverter}, Mode=TwoWay}"
+                            SelectedDateFormat="Short" />
+            </Grid>
+        </StackPanel>
         <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"></RowDefinition>
-                <RowDefinition Height="Auto"></RowDefinition>
-            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Grid.Row="0"
-                       Text="typ"
-                       Margin="5,0" />
-            <TextBox Grid.Column="1" Grid.Row="0"
-                     Margin="5"
-                     MaxLength="1"
-                     FontSize="19"
-                     FontWeight="ExtraLight"
-                     Text="{Binding Typ}" />
-            <TextBlock Grid.Column="0" Grid.Row="1"
-                       Text="Datum"
-                       Margin="5" />
-            <TextBox Grid.Column="1" Grid.Row="1"
-                     Margin="5,0"
-                     FontSize="19"
-                     FontWeight="ExtraLight"
-                     Text="{Binding Datum}" />
-        </Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>

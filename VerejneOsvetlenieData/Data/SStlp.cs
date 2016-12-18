@@ -65,7 +65,7 @@ namespace VerejneOsvetlenieData.Data
             }
             catch
             {
-                ErrorMessage = "Nespravny datum.";
+                ErrorMessage = "Nesprávny datum.";
                 return false;
             }
 

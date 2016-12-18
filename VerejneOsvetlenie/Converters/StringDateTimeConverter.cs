@@ -12,14 +12,20 @@ namespace VerejneOsvetlenie.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            DateTime d;
-            return DateTime.TryParse(value?.ToString(), out d) ? d.ToString("dd.MM. yyyy") : string.Empty;
+            if (string.IsNullOrEmpty(value?.ToString()))
+                return string.Empty;
+            if (value is DateTime)
+                return ((DateTime) value);
+            return DateTime.Parse(value.ToString());
+            //DateTime d;
+            ////return DateTime.TryParse(value?.ToString(), out d) ? d.ToString("dd.MM.yyyy") : string.Empty;
+            //return DateTime.Parse(value?.ToString()).ToString("dd.MM.yyyy");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is DateTime)
-                return ((DateTime)value).ToString("dd.MM. yyyy");
+                return ((DateTime)value).ToString("dd.MM.yyyy");
             return string.Empty;
         }
     }

@@ -82,7 +82,7 @@ namespace VerejneOsvetlenieData.Data
         {
             string s = "select id_lampy, id_sluzby, to_char(datum, 'dd.mm.yyyy'), nvl(popis,''), trvanie, cena from s_obsluha_lampy join s_sluzba using (id_sluzby) join s_servis using (id_sluzby)  order by id_sluzby desc";
             var select = new VystupSelect(s,
-                "cislo", "id_sluzby", "datum", "popis", "trvanie", "cena");
+                "id_lampy", "id_sluzby", "datum", "popis", "trvanie", "cena");
             select.KlucovyStlpec = "ID_SLUZBY";
             return select;
 

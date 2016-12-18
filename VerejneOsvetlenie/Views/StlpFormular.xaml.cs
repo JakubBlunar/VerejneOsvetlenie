@@ -69,6 +69,7 @@ namespace VerejneOsvetlenie.Views
                 Obrazky.Children.Add(new InfoStlpu()
                 {
                     Update = true,
+                    CisloStlpu = _aktualnyStlp.SStlp.Cislo,
                     DataContext = sInfo
                 });
             }

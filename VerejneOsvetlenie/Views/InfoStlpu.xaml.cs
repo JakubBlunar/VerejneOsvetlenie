@@ -39,10 +39,10 @@ namespace VerejneOsvetlenie.Views
         {
             if (Model == null)
                 return;
-
-            Model.Cislo = CisloStlpu;
+            
             Upravit.Visibility = Update ? Visibility.Visible : Visibility.Collapsed;
             Vlozit.Visibility = !Update ? Visibility.Visible : Visibility.Collapsed;
+            HlavnyStackPanel.IsEnabled = false;
             if (Model.Data != null)
             {
                 Obrazok.Source = GetImageStream(new MemoryStream(Model.Data));
@@ -84,10 +84,17 @@ namespace VerejneOsvetlenie.Views
 
         private void Upravit_Click(object sender, RoutedEventArgs e)
         {
+            if (!HlavnyStackPanel.IsEnabled)
+            {
+                HlavnyStackPanel.IsEnabled = true;
+                return;
+            }
             Model.Cislo = CisloStlpu;
             var result = Model.Update();
 
             FormularGenerator.GenerujSpravu(result, Model.ErrorMessage);
+            if (result)
+                HlavnyStackPanel.IsEnabled = false;
         }
 
         private void Vlozit_Click(object sender, RoutedEventArgs e)

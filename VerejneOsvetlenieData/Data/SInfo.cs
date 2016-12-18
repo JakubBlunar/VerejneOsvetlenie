@@ -48,7 +48,7 @@ namespace VerejneOsvetlenieData.Data
         public override bool Update()
         {
             DateTime? datum;
-            if (!string.IsNullOrWhiteSpace(Datum))
+            if (!string.IsNullOrEmpty(Datum))
             {
                 try
                 {
@@ -60,7 +60,11 @@ namespace VerejneOsvetlenieData.Data
                     return false;
                 }
             }
-            else datum = null;
+            else
+            {
+                ErrorMessage = "Nie je zadaný dátum.";
+                return false;
+            }
 
             return UseDbMethod(Databaza.UpdateInfoStlpu(Id, Cislo, Typ,datum, Data));
         }
@@ -80,7 +84,11 @@ namespace VerejneOsvetlenieData.Data
                     return false;
                 }
             }
-            else datum = null;
+            else
+            {
+                ErrorMessage = "Nie je zadaný dátum.";
+                return false;
+            }
 
             return UseDbMethod(Databaza.VlozInfoStlpu(Cislo, Typ, datum, Data));
         }
