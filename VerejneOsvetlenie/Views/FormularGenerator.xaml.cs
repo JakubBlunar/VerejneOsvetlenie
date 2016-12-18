@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VerejneOsvetlenie.Converters;
 using VerejneOsvetlenieData.Data;
 using VerejneOsvetlenieData.Data.Interfaces;
 using Image = System.Windows.Controls.Image;
@@ -122,7 +123,12 @@ namespace VerejneOsvetlenie.Views
                 var label = DajLabel(propertyInfo, atribut);
                 UIElement inputBoxOrImage = null;
                 if (atribut?.IsBitmapImage == false)
-                    inputBoxOrImage = DajInputBox(propertyInfo, model, atribut);
+                {
+                    if (atribut?.IsDate == false)
+                        inputBoxOrImage = DajInputBox(propertyInfo, model, atribut);
+                    else
+                        inputBoxOrImage =  DajDatePicker(propertyInfo, model);
+                }
                 else
                 {
                     inputBoxOrImage = new Image();
@@ -162,6 +168,28 @@ namespace VerejneOsvetlenie.Views
                 StringFormat = paAttribut?.SpecialFormat
             });
             return box;
+        }
+
+        public DatePicker DajDatePicker(PropertyInfo paPropertyInfo, SqlEntita paEntita = null)
+        {
+            var picker = new DatePicker
+            {
+                FontSize = 20,
+                Margin = new Thickness(5, 5, 0, 5),
+                MaxWidth = 180,
+                Text = "vyberte dátum",
+                SelectedDateFormat = DatePickerFormat.Short,
+            };
+            picker.SetBinding(DatePicker.SelectedDateProperty, new Binding()
+            {
+                Path = new PropertyPath(paPropertyInfo.Name),
+                Source = paEntita ?? DataContext,
+                Mode = paPropertyInfo.CanWrite ? BindingMode.TwoWay : BindingMode.OneWay,
+                ConverterCulture = CultureInfo.CurrentCulture,
+                Converter = new StringDateTimeConverter()
+            });
+
+            return picker;
         }
 
         private TextBlock DajLabel(PropertyInfo paPropertyInfo, SqlClassAttribute paAttribut = null)
@@ -267,6 +295,7 @@ namespace VerejneOsvetlenie.Views
                 }
             }
         }
+
     }
 
     public enum StavyFormulara

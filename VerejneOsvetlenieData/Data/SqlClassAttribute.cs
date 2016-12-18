@@ -26,6 +26,8 @@ namespace VerejneOsvetlenieData.Data
         /// </summary>
         public bool IsColumn => !string.IsNullOrEmpty(ColumnName);
 
+        public bool IsDate { get; set; }
+
         /// <summary>
         /// názov stĺpca ktorý replrezentuje property
         /// </summary>
@@ -78,6 +80,7 @@ namespace VerejneOsvetlenieData.Data
             IsBitmapImage = false;
             ReadOnly = false;
             IgnoreEntity = false;
+            IsDate = false;
         }
 
         public static SqlClassAttribute ExtractSqlClassAttribute(PropertyInfo paPropertyInfo)

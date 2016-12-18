@@ -23,7 +23,7 @@ namespace VerejneOsvetlenieData.Data
         [SqlClass(ColumnName = "RODNE_CISLO", DisplayName = "Technik", Length = 10)]
         public string RodneCislo { get; set; }
 
-        [SqlClass(ColumnName = "DATUM", DisplayName = "Dátum")]
+        [SqlClass(ColumnName = "DATUM", DisplayName = "Dátum", IsDate = true)]
         public DateTime Datum { get; set; }
 
         [SqlClass(ColumnName = "POPIS", DisplayName = "Popis", Length = 500)]

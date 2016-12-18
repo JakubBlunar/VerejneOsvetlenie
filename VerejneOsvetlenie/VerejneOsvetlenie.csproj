@@ -69,6 +69,7 @@
       <DependentUpon>AutoHideMenu.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\FormularVisibilityConverter.cs" />
+    <Compile Include="Converters\StringDateTimeConverter.cs" />
     <Compile Include="Converters\StringVisibilityConverter.cs" />
     <Compile Include="ResourceVystupy.Designer.cs">
       <AutoGen>True</AutoGen>
