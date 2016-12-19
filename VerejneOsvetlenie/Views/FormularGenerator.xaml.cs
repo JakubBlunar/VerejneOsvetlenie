@@ -180,14 +180,17 @@ namespace VerejneOsvetlenie.Views
                 Text = "vyberte dátum",
                 SelectedDateFormat = DatePickerFormat.Short,
             };
-            picker.SetBinding(DatePicker.SelectedDateProperty, new Binding()
+            var binding = new Binding()
             {
                 Path = new PropertyPath(paPropertyInfo.Name),
                 Source = paEntita ?? DataContext,
                 Mode = paPropertyInfo.CanWrite ? BindingMode.TwoWay : BindingMode.OneWay,
-                ConverterCulture = CultureInfo.CurrentCulture,
-                Converter = new StringDateTimeConverter()
-            });
+                ConverterCulture = CultureInfo.CurrentCulture
+            };
+            if (paPropertyInfo.PropertyType == typeof(string))
+                binding.Converter = new StringDateTimeConverter();
+
+            picker.SetBinding(DatePicker.SelectedDateProperty, binding);
 
             return picker;
         }
